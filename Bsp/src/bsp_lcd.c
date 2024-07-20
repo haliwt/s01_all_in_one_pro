@@ -302,14 +302,14 @@ void LCD_Number_Ai_OneTwo_Humidity(void)
 {
 
   if(ai_mode_state()== 1){ //AI state 
-  //number '1'
-    // TM1723_Write_Display_Data(0xC4,(0x01+lcdNumber1_High[glcd_t.number1_high] + lcdNumber1_Low[glcd_t.number1_low]) & 0xffff); //numbers : '1' addr: 0xC4
-    TM1723_Write_Display_Data(0xC3,lcdNumber1_Low[glcd_t.number1_low]+AI_Symbol+lcdNumber2_High[glcd_t.number2_high]);//display  "AI icon"
+ 
+  
+    TM1723_Write_Display_Data(0xC3,lcdNumber1_Low[glcd_t.number1_low]+AI_Symbol+lcdNumber2_High[glcd_t.number2_high] & 0xFF);//display  "AI icon"
   }
   else{
-        //number '1'
-     //TM1723_Write_Display_Data(0xC4,(0x00+lcdNumber1_High[glcd_t.number1_high] + lcdNumber1_Low[glcd_t.number1_low]) & 0xffff); //numbers : '1' addr: 0xC4
-     TM1723_Write_Display_Data(0xC3,(lcdNumber1_Low[glcd_t.number1_low])+lcdNumber2_High[glcd_t.number2_high]);//don't display "AI icon"
+    
+     
+     TM1723_Write_Display_Data(0xC3,(lcdNumber1_Low[glcd_t.number1_low])+lcdNumber2_High[glcd_t.number2_high] & 0xFE);//don't display "AI icon"
   }
 
 
@@ -889,11 +889,7 @@ void Lcd_Display_Off(void)
 void Disp_HumidityTemp_Value(void)
 {
 
-//   if( gpro_t.set_temperature_value_success == 0){  // || gpro_t.set_temp_confirm == 1){
-//      
-//       LCD_Disp_Temperature_Value_Handler();
-//
-//    }
+
     LCD_Disp_Temperature_Value_Handler();
     LCD_Number_Ai_OneTwo_Humidity();
 }
