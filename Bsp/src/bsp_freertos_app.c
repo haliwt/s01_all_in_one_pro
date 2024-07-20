@@ -350,6 +350,7 @@ static void vTaskStart(void *pvParameters)
               bsp_Idle();
               mainboard_active_handler();
               LCD_Timer_Colon_Flicker();
+              
 
             }
             else {
