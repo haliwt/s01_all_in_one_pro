@@ -79,13 +79,13 @@ void MX_GPIO_Init(void)
 
 
   /*Configure GPIO pin : PtPin  interrupt GPIO*/
-  GPIO_InitStruct.Pin = KEY_MODE_Pin;
+  GPIO_InitStruct.Pin = KEY_UP_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;//GPIO_NOPULL;
-  HAL_GPIO_Init(KEY_MODE_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PDPin PDPin PDPin */
-  GPIO_InitStruct.Pin = KEY_UP_Pin|KEY_DOWN_Pin|KEY_POWER_Pin;
+  GPIO_InitStruct.Pin = KEY_DOWN_Pin|KEY_POWER_Pin|KEY_MODE_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;//GPIO_NOPULL;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);

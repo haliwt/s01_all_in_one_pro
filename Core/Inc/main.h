@@ -88,27 +88,32 @@ void Error_Handler(void);
 
 //display panel GPIO
 
-//#define KEY_POWER_Pin 						GPIO_PIN_15
-//#define KEY_POWER_GPIO_Port 				GPIOA
-//#define KEY_POWER_EXTI_IRQn 				EXTI4_15_IRQn
-
-//#define KEY_MODE_Pin 						GPIO_PIN_0
-//#define KEY_MODE_GPIO_Port 					GPIOD
-//#define KEY_MODE_EXTI_IRQn 					EXTI0_1_IRQn
-
 #define KEY_POWER_Pin 						GPIO_PIN_0
 #define KEY_POWER_GPIO_Port 				GPIOD
 #define KEY_POWER_EXTI_IRQn 				EXTI0_1_IRQn
 
-#define KEY_MODE_Pin 						GPIO_PIN_15
-#define KEY_MODE_GPIO_Port 					GPIOA
-#define KEY_MODE_EXTI_IRQn 					EXTI4_15_IRQn
+//#define KEY_MODE_Pin 						GPIO_PIN_15
+//#define KEY_MODE_GPIO_Port 					GPIOA
+//#define KEY_MODE_EXTI_IRQn 					EXTI4_15_IRQn
 
 
 
-#define KEY_UP_Pin 							GPIO_PIN_1
-#define KEY_UP_GPIO_Port 					GPIOD
-#define KEY_UP_EXTI_IRQn 					EXTI0_1_IRQn
+//#define KEY_UP_Pin 							GPIO_PIN_1
+//#define KEY_UP_GPIO_Port 					GPIOD
+///#define KEY_UP_EXTI_IRQn 					EXTI0_1_IRQn
+
+#define KEY_MODE_Pin 						GPIO_PIN_1
+#define KEY_MODE_GPIO_Port 					GPIOD
+#define KEY_MODE_EXTI_IRQn 					EXTI0_1_IRQn
+
+
+#define KEY_UP_Pin 							GPIO_PIN_15
+#define KEY_UP_GPIO_Port 					GPIOA
+#define KEY_UP_EXTI_IRQn 					EXTI4_15_IRQn
+
+
+
+
 
 #define KEY_DOWN_Pin 						GPIO_PIN_2
 #define KEY_DOWN_GPIO_Port 					GPIOD
