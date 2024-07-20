@@ -26,6 +26,15 @@
 #define		BitCLR(x,y)		x&=~(1<<y)				//?0
 
 
+#define HUM_T8           0x01
+
+
+#define FAN_DIS_T15        0x01
+#define FAN_NO_DIS_T15     0
+
+
+
+
 #define DisplayReg           0x40// to write display register 
   
 #define AddrFixed 	         0x44// 
@@ -140,7 +149,7 @@ void Disp_HumidityTemp_Value(void);
 
 
 
-void LCD_Number_FiveSix_Hours(void);
+void LCD_Number_FiveSixSeveEight_Hours(void);
 void LCD_Number_SevenEight_Minutes(void);
 
 void LCD_Wind_Run_Icon(uint8_t speed_valu);

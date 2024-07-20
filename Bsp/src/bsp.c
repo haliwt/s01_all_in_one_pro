@@ -40,10 +40,6 @@ void bsp_Idle(void)
 //
 //    }
 
-	/* --- 让CPU进入休眠，由Systick定时中断唤醒或者其他中断唤醒 */
-
-	/* 例如 emWin 图形库，可以插入图形库需要的轮询函数 */
-	//GUI_Exec();
 
     if(gkey_t.key_power == power_on){
 
