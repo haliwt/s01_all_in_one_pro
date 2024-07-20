@@ -440,13 +440,13 @@ void LCD_Number_FiveSixSeveEight_Hours(void)
     TM1723_Write_Display_Data(0xCB,(0x01+lcdNumber6_Low[glcd_t.number6_low]+lcdNumber7_High[glcd_t.number7_high]) & 0x01);
     TM1723_Write_Display_Data(0xCC,(T14+lcdNumber7_Low[glcd_t.number7_low]+lcdNumber8_High[glcd_t.number8_high]) & 0x01);
     if(wifi_t.set_wind_speed_value == 0){
-        TM1723_Write_Display_Data(0xCE,(T13+lcdNumber8_Low[glcd_t.number8_low]+0xE0) & 0xE1);
+        TM1723_Write_Display_Data(0xCE,(T13+lcdNumber8_Low[glcd_t.number8_low]++WIND_SPEED_FULL) & 0xff);
     }
     else if(wifi_t.set_wind_speed_value== 1){
-        TM1723_Write_Display_Data(0xCE,(T13+lcdNumber8_Low[glcd_t.number8_low]+WIND_SPEED_TWO) & 0xE1);
+        TM1723_Write_Display_Data(0xCE,(T13+lcdNumber8_Low[glcd_t.number8_low]+WIND_SPEED_TWO) & 0xff);
     }
     else if(wifi_t.set_wind_speed_value==2){
-        TM1723_Write_Display_Data(0xCE,(T13+lcdNumber8_Low[glcd_t.number8_low]+WIND_SPEED_ONE) & 0xE1);
+        TM1723_Write_Display_Data(0xCE,(T13+lcdNumber8_Low[glcd_t.number8_low]+WIND_SPEED_ONE) & 0xff);
     }
 
 }
@@ -968,42 +968,7 @@ void donot_disp_ai_symbol(void)
 void Disp_Dry_Icon(void)
 {
   
-   if(gctl_t.ptc_warning ==0 && gctl_t.fan_warning ==0){
-
-        if(ptc_state()== 1){
-        
-                //number '5' and 'ptc' icon
-                TM1723_Write_Display_Data(0xC9,(0x01+lcdNumber5_High[glcd_t.number5_high] + lcdNumber5_Low[glcd_t.number5_low]  ) & 0xffff); 
-           }
-           else{
-               //number '5' and 'ptc' icon
-                TM1723_Write_Display_Data(0xC9,(lcdNumber5_High[glcd_t.number5_high] + lcdNumber5_Low[glcd_t.number5_low]  ) & 0xffff); 
-        
-           }
-
-    }
-    else{
-
-        if(gctl_t.ptc_warning ==1 && gctl_t.ptc_warning ==0){
-
-        
-           LCD_Fault_Numbers_Code();
-            if(ptc_state()== 1){
-        
-                //number '5' and 'ptc' icon
-                //TM1723_Write_Display_Data(0xC9,(0x01+lcdNumber5_High[glcd_t.number5_high] + lcdNumber5_Low[glcd_t.number5_low]  ) & 0xffff); 
-                TM1723_Write_Display_Data(0xC9,(0x01+lcdNumber5_Low_E[0]  + lcdNumber5_High_E[0] + DRY_Symbol ) & 0xffff); // dry of icon display
-           }
-           else{
-               //number '5' and 'ptc' icon
-               // TM1723_Write_Display_Data(0xC9,(lcdNumber5_High[glcd_t.number5_high] + lcdNumber5_Low[glcd_t.number5_low]  ) & 0xffff); 
-                TM1723_Write_Display_Data(0xC9,(lcdNumber5_Low_E[0]  + lcdNumber5_High_E[0]  ) & 0xffff); //numbers : "dry of icon"
-           }
-
-
-        }
-        
-       }
+   Display_Kill_Dry_Ster_Icon();
 
 }
 
