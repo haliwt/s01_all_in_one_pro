@@ -178,6 +178,9 @@ void donot_disp_ai_symbol(void);
 
 void Display_Kill_Dry_Ster_Icon(void);
 
+void LCD_Disp_Humidity_value_Handler(void);
+
+
 
 
 #endif 

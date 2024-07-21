@@ -226,10 +226,10 @@ void Dec_Key_Fun(uint8_t cmd)
 
            if( gctl_t.gSet_temperature_value   > 40) gctl_t.gSet_temperature_value  = 20;
 				
-			   glcd_t.number3_low =  gctl_t.gSet_temperature_value   / 10 ;
-            glcd_t.number3_high =  gctl_t.gSet_temperature_value   / 10 ;
-			   glcd_t.number4_low  = gctl_t.gSet_temperature_value   % 10; //
-            glcd_t.number4_high =  gctl_t.gSet_temperature_value   % 10; //
+			glcd_t.number1_low =  gctl_t.gSet_temperature_value   / 10 ;
+            glcd_t.number1_high =  gctl_t.gSet_temperature_value   / 10 ;
+			glcd_t.number2_low  = gctl_t.gSet_temperature_value   % 10; //
+            glcd_t.number2_high =  gctl_t.gSet_temperature_value   % 10; //
 
         
           
@@ -330,10 +330,10 @@ void Add_Key_Fun(uint8_t cmd)
 
         if(gctl_t.gSet_temperature_value   > 40)gctl_t.gSet_temperature_value  = 20;
 
-        glcd_t.number3_low = gctl_t.gSet_temperature_value   / 10 ;
-        glcd_t.number3_high = gctl_t.gSet_temperature_value   / 10 ;
-        glcd_t.number4_low  =gctl_t.gSet_temperature_value   % 10; //
-        glcd_t.number4_high = gctl_t.gSet_temperature_value  % 10; //
+        glcd_t.number1_low = gctl_t.gSet_temperature_value   / 10 ;
+        glcd_t.number1_high = gctl_t.gSet_temperature_value   / 10 ;
+        glcd_t.number2_low  =gctl_t.gSet_temperature_value   % 10; //
+        glcd_t.number2_high = gctl_t.gSet_temperature_value  % 10; //
 
      
         gkey_t.gTimer_set_temp_value=0;

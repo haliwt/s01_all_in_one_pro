@@ -428,6 +428,31 @@ void LCD_Disp_Temperature_Value_Handler(void)
 }
 /*****************************************************************************
  * 
+ * Function Name:  void LCD_Disp_Humidity_value_Handler(void)
+ * Function: read humidity of value from sensor of temperature
+ * Input Ref:
+ * Return Ref:
+ * 
+*****************************************************************************/
+void LCD_Disp_Humidity_value_Handler(void)
+{
+   TM1723_Write_Display_Data(0xC4,(0x01+lcdNumber2_Low[glcd_t.number2_low]+lcdNumber3_High[glcd_t.number3_high])&0xff);
+
+   if(wifi_link_net_state()==1){
+
+      TM1723_Write_Display_Data(0xC5,(WIFI_Symbol+lcdNumber3_Low[glcd_t.number3_low] + lcdNumber4_High[glcd_t.number4_high]) & 0xff); //Wifi
+   }
+   else{
+       TM1723_Write_Display_Data(0xC5,(WIFI_NO_Symbol+lcdNumber3_Low[glcd_t.number3_low] + lcdNumber4_High[glcd_t.number4_high]) & 0xff); //Wifi 
+
+   }
+
+   TM1723_Write_Display_Data(0xC9,(0x01+lcdNumber4_Low[glcd_t.number4_low]+lcdNumber5_High[glcd_t.number5_high]) & 0xff);//display digital '4,5'
+
+}
+
+/*****************************************************************************
+ * 
  * Function Name:  void LCD_Number_FiveSixSeveEight_Hours(void)
  * Function:
  * Input Ref:
@@ -791,13 +816,13 @@ void LCD_Timer_Colon_Flicker(void)
         if(gctl_t.ptc_warning ==0 && gctl_t.fan_warning ==0){
         if(gkey_t.key_mode != mode_set_timer){
 
-           //TM1723_Write_Display_Data(0xC9,(COLON_SYMBOL +lcdNumber4_Low[glcd_t.number4_low+lcdNumber5_High[glcd_t.number5_high] ) & 0xffff);
+           
            TM1723_Write_Display_Data(0xCB,COLON_SYMBOL+lcdNumber6_Low[glcd_t.number6_low]+lcdNumber7_High[glcd_t.number7_high]);//display "6,7"
         
 
         }
         else{
-           //TM1723_Write_Display_Data(0xC9,(0x01+lcdNumber4_Low[glcd_t.number4_low]+lcdNumber5_High_E[0]));//display digital '4,5'
+          
            TM1723_Write_Display_Data(0xCB,COLON_SYMBOL+lcdNumber6_Low[glcd_t.number6_low]+lcdNumber7_High[glcd_t.number7_high]);//display "6,7"
         }
           
@@ -809,7 +834,7 @@ void LCD_Timer_Colon_Flicker(void)
     
        if(gctl_t.ptc_warning ==0 && gctl_t.fan_warning ==0){
           if(gkey_t.key_mode != mode_set_timer){
-            // TM1723_Write_Display_Data(0xC9,(NO_COLON_SYMBOL+lcdNumber4_Low[glcd_t.number4_low]+lcdNumber5_High[glcd_t.number5_high]  ) & 0xffff);
+           
  
           TM1723_Write_Display_Data(0xCB,NO_COLON_SYMBOL+lcdNumber6_Low[glcd_t.number6_low]+lcdNumber7_High[glcd_t.number7_high]);//display "6,7"
 
@@ -817,7 +842,7 @@ void LCD_Timer_Colon_Flicker(void)
           }
       }
       else{
-          //TM1723_Write_Display_Data(0xC9,( COLON_SYMBOL + lcdNumber4_Low[glcd_t.number4_low]+lcdNumber5_High[glcd_t.number5_high]  ) & 0xffff); 
+         
             TM1723_Write_Display_Data(0xCB,NO_COLON_SYMBOL+lcdNumber6_Low[glcd_t.number6_low]+lcdNumber7_High[glcd_t.number7_high]);//display "6,7"
       }
      
@@ -861,7 +886,8 @@ void Disp_HumidityTemp_Value(void)
 
 
     LCD_Disp_Temperature_Value_Handler();
-   // LCD_Number_Ai_OneTwo_Humidity();
+    LCD_Disp_Humidity_value_Handler();
+   
 }
 
 
