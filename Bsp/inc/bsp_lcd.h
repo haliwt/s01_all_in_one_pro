@@ -126,11 +126,11 @@ void Lcd_Display_Detials(void);
 void LCD_Display_Wind_Icon_Handler(void);
 
 
-void Disp_Dry_Icon(void);
 
-void Disp_Kill_Icon(void);
 
-void Disp_Ultrsonic_Icon(void);
+
+
+
 
 void Wifi_Icon_FastBlink(void);
 
@@ -175,6 +175,9 @@ void disp_ai_iocn(void);
 void disp_ai_symbol(void);
 
 void donot_disp_ai_symbol(void);
+
+void Display_Kill_Dry_Ster_Icon(void);
+
 
 
 #endif 

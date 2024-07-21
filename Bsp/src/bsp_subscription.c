@@ -633,7 +633,7 @@ void Json_Parse_Command_Fun(void)
             MqttData_Publish_SetPlasma(0);
 			HAL_Delay(200);
            gctl_t.plasma_flag=0;
-           Disp_Kill_Icon();
+          // Disp_Kill_Icon();
            	buzzer_sound();
            
 		  
@@ -652,7 +652,7 @@ void Json_Parse_Command_Fun(void)
             MqttData_Publish_SetPlasma(1);
 		    HAL_Delay(200);
            gctl_t.plasma_flag=1;
-            Disp_Kill_Icon();
+         //   Disp_Kill_Icon();
             buzzer_sound();
 		   
 			}
@@ -669,7 +669,7 @@ void Json_Parse_Command_Fun(void)
             MqttData_Publish_SetUltrasonic(0);
 			HAL_Delay(200);
             gctl_t.ultrasonic_flag=0;
-             Disp_Ultrsonic_Icon();
+          //   Disp_Ultrsonic_Icon();
             buzzer_sound();
             
 		}
@@ -688,7 +688,7 @@ void Json_Parse_Command_Fun(void)
 			HAL_Delay(200);
           
             gctl_t.ultrasonic_flag=1;
-            Disp_Ultrsonic_Icon();
+           // Disp_Ultrsonic_Icon();
              buzzer_sound();
            
 		}

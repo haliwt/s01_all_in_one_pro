@@ -347,48 +347,7 @@ static void interval_two_hours_stop_action(void)
   // Fan_Stop();
    Plasma_Off();
 
-   if(ptc_state() ==1){
-
-
-      
-       Disp_Dry_Icon();
-
-
-     }
-    else{
-
-           
- 
-     Disp_Dry_Icon();
-    }
-            
-
-    if(plasma_state() ==1){
-		
- 
-       Disp_Kill_Icon();
-
-    }
-	else{
-
-	 
-       Disp_Kill_Icon();
-
-	}
-
-    if(ultrasonic_state() ==1){
-
-
-         Disp_Ultrsonic_Icon();
-
-    }
-    else{
-
- 
-    Disp_Ultrsonic_Icon();
-
-
-    }
+   Display_Kill_Dry_Ster_Icon();
 
   
  
@@ -411,11 +370,11 @@ static void Process_Dynamical_Action(void)
 
     if(gctl_t.ai_flag == 1){
 
-            disp_ai_symbol();
+           // disp_ai_symbol();
 
      }
      else{
-       donot_disp_ai_symbol();
+      // donot_disp_ai_symbol();
 
      }
 
@@ -423,7 +382,7 @@ static void Process_Dynamical_Action(void)
 
 
        Ptc_On();
-       Disp_Dry_Icon();
+      // Disp_Dry_Icon();
 
 
      }
@@ -431,33 +390,33 @@ static void Process_Dynamical_Action(void)
 
            
      Ptc_Off();
-     Disp_Dry_Icon();
+     //Disp_Dry_Icon();
     }
             
 
     if(plasma_state() ==1){
 		
        Plasma_On();
-       Disp_Kill_Icon();
+      // Disp_Kill_Icon();
 
     }
 	else{
 
 	   Plasma_Off();
-       Disp_Kill_Icon();
+       //Disp_Kill_Icon();
 
 	}
 
     if(ultrasonic_state() ==1){
 
          Ultrasonic_Pwm_Output();
-         Disp_Ultrsonic_Icon();
+        // Disp_Ultrsonic_Icon();
 
     }
     else{
 
     Ultrasonic_Pwm_Stop();
-    Disp_Ultrsonic_Icon();
+    //Disp_Ultrsonic_Icon();
 
 
     }
@@ -483,6 +442,9 @@ static void Process_Dynamical_Action(void)
     
     
        }
+
+    
+    Display_Kill_Dry_Ster_Icon();
 
 }
 
