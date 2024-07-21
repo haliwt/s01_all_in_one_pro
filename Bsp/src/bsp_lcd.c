@@ -41,13 +41,13 @@ lcd_ref glcd_t;
 
 
 
-#define T17_T18_T19				 0x70  
-#define GLASS_T17                0x40
-#define GLASS_T18                0x20
-#define GLASS_T19                0x10
-#define WIND_SPEED_ONE           0x40
-#define WIND_SPEED_TWO           0x60
-#define WIND_SPEED_FULL          0x70
+#define T17_T18_T19				 0xE0  
+#define GLASS_T17                0x80
+#define GLASS_T18                0x40
+#define GLASS_T19                0x20
+#define WIND_SPEED_ONE           0x80
+#define WIND_SPEED_TWO           0xC0
+#define WIND_SPEED_FULL          0xE0
 
 
 
