@@ -150,7 +150,7 @@ void Disp_HumidityTemp_Value(void);
 
 
 void LCD_Number_FiveSixSeveEight_Hours(void);
-void LCD_Number_SevenEight_Minutes(void);
+
 
 void LCD_Wind_Run_Icon(uint8_t speed_valu);
 

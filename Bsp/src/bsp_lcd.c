@@ -272,7 +272,7 @@ void Lcd_Display_Detials(void)
 
 
    /* display temperature  number 7, 8 */
-  // LCD_Number_SevenEight_Minutes();
+
 
  }
  else{
@@ -392,13 +392,15 @@ void Disip_Wifi_Icon_State(void)
 void LCD_Disp_Temperature_Value_Handler(void)
 {
   //number '3' 
-   if(gctl_t.ptc_flag==1 && gctl_t.plasma_flag==1 && gctl_t.ultrasonic_flag==1)
+   if(gctl_t.ptc_flag==1 && gctl_t.plasma_flag==1 && gctl_t.ultrasonic_flag==1){
 		 	TM1723_Write_Display_Data(0xC2,((0X01+DRY_Symbol+KILL_Symbol+BUG_Symbol)+lcdNumber1_High[glcd_t.number1_high]) & 0xff);//display digital "temp
-         else if(gctl_t.ptc_flag ==0 && gctl_t.plasma_flag ==1 && gctl_t.ultrasonic_flag==1)
+    }
+    else if(gctl_t.ptc_flag ==0 && gctl_t.plasma_flag ==1 && gctl_t.ultrasonic_flag==1){
 		 	TM1723_Write_Display_Data(0xC2,((0X01+KILL_Symbol+BUG_Symbol)+lcdNumber1_High[glcd_t.number1_high]) & 0xff);//display digital "temp
-         else if(gctl_t.ptc_flag ==0 && gctl_t.plasma_flag ==0 && gctl_t.ultrasonic_flag==1)
+    }
+    else if(gctl_t.ptc_flag ==0 && gctl_t.plasma_flag ==0 && gctl_t.ultrasonic_flag==1){
 		 	TM1723_Write_Display_Data(0xC2,(0X01+BUG_Symbol+lcdNumber1_High[glcd_t.number1_high]) & 0xff);//display digital "temp
-		 else if(gctl_t.ptc_flag ==0 && gctl_t.plasma_flag==0 && gctl_t.ultrasonic_flag==0){
+    }else if(gctl_t.ptc_flag ==0 && gctl_t.plasma_flag==0 && gctl_t.ultrasonic_flag==0){
 		 	TM1723_Write_Display_Data(0xC2,(0X01+lcdNumber1_High[glcd_t.number1_high]) & 0xff);//display digital "temp
 		 }
 		 else if(gctl_t.ptc_flag ==1 && gctl_t.plasma_flag==1 && gctl_t.ultrasonic_flag==0){
@@ -470,44 +472,12 @@ void LCD_Numbers1234_Init(void)
 
 /*****************************************************************************
  * 
- * Function Name:  static void LCD_Number_SevenEight_Minutes(void)
+ * Function Name: 
  * Function:
  * Input Ref:
  * Return Ref:
  * 
 *****************************************************************************/
-void LCD_Number_SevenEight_Minutes(void)
-{
-
-  
-     if(ultrasonic_state() == 1){
-
-
-      if(gkey_t.key_mode == mode_set_timer || gkey_t.key_mode_switch_flag == 1){
-
-         gkey_t.key_mode_switch_flag = 0;
-
-        //timing ":" blank
-        TM1723_Write_Display_Data(0xCB,(0x01+lcdNumber7_High[glcd_t.number7_high] + lcdNumber7_Low[glcd_t.number7_low]) & 0xffff); //numbers : '1' addr: 0xC4
-       }
-	  //number '8'
-	  TM1723_Write_Display_Data(0xCC,(0x01+lcdNumber8_High[glcd_t.number8_high] + lcdNumber8_Low[glcd_t.number8_low] ) & 0xffff); //numbers : '2' addr: 0xC
-
-      }
-      else{
-
-         if(gkey_t.key_mode == mode_set_timer || gkey_t.key_mode_switch_flag == 1){
-
-           gkey_t.key_mode_switch_flag = 0;
-
-           //timing ":" blank
-           TM1723_Write_Display_Data(0xCB,(0x01+lcdNumber7_High[glcd_t.number7_high] + lcdNumber7_Low[glcd_t.number7_low]) & 0xffff); //numbers : '1' addr: 0xC4
-          }
-
-         TM1723_Write_Display_Data(0xCC,(0x00+lcdNumber8_High[glcd_t.number8_high] + lcdNumber8_Low[glcd_t.number8_low] ) & 0xffff); //numbers
-
-      }
-}
 
 /*****************************************************************************
  * 

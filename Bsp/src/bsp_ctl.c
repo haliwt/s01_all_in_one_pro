@@ -297,7 +297,7 @@ void SetTemp_Compare_SensoTemp(void)
                 gctl_t.ptc_flag = 1;
                 Ptc_On();
 
-                Disp_Dry_Icon();
+               
 
                   ptc_counter_off ++;
 
@@ -323,7 +323,7 @@ void SetTemp_Compare_SensoTemp(void)
              
                  gctl_t.ptc_flag = 0;
                  Ptc_Off();
-                 Disp_Dry_Icon();
+               
 
 
                    ptc_counter_on ++;
@@ -355,7 +355,7 @@ void SetTemp_Compare_SensoTemp(void)
                       ptc_counter_off ++;
                        gctl_t.ptc_flag = 0;
                          Ptc_Off();
-                         Disp_Dry_Icon();
+                     
 
                          if(ptc_on_init !=ptc_counter_on){
                             ptc_on_init =ptc_counter_on;
@@ -378,7 +378,7 @@ void SetTemp_Compare_SensoTemp(void)
                 gctl_t.ptc_flag = 1;
                 Ptc_On();
 
-                Disp_Dry_Icon();
+             
 
                 if(ptc_off_init != ptc_counter_off){
                     ptc_off_init = ptc_counter_off;

@@ -456,7 +456,7 @@ static void interval_continuce_works_fun(void)
     
     
           Ptc_On();
-          Disp_Dry_Icon();
+       
     
     
         }
@@ -464,7 +464,7 @@ static void interval_continuce_works_fun(void)
     
               
         Ptc_Off();
-        Disp_Dry_Icon();
+      
        }
                
     
