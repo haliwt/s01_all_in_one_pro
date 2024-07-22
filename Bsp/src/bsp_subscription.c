@@ -877,7 +877,7 @@ void Json_Parse_Command_Fun(void)
 
                 
 			     MqttData_Publis_SetFan(wind_total_value);
-        	     HAL_Delay(350);//
+        	     osDelay(100);//HAL_Delay(350);//
     	   
           
 		       }
@@ -885,7 +885,7 @@ void Json_Parse_Command_Fun(void)
 				 wifi_t.set_wind_speed_value=0;
 
 			    MqttData_Publis_SetFan(wifi_t.set_wind_speed_value);
-				HAL_Delay(350);
+				osDelay(100);//HAL_Delay(350);
 				//do seomthing 
 
 

@@ -226,12 +226,9 @@ void Wifi_SoftAP_Config_Handler(void)
 		     wifi_t.wifi_config_net_lable=wifi_set_tcdevreg;
 
 			}
-			
-		
-	
 
-
-	 case wifi_set_tcdevreg://dynamic register
+	    break;
+		case wifi_set_tcdevreg://dynamic register
 
 	     if(wifi_t.gTimer_login_tencent_times > 6){
 		 
@@ -255,8 +252,7 @@ void Wifi_SoftAP_Config_Handler(void)
 	        sprintf((char *)device_massage, "AT+TCSAP=\"UYIJIA01-%d\"\r\n",wifi_t.randomName[0]);
             usart2_flag = at_send_data(device_massage, strlen((const char *)device_massage));
            
-
-		     wifi_t.gTimer_login_tencent_times = 0;
+			wifi_t.gTimer_login_tencent_times = 0;
 
 			 wifi_t.soft_ap_config_flag =1;
 			
@@ -294,12 +290,7 @@ void Wifi_SoftAP_Config_Handler(void)
 void SmartPhone_LinkTencent_Cloud(void)
 {
    
-    uint8_t *device_submassage;
-
-    device_submassage = (uint8_t *)malloc(128);
-
-
-	if(wifi_t.soft_ap_config_success==1){
+    if(wifi_t.soft_ap_config_success==1){
 
        wifi_t.soft_ap_config_success=0;
 	   wifi_t.gTimer_login_tencent_times=0;
@@ -309,10 +300,6 @@ void SmartPhone_LinkTencent_Cloud(void)
 
 	}
 	
-
-	   
-    free(device_submassage);
-
 }
 
 
@@ -343,10 +330,10 @@ void Get_Beijing_Time(void)
 void PowerOn_Self_Auto_Link_Tencent_Cloud(void)
 {
 
-	 uint8_t *device_massage,auto_link_cloud_flag=0;
+	 uint8_t auto_link_cloud_flag=0;
     
 
-    device_massage = (uint8_t *)malloc(128);
+   // device_massage = (uint8_t *)malloc(128);
 
 
    switch (auto_link_cloud_flag)
@@ -376,7 +363,7 @@ void PowerOn_Self_Auto_Link_Tencent_Cloud(void)
 	 break;
 
 }
-  free(device_massage);
+ // free(device_massage);
 
 }
 

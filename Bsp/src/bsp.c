@@ -171,9 +171,7 @@ void power_on_run_handler(void)
 
 	 break;
 
-
-
-	case 5: //check works times 
+  case 5: //check works times 
 			  if(gpro_t.gTimer_run_total > 119){//119 //120 minutes
 			       gpro_t.gTimer_run_total =0;
 				   gpro_t.gTimer_run_time_out=0;  //time out recoder start 10 minutes
@@ -183,42 +181,31 @@ void power_on_run_handler(void)
 			       gctl_t.interval_stop_run_flag  =1 ;
 		         
 			    }
-                else if(gctl_t.interval_stop_run_flag  ==1){
+          else if(gctl_t.interval_stop_run_flag  ==1){
                  gctl_t.step_process=7;
                 
-                }
-			    else{
-				 gctl_t.step_process=1;
-
-                 }
+          }
+			  else{
+				  gctl_t.step_process=1;
+        }
 
 		  break;
 
 		  case 7: //works have a rest ten minutes
-              if(gctl_t.interval_stop_run_flag  ==1){
+        if(gctl_t.interval_stop_run_flag  ==1){
 
-		            Works_Time_Out();
-
-                
-                  gctl_t.step_process=1;
+		          Works_Time_Out();
+              gctl_t.step_process=1;
 
 			   }
-               else 
-                   gctl_t.step_process=1;
+        else 
+            gctl_t.step_process=1;
                    
-			 
+			break;
 
-
-		  break;
-
-		  
-
-
-	     }
+		}
 
  }      
-
-
 /**********************************************************************************************************
 *
 *	函 数 名: void mainboard_active_handler(void)
@@ -230,23 +217,16 @@ void power_on_run_handler(void)
 **********************************************************************************************************/
 void mainboard_active_handler(void)
 {
-
-   
-    if(gpro_t.gTimer_run_main_fun > 0){
-                    gpro_t.gTimer_run_main_fun =0;
-                  if(gctl_t.interval_stop_run_flag  ==0){
-                       Process_Dynamical_Action();
-                  }
-                  else{
-                      interval_two_hours_stop_action();
-                   
-    
-                  }
-               }
-    
-
+  if(gpro_t.gTimer_run_main_fun > 0){
+    gpro_t.gTimer_run_main_fun =0;
+    if(gctl_t.interval_stop_run_flag  ==0){
+    Process_Dynamical_Action();
+    }
+    else{
+    interval_two_hours_stop_action();
+    }
+  }
 }
-
 /**********************************************************************************************************
 *
 *	函 数 名: void disp_works_or_timer_timing_fun(void)
