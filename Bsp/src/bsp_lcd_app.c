@@ -201,16 +201,14 @@ void LCD_Disp_Works_Timing_Init(void)
 
 }
 
-/*
-*********************************************************************************************************
+/*******************************************************************************************************
 *
 *	函 数 名: void Dissplay_Timer_Timing(uint8_t hours,uint8_t minutes)
 *	功能说明: 到记时功能
 *	形    参: 无
 *	返 回 值: 无
 *
-*********************************************************************************************************
-*/
+**********************************************************************************************************/
 void Display_Timer_Timing(void)
 {
 
@@ -274,7 +272,14 @@ void Display_Timer_Timing(void)
 }
 
 
-
+/*******************************************************************************************************
+*
+*	函 数 名: void LCD_Disp_Timer_Timing(void)
+*	功能说明:   display of set up timer timing how many ? value .
+*	形    参: 无
+*	返 回 值: 无
+*
+**********************************************************************************************************/
 void LCD_Disp_Timer_Timing(void)
 {
 
@@ -288,8 +293,8 @@ void LCD_Disp_Timer_Timing_Init(void)
 
      gctl_t.ai_flag = 0;
 
-   //  LCD_Number_Ai_OneTwo_Humidity();
-//display hours timing
+   
+     //display hours timing
     glcd_t.number5_low = gpro_t.set_timer_timing_hours / 10;
     glcd_t.number5_high = gpro_t.set_timer_timing_hours / 10;
 
@@ -304,8 +309,9 @@ void LCD_Disp_Timer_Timing_Init(void)
     				
     glcd_t.number8_low = gpro_t.set_timer_timing_minutes   % 10;
     glcd_t.number8_high = gpro_t.set_timer_timing_minutes % 10;
-
+    disp_ai_iocn();
     LCD_Disp_Timer_Timing();
+   
 
 }
 
@@ -339,7 +345,7 @@ void Display_WorksTimingr_Handler(uint8_t sel_item)
             if(switch_counter>0){
                switch_counter =0;
               }
-         
+            disp_ai_iocn();
             Display_Works_Timing();
             
 
@@ -358,6 +364,7 @@ void Display_WorksTimingr_Handler(uint8_t sel_item)
       if(gctl_t.fan_warning ==0 && gctl_t.ptc_warning==0 ){
             if(gkey_t.set_timer_timing_success ==1){
                gctl_t.ai_flag = 0; // don't  DISPLAY AI ICON
+               disp_ai_iocn();
                Display_Timer_Timing();
              
 

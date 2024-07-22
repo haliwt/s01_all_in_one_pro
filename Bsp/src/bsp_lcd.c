@@ -730,7 +730,7 @@ void LCD_Wind_Run_Icon(uint8_t wind_speed)
 {
 
    //wind run icon
-  if(gctl_t.ptc_warning ==0 || gctl_t.fan_warning ==0){
+  if(gctl_t.ptc_warning ==0 && gctl_t.fan_warning ==0){
 
    switch(wind_speed){
 
@@ -801,10 +801,6 @@ void LCD_Wind_Run_Icon(uint8_t wind_speed)
         	glcd_t.gTimer_fan_blink=0;
         }
         
-    }
-       
-
-
     break;
 
    }
