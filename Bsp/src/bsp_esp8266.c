@@ -202,7 +202,7 @@ void Wifi_SoftAP_Config_Handler(void)
 
 			if(wifi_t.gTimer_login_tencent_times > 2){
 				wifi_t.gTimer_login_tencent_times=0;
-				wifi_t.wifi_config_net_lable =wifi_set_softap;
+				wifi_t.wifi_config_net_lable =wifi_set_softap;//wifi_register_codes
 				wifi_t.randomName[0] = HAL_GetUIDw0();
 
 
@@ -212,6 +212,8 @@ void Wifi_SoftAP_Config_Handler(void)
 
 
 	 break;
+
+	
 
 	  case wifi_set_softap:
             WIFI_IC_ENABLE();
@@ -259,10 +261,22 @@ void Wifi_SoftAP_Config_Handler(void)
 			 wifi_t.soft_ap_config_flag =1;
 			
 			 wifi_t.wifi_uart_counter=0;
-			 wifi_t.wifi_config_net_lable=0xff;
+			 
+             wifi_t.wifi_config_net_lable=wifi_inquire_register_codes; //WT.EDIT 2024.07.22
 		  }
-		
+		 
 			
+	 break;
+
+     case wifi_inquire_register_codes: //WT.EDIT 2024.07.22
+	   if(wifi_t.gTimer_login_tencent_times > 3){
+         wifi_t.gTimer_login_tencent_times=0;
+		 wifi_t.wifi_uart_counter=0;
+        HAL_UART_Transmit(&huart2, "AT+TCPRDINFOSET?\r\n", strlen("AT+TCPRDINFOSET?\r\n"), 0xffff); //动
+        wifi_t.wifi_config_net_lable=0xff;//
+
+        }
+       
 	 break;
 
 	}
