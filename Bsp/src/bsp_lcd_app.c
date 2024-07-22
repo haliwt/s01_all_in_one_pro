@@ -467,7 +467,7 @@ void Display_WorksTimingr_Handler(uint8_t sel_item)
                 gkey_t.key_mode = disp_timer_timing;
                 gkey_t.key_add_dec_mode = set_temp_value_item;
 
-               LCD_Disp_Works_Timing_Init();
+                 LCD_Disp_Timer_Timing_Init();
                 
      
 
