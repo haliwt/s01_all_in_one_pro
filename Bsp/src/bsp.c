@@ -239,10 +239,10 @@ void mainboard_active_handler(void)
 void disp_works_or_timer_timing_fun(void)
 {
 
-   if(gkey_t.key_add_dec_mode != mode_set_timer){
-       Display_WorksTimingr_Handler(gkey_t.key_mode);
+   
+    Display_WorksTimingr_Handler(gkey_t.key_mode);
 
-   }
+   
 
 }
 /**********************************************************************************************************
@@ -557,6 +557,7 @@ static void power_off_function(void)
            
     	    //stop main board function ref.
     	    PowerOff_Off_Led();
+            lcd_power_off_handler();
     	  
 		
 	  }

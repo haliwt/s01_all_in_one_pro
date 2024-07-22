@@ -292,6 +292,7 @@ static void vTaskStart(void *pvParameters)
           
           LED_Mode_Off();
           Backlight_Off();
+          LcdDisp_Init();
           
           buzzer_sound();
 

@@ -184,6 +184,10 @@ void Display_Kill_Dry_Ster_Icon(void);
 void LCD_Disp_Humidity_value_Handler(void);
 
 
+void Set_LCD_Timer_Numbers_FiveSixSeveEight_Hours(void);
+
+void lcd_power_off_handler(void);
+
 
 
 #endif 

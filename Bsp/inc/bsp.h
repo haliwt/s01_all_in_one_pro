@@ -92,10 +92,6 @@ typedef struct {
 
    uint8_t app_ptc_flag;
 
-   uint8_t set_timer_timing_led_off;
-   
-
-     
 
    int8_t set_timer_timing_hours;
    int8_t set_timer_timing_minutes;
