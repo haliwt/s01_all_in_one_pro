@@ -587,7 +587,6 @@ static void power_off_function(void)
     if(	gpro_t.power_off_flag ==2){
            if(gkey_t.gTimer_power_off_run_times < 61){
                 Fan_Run();
-				//OnlyDisp_Wind_Icon_Handler();
 				power_off_disp_fan_run_handler();
 				
 
@@ -653,8 +652,8 @@ static void power_on_init_function(void)
     Backlight_On();
 
 
-    LCD_Numbers1234_Init();
-    Display_Wind_Icon_Inint();
+   // LCD_Numbers1234_Init();
+   
 
     Update_DHT11_Value();
     

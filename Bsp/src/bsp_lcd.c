@@ -274,13 +274,13 @@ void Lcd_Display_Detials(void)
 
 /*****************************************************
  * 
- * Function Name:  void LCD_Number_Ai_OneTwo_Humidity(void)
+ * Function Name:  void lcd_disp_ai_icon(void)
  * Function:
  * Input Ref:
  * Return Ref:
  * 
 ******************************************************/
-void LCD_Number_Ai_OneTwo_Humidity(void)
+void lcd_disp_ai_icon(void)
 {
 
   if(ai_mode_state()== 1){ //AI state 
@@ -858,13 +858,6 @@ void Set_LCD_Timer_Numbers_FiveSixSeveEight_Hours(void)
  * 
 *****************************************************************************/
 
-void LCD_Numbers1234_Init(void)
-{
-
-     
-     
-
-}
 
 /*****************************************************************************
  * 
@@ -1211,16 +1204,6 @@ void LCD_Wind_Run_Icon(uint8_t wind_speed)
  * Return Ref:
  * 
 *****************************************************************************/
-void Display_Wind_Icon_Inint(void)
-{
-
-   TIM1723_Write_Cmd(0x00); // 0x00 -> display setup model
-   TIM1723_Write_Cmd(0x40); // 0x40 ->write data to display of register
-	TIM1723_Write_Cmd(0x44); // 0x44 -> write fix of address model
-
-
-     TIM1723_Write_Cmd(LUM_VALUE);//(0x97);//(0x94);//(0x9B);
-}
 
 /*****************************************************************************
  * 
@@ -1339,7 +1322,7 @@ void Disp_HumidityTemp_Init(void)
 {
 
     LCD_Disp_Temperature_Value_Handler();
- //   LCD_Number_Ai_OneTwo_Humidity();
+ 
 
 }
 
@@ -1446,23 +1429,12 @@ void Wifi_Icon_FastBlink(void)
 
 /*************************************************************************************
 	*
-	*Function Name: void OnlyDisp_Wind_Icon_Handler(void)
+	*Function Name: void LcdDisp_Init(void)
 	*Function : 
 	*Input Ref:
 	*Return Ref:NO
 	*
 *************************************************************************************/
-void OnlyDisp_Wind_Icon_Handler(void)
-{
-    
-
-    wifi_t.set_wind_speed_value=0;
-    
-   // LCD_Wind_Run_Icon(wifi_t.set_wind_speed_value);
-
-
-}
-
 void LcdDisp_Init(void)
 {
     

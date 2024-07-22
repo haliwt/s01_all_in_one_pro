@@ -157,19 +157,19 @@ void LCD_Number_FiveSixSeveEight_Hours(void);
 
 void LCD_Wind_Run_Icon(uint8_t speed_valu);
 
-void Display_Wind_Icon_Inint(void);
+
 
 void Disip_Wifi_Icon_State(void  );
 
-void LCD_Numbers1234_Init(void);
 
-void LCD_Number_Ai_OneTwo_Humidity(void);
+
+void lcd_disp_ai_icon(void);
 
 void Disp_SetTemp_Value(uint8_t temp_value);
 
-void Lcd_Display_SensorTemp_Value(void);
 
-void OnlyDisp_Wind_Icon_Handler(void);
+
+
 
 void LCD_Fault_Numbers_Code(void);
 
