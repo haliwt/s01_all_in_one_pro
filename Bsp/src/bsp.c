@@ -46,10 +46,12 @@ void bsp_Idle(void)
         
 
          // Function to display the wind run icon based on the wind speed value set in the WiFi configuration
-         
-         LCD_Wind_Run_Icon(wifi_t.set_wind_speed_value);
+         if(gkey_t.key_mode  != mode_set_timer){
+             LCD_Wind_Run_Icon(wifi_t.set_wind_speed_value);
 
-         Disip_Wifi_Icon_State();
+              Disip_Wifi_Icon_State();
+
+            }
 
  
 
