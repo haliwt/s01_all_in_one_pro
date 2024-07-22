@@ -189,6 +189,7 @@ void Set_LCD_Timer_Numbers_FiveSixSeveEight_Hours(void);
 void lcd_power_off_handler(void);
 
 
+void power_off_disp_fan_run_handler(void);
 
 #endif 
 

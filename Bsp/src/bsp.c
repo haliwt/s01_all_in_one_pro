@@ -587,7 +587,8 @@ static void power_off_function(void)
     if(	gpro_t.power_off_flag ==2){
            if(gkey_t.gTimer_power_off_run_times < 61){
                 Fan_Run();
-				OnlyDisp_Wind_Icon_Handler();
+				//OnlyDisp_Wind_Icon_Handler();
+				power_off_disp_fan_run_handler();
 				
 
 		   }
