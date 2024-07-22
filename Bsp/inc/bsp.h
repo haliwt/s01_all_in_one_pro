@@ -92,6 +92,8 @@ typedef struct {
 
    uint8_t app_ptc_flag;
 
+   uint8_t set_timer_timing_led_off;
+   
 
      
 
@@ -118,6 +120,7 @@ typedef struct {
    uint8_t gTimer_compare_temp;
    uint8_t gTimer_ptc_detected;
    uint8_t gTimer_shut_off_backlight;
+   uint8_t gTimer_timer_led_blink;
 
    
  

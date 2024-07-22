@@ -124,7 +124,9 @@ void mode_long_short_key_fun(void)
            gkey_t.gTimer_disp_set_timer = 0;       //counter exit timing this "mode_set_timer"
           
            buzzer_sound();
-           Set_Timer_Timing_Lcd_Blink();
+          Set_Timer_Timing_Lcd_Blink();
+          //Set_Timer_Timing_Lcd_Blink_Off();
+          //Set_Timer_Timing_Lcd_Blink_On();
            
 
         }
@@ -297,7 +299,9 @@ void Dec_Key_Fun(uint8_t cmd)
                 
 
          // LCD_Disp_Timer_Timing();
-         Set_Timer_Timing_Lcd_Blink();
+         //Set_Timer_Timing_Lcd_Blink();
+         Set_Timer_Timing_Lcd_Blink_Off();
+         Set_Timer_Timing_Lcd_Blink_On();
        
 
          break;
@@ -407,7 +411,9 @@ void Add_Key_Fun(uint8_t cmd)
        // gkey_t.gTimer_disp_set_timer_blink =0;
         
         //LCD_Disp_Timer_Timing();
-        Set_Timer_Timing_Lcd_Blink();
+       // Set_Timer_Timing_Lcd_Blink();
+          Set_Timer_Timing_Lcd_Blink_Off();
+          Set_Timer_Timing_Lcd_Blink_On();
         
      break;
         

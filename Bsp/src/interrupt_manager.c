@@ -158,6 +158,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
         gpro_t.gTimer_run_main_fun++;
         gpro_t.gTimer_publish_tencent_dht11++;
         gpro_t.gTimer_compare_temp++;
+        gpro_t.gTimer_timer_led_blink++;
         
        
         //wifi
