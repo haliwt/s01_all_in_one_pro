@@ -38,20 +38,6 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 					wifi_t.wifi_data[wifi_t.wifi_uart_counter] = wifi_t.usart1_dataBuf[0];
 					wifi_t.wifi_uart_counter++;
 				}
-				else if(wifi_t.get_rx_auto_repeat_net_enable ==1){
-
-					wifi_t.wifi_data[wifi_t.wifi_uart_counter] = wifi_t.usart1_dataBuf[0];
-					wifi_t.wifi_uart_counter++;
-
-					if(*wifi_t.usart1_dataBuf==0X0A) // 0x0A = "\n"
-					{
-						
-						Wifi_Rx_Auto_Link_Net_Handler();
-						wifi_t.wifi_uart_counter=0;
-					}
-
-
-				}
 				else{
 					Subscribe_Rx_Interrupt_Handler();
 
@@ -83,7 +69,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 /*******************************************************************************
 	*
 	*Function Name:void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-	*Function : timing 10ms interrupt call back function call back function
+	*Function : timing 1ms interrupt call back function call back function
 	*timer 1ms 
 	*
 *******************************************************************************/
@@ -135,7 +121,13 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
       
           //control timer
         gctl_t.gTimer_wifi_blink++;
+        gctl_t.gTimer_ctl_wifi_state ++;
+
+
+
+        //lcd timer
        glcd_t.gTimer_error_times++;
+       
     
   
 	   
@@ -160,6 +152,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
         gpro_t.gTimer_run_main_fun++;
         gpro_t.gTimer_publish_tencent_dht11++;
         gpro_t.gTimer_compare_temp++;
+        gpro_t.gTimer_get_data_from_tencent_data++;
        
         
        
@@ -173,10 +166,16 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
         wifi_t.gTimer_login_tencent_times ++;
 		wifi_t.gTimer_publish_dht11++;
 		wifi_t.gTimer_get_beijing_time++;
-		wifi_t.gTimer_auto_detected_net_state_times++;
+		
 		wifi_t.gTimer_read_beijing_time ++;
-		wifi_t.gTimer_wifi_counter_link_beijing_times++;
-        wifi_t.gTimer_counter_repeat_link_net++;
+		
+        wifi_t.gTimer_auto_link_net_time++;
+        wifi_t.gTimer_login_tencent_step_3++;
+        wifi_t.gTime_link_time_start ++ ;
+         wifi_t.gTimer_login_tencent_times_0++;
+        wifi_t.gTimer_login_tencent_times_1++;
+        wifi_t.gTimer_login_tencent_times_2++;
+
         
 
         

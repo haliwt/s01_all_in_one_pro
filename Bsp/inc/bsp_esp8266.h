@@ -56,7 +56,7 @@ typedef enum{
 
 
 
-void InitWifiModule_Hardware(void);
+void auto_init_wifi_mode_handler(void);
 
 
 
@@ -70,7 +70,7 @@ uint8_t at_send_data(uint8_t *pdata, uint16_t len);
 void Wifi_Rx_Link_Net_InputInfo_Handler(void);
 
 void Wifi_SoftAP_Config_Handler(void);
-void SmartPhone_TryToLink_TencentCloud(void);
+void auto_link_smartphone_tencent_handler(void);
 void wifi_Disconnect_Fun(void);
 void Get_BeiJing_Time_Cmd(void);
 void Get_Beijing_Time(void);

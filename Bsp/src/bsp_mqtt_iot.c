@@ -87,11 +87,15 @@ static void Mqtt_Value_update_data(void)
 	sg_info.ptc  = gctl_t.ptc_flag;
 	sg_info.anion =gctl_t.plasma_flag;
 	sg_info.sonic = gctl_t.ultrasonic_flag ;
-    sg_info.find =  100;//wifi_t.set_wind_speed_value;
-	
-	if(gctl_t.gSet_temperature_value <20)gctl_t.gSet_temperature_value = 40;
-	else if(gctl_t.gSet_temperature_value > 40 )gctl_t.gSet_temperature_value = 40;
-	sg_info.set_temperature = 40;
+    sg_info.find =  wifi_t.wind_txdata_tencent ; //100;//wifi_t.set_wind_speed_value;
+	if(gkey_t.set_temp_value_be_pressed == 2){
+
+         sg_info.set_temperature=  gctl_t.gSet_temperature_value;
+    }
+    else{
+       sg_info.set_temperature = 40;
+
+    }
 
 }
 

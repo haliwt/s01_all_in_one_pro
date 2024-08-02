@@ -1455,13 +1455,16 @@ void lcd_power_off_handler(void)
    
     power_off_disp_fan_run_handler();
 
-   
+ }
 
-
-
-}
-
-
+/**********************************************************************************************************
+*
+*	Function Name: void power_off_disp_fan_run_handler(void)
+*	Function:
+*	Input Ref: NO
+*	Return Ref: NO
+*
+**********************************************************************************************************/
 void power_off_disp_fan_run_handler(void)
 {
     if(glcd_t.gTimer_fan_blink < 15){

@@ -37,6 +37,7 @@ typedef struct _bsp_ctl{
     uint8_t step_process;
     uint8_t interval_stop_run_flag;
     uint8_t send_ptc_state_data_flag;
+    uint8_t get_beijing_time_success;
 
 
 
@@ -58,6 +59,7 @@ typedef struct _bsp_ctl{
     uint8_t gTimer_wifi_blink;
 
     uint8_t gTimer_wifi_fast_blink;
+    uint8_t gTimer_ctl_wifi_state ;
 
     
    

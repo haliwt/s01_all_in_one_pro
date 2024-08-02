@@ -38,6 +38,7 @@ static void vTaskStart(void *pvParameters);
 static void AppTaskCreate (void);
 
 
+
 /*
 **********************************************************************************************************
 											变量声明
@@ -172,7 +173,7 @@ static void vTaskMsgPro(void *pvParameters)
 static void vTaskStart(void *pvParameters)
 {
    BaseType_t xResult;
-   const TickType_t xMaxBlockTime = pdMS_TO_TICKS(30); /* 设置最大等待时间为50ms */
+   const TickType_t xMaxBlockTime = pdMS_TO_TICKS(20); /* 设置最大等待时间为50ms */
    static uint8_t sound_flag,power_on_first;
    uint32_t ulValue;
    static uint8_t add_flag,dec_flag,power_sound_flag,smart_phone_sound;
@@ -284,29 +285,36 @@ static void vTaskStart(void *pvParameters)
             }
         }
         }
-        else {
+        else{
             
               
         if(power_sound_flag==0){
+         
           power_sound_flag++;
-          
           LED_Mode_Off();
           Backlight_Off();
           LcdDisp_Init();
           
           buzzer_sound();
+        
 
         }
+
+
+        
          if(smart_phone_sound == 1){
             smart_phone_sound++;
-           smartphone_power_on_handler();
+            smartphone_power_on_handler();
           }
-          else
-            power_long_short_key_fun();
+          else 
+             power_long_short_key_fun();
+          
+         
         
         
           if(gkey_t.power_key_long_counter ==0 || gkey_t.power_key_long_counter==200){
-          if(gkey_t.key_power==power_on){
+
+            if(gkey_t.key_power==power_on){
                 
                  mode_long_short_key_fun();
 
@@ -336,10 +344,9 @@ static void vTaskStart(void *pvParameters)
                        Dec_Key_Fun(gkey_t.key_add_dec_mode);
                  }
 
-           }
-            }   
-
-            if(gkey_t.key_power==power_on){
+               }  
+         }
+         if(gkey_t.key_power==power_on){
               power_on_run_handler();
               Record_WorksOr_Timer_Timing_DonotDisp_Handler();
               Detected_Fan_Error();
@@ -351,7 +358,7 @@ static void vTaskStart(void *pvParameters)
               bsp_Idle();
               mainboard_active_handler();
               LCD_Timer_Colon_Flicker();
-              
+              WIFI_Process_Handler();
 
             }
             else {
@@ -359,14 +366,12 @@ static void vTaskStart(void *pvParameters)
              power_off_run_handler();
 
             }
+            wifi_get_beijint_time_handler();
             MainBoard_Self_Inspection_PowerOn_Fun();
         
-            WIFI_Process_Handler();
-            
-
-           }
-
           }
+
+      }
 
  }
   
@@ -400,7 +405,7 @@ static void AppTaskCreate (void)
 
 void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
 {
-
+   static volatile uint8_t first_dc_power_on;
  
    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
     __HAL_GPIO_EXTI_CLEAR_RISING_IT(GPIO_Pin);
@@ -412,6 +417,11 @@ void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
      
         if(KEY_POWER_VALUE()==KEY_DOWN){
 
+        if(first_dc_power_on==0){
+            first_dc_power_on ++;
+
+        }
+        else{
      
 
         xTaskNotifyFromISR(xHandleTaskMsgPro,  /* 目标任务 */
@@ -422,6 +432,8 @@ void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
         /* Èç¹ûxHigherPriorityTaskWoken = pdTRUE£¬ÄÇÃ´ÍË³öÖÐ¶ÏºóÇÐµ½µ±Ç°×î¸ßÓÅÏÈ¼¶ÈÎÎñÖ´ÐÐ */
         portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 
+
+        }
 
         }
        

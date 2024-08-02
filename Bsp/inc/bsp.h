@@ -117,6 +117,7 @@ typedef struct {
    uint8_t gTimer_ptc_detected;
    uint8_t gTimer_shut_off_backlight;
    uint8_t gTimer_timer_led_blink;
+   uint8_t gTimer_get_data_from_tencent_data;
 
    
  

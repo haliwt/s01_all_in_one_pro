@@ -31,13 +31,20 @@ void power_long_short_key_fun(void)
           
              	//WIFI CONNCETOR process
 			 gkey_t.wifi_led_fast_blink_flag=1;
+          
+           
 			 //WIFI CONNCETOR process
 			wifi_t.esp8266_login_cloud_success =0;
 			wifi_t.runCommand_order_lable=wifi_link_tencent_cloud;
 			wifi_t.wifi_config_net_lable= wifi_set_restor;
+            wifi_t.link_tencent_step_counter=0;
+           
 			wifi_t.power_on_login_tencent_cloud_flag=0;
-			wifi_t.link_tencent_step_counter=0;
+			
+
+            
 			wifi_t.gTimer_linking_tencent_duration=0; //166s -2分7秒
+			gpro_t.gTimer_get_data_from_tencent_data=0;
          
             Buzzer_KeySound();
 
@@ -267,7 +274,7 @@ void Dec_Key_Fun(uint8_t cmd)
 
          case mode_set_timer: //set timer timing value 
 
-         //   gkey_t.key_sound_flag = key_sound;
+
               gkey_t.gTimer_disp_set_timer = 0; 
 
               gpro_t.set_timer_timing_minutes =0;
@@ -342,8 +349,6 @@ void Add_Key_Fun(uint8_t cmd)
       
         gctl_t.send_ptc_state_data_flag =0; //send data to tencent to tell ptc on or off state .
     
-  
-
         //add_key = 1;
         gkey_t.set_temp_value_be_pressed = 1;
 
@@ -380,7 +385,7 @@ void Add_Key_Fun(uint8_t cmd)
 
     case mode_set_timer: //set timer timing value 
 
-        // gkey_t.key_sound_flag = key_sound;
+
 
          gkey_t.gTimer_disp_set_timer = 0; 
 

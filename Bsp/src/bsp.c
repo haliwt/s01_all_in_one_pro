@@ -16,7 +16,7 @@ static void interval_two_hours_stop_action(void);
 
 
 
-uint8_t power_off_flag;
+//uint8_t power_off_flag;
 
 uint8_t  fan_continue_flag;
 
@@ -71,22 +71,18 @@ void bsp_Idle(void)
 void power_off_run_handler(void)
 {
 
-  
-  if( gkey_t.key_sound_flag == key_sound){
-		gkey_t.key_sound_flag =0;
-		Buzzer_KeySound();
-
-    }
-
-   power_off_function();
+  power_off_function();
 		
    Breath_Led();
 
 }
-
-
-
-
+/*********************************************************************************************************
+*	函 数 名: void power_on_run_handler(void)
+*	功能说明: 
+*			 
+*	形    参: 无
+*	返 回 值: 无
+*********************************************************************************************************/
 void power_on_run_handler(void)
 {
 
@@ -114,10 +110,9 @@ void power_on_run_handler(void)
 		  break;
 
 
-       
-          case 1:   //run dht11 display 
+      case 1:   //run dht11 display 
 
-             if(gpro_t.gTimer_run_dht11 > 12  || power_on_run_dht11_times < 10){
+        if(gpro_t.gTimer_run_dht11 > 12  || power_on_run_dht11_times < 10){
                 gpro_t.gTimer_run_dht11=0;
                 power_on_run_dht11_times++;
                   Update_DHT11_Value();
@@ -127,16 +122,10 @@ void power_on_run_handler(void)
                      SetTemp_Compare_SensoTemp();
 
                   }
-
-                    
-
-              }
-
-
-
-          gctl_t.step_process=3;
+          }
+         gctl_t.step_process=3;
 		  
-          break;
+      break;
 
         
 
@@ -455,11 +444,7 @@ static void interval_continuce_works_fun(void)
        }
                
     
-       
-    
-       
-    
-       if(plasma_state() ==1){
+      if(plasma_state() ==1){
            
           Plasma_On();
     
@@ -543,7 +528,8 @@ static void power_off_function(void)
             
 
             //wifi set ref
-    	
+    	  //  wifi_t.wifi_config_net_lable = 0;
+            
     		wifi_t.link_tencent_thefirst_times=0;
     	
     		wifi_t.gTimer_wifi_pub_power_off=0;	
@@ -551,7 +537,7 @@ static void power_off_function(void)
 
             wifi_t.repeat_login_tencent_cloud_init_ref=0;
     	    wifi_t.runCommand_order_lable= 0xff;
-            wifi_t.three_times_link_beijing=0;
+       
     		wifi_t.smartphone_app_power_on_flag=0;
 
             gpro_t.gTimer_run_dht11=20;
@@ -564,32 +550,35 @@ static void power_off_function(void)
 		
 	  }
 
-     if(wifi_link_net_state() ==1 && power_off_flag==0 ){
+     if(wifi_link_net_state() ==1 && gpro_t.power_off_flag==2 ){
 		wifi_t.gTimer_wifi_pub_power_off=0;
-		power_off_flag++;
+		gpro_t.power_off_flag++;
 		MqttData_Publish_PowerOff_Ref();
+        osDelay(200);
 		wifi_t.runCommand_order_lable= wifi_publish_update_tencent_cloud_data;
 	     
 		 
 		  
 	}
-	if(wifi_link_net_state() ==1  && wifi_t.gTimer_wifi_sub_power_off > 4 && power_off_flag==1){
-		power_off_flag++;
+	if(wifi_link_net_state() ==1   && wifi_t.gTimer_wifi_sub_power_off > 32){
+		
 		wifi_t.gTimer_wifi_sub_power_off=0;
         Subscriber_Data_FromCloud_Handler();
+        osDelay(300);
+
+        MqttData_Publish_PowerOff_Ref();
+        osDelay(300);
+        wifi_t.runCommand_order_lable= wifi_publish_update_tencent_cloud_data;
 	  
 	
     }
-    if(wifi_link_net_state() ==1){
-       // Record_WorksTime_DonotDisp_Handler();
-       wifi_t.runCommand_order_lable= wifi_publish_update_tencent_cloud_data;
-
-    }
+   
 	
-    if(	gpro_t.power_off_flag ==2){
+    if(	gpro_t.power_off_flag ==3){
            if(gkey_t.gTimer_power_off_run_times < 61){
                 Fan_Run();
 				power_off_disp_fan_run_handler();
+                wifi_t.gTimer_wifi_sub_power_off =0;
 				
 
 		   }
@@ -619,7 +608,7 @@ static void power_on_init_function(void)
      //led on 
 
    
-    power_off_flag=0;
+  
     gpro_t.power_off_flag=1;
     
     gkey_t.set_timer_timing_success =0;

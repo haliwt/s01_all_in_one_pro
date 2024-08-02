@@ -2,6 +2,8 @@
 #define __BSP_ADC_H_
 #include "main.h"
 
+#define  UNIT_TEST     1
+
 
 void Judge_PTC_Temperature_Value(void);
 void Get_PTC_Temperature_Voltage(uint32_t channel,uint8_t times);

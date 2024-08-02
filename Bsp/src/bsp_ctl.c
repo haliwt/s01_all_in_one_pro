@@ -76,6 +76,7 @@ void main_fun_init(void)
    gctl_t.ai_flag = 1;
    gkey_t.key_add_dec_mode = set_temp_value_item;
    wifi_t.set_wind_speed_value=0;
+   wifi_t.wind_txdata_tencent =100; //WT.EDIT 2024.08.02
 
    
 
@@ -419,8 +420,15 @@ void local_read_latency_ten_minutes(void)
     if(gpro_t.gTimer_shut_off_backlight > 9 && gctl_t.ptc_warning ==0 && gctl_t.fan_warning == 0 && gkey_t.key_power==power_on){
 
          gpro_t.gTimer_shut_off_backlight =0;
-         gpro_t.shut_Off_backlight_flag = turn_off;
-         LCD_BACK_LIGHT_OFF();  
+         #ifdef UNIT_TEST
+            gpro_t.shut_Off_backlight_flag = turn_on;
+
+
+         #else
+            gpro_t.shut_Off_backlight_flag = turn_off;
+            LCD_BACK_LIGHT_OFF();  
+
+         #endif 
     }
 
 

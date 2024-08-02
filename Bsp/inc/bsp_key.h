@@ -50,7 +50,7 @@ typedef enum mode_key_t{
    
    uint8_t  key_power;
    uint8_t  key_mode;
-   uint8_t  key_sound_flag;
+  
    uint8_t  key_mode_be_pressed;
 
  

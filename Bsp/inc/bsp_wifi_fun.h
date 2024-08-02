@@ -21,7 +21,9 @@ typedef enum _wifi_state_t{
 	wifi_subscriber_form_tencent_cloud_cmd,//5
 	wifi_publish_update_tencent_cloud_data,//6
 	wifi_auto_to_link_cloud,//7
-	wifi_atuo_link_cloud_ref,//8
+	wifi_again_link_net_init,
+	wifi_from_down_data_cmd,
+	wifi_auto_repeat_check_link_net_state,//8
 	wifi_auto_repeat_link_cloud,//9
 	wifi_tencent_publish_dht11_data,//10
 	wifi_get_beijing_time,//11
@@ -90,28 +92,31 @@ typedef struct _WIFI_FUN{
 	uint8_t link_tencent_step_counter;
 	uint8_t link_beijing_times_flag;
 	uint8_t auto_linknet_flag;
-	uint8_t three_times_link_beijing;
+	
     //esp8266 up ref
 
 	uint8_t runCommand_order_lable;
 	uint8_t has_been_login_flag;
     uint8_t soft_ap_config_flag;
     uint8_t get_rx_beijing_time_enable;
-	uint8_t auto_link_login_tencent_cloud_flag;
+
 	uint8_t receive_beijing_time;
 	
 	//wifi
-	unsigned char wifi_data[150]; 
-	uint8_t  wifi_temp_data[150]; 
+	uint8_t  wifi_data[300]; 
+
  
 	uint8_t usart1_dataBuf[1];
   
-    //uint8_t usart2_rx_flag;
+    uint8_t once_rx_data_done;
+
+     uint8_t serch_for_wifi_flag;
+     
 	
 	
 	uint8_t wifi_uart_counter;
 	uint8_t tencent_cloud_command_power_on;
-	uint8_t get_rx_auto_repeat_net_enable;
+
 	
 	//
 	uint8_t response_wifi_signal_label;
@@ -140,9 +145,11 @@ typedef struct _WIFI_FUN{
 	//beijing time
 	uint8_t set_beijing_time_flag;
 	uint8_t beijing_time_flag ;
+    uint8_t wind_txdata_tencent ;
+    
 
 	//auto link net
-	uint8_t rx_error_codes_flag;
+	
 	uint8_t link_tencent_thefirst_times;
 	uint8_t rx_setup_hardware_counter;
     uint8_t tencent_rx_data_flag;
@@ -162,16 +169,21 @@ typedef struct _WIFI_FUN{
 	uint8_t gTimer_power_first_link_tencent ;
 	uint8_t gTimer_wifi_pub_power_off;
 	uint8_t gTimer_wifi_power_on_detect ;
-	uint8_t gTimer_wifi_counter_link_beijing_times ;
+
 	uint8_t gTimer_main_gpro_times;
 	uint8_t gTimer_wifi_sub_power_off;
 	uint8_t gTimer_wifi_rx_error;
-    uint8_t gTimer_counter_repeat_link_net;
+ 
     uint8_t gTimer_normal_send_dat_tencent ;
+    uint8_t gTimer_auto_link_net_time;
+    uint8_t gTimer_login_tencent_step_3;
 	
-    uint16_t gTimer_get_beijing_time;
-	uint16_t gTimer_auto_detected_net_state_times;
-	
+    uint8_t gTimer_get_beijing_time;	
+
+    uint8_t gTime_link_time_start;
+    uint8_t gTimer_login_tencent_times_0;
+    uint8_t gTimer_login_tencent_times_1;
+    uint8_t gTimer_login_tencent_times_2;
 
 	uint32_t randomName[1];
 	
