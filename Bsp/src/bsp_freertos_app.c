@@ -360,6 +360,7 @@ static void vTaskStart(void *pvParameters)
               mainboard_active_handler();
               LCD_Timer_Colon_Flicker();
               WIFI_Process_Handler();
+              detection_net_link_state_handler();
 
             }
             else {

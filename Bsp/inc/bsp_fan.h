@@ -27,6 +27,7 @@ void Fan_Run_Lower(void);
 
 void fan_max_run(void);
 
+void fan_run_icon_handler(void);
 
 #endif
 

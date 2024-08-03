@@ -174,7 +174,7 @@ void Get_Fan_Adc_Fun(uint32_t channel,uint8_t times)
 
 		  Buzzer_Fan_Error_Sound();
 
-           wifi_t.set_wind_speed_value = 2;
+           wifi_t.set_wind_speed_value = 2; //wind speed is min 
           
        
           if(wifi_link_net_state() ==1){

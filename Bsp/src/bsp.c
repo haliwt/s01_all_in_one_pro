@@ -33,12 +33,7 @@ uint8_t  fan_continue_flag;
 */
 void bsp_Idle(void)
 {
-//	/* --- 喂狗 8s input reset */
-//    if(gctl_t.gTimer_prcoess_iwdg > 5){
-//		gctl_t.gTimer_prcoess_iwdg =0;
-//    	iwdg_feed();
-//
-//    }
+
 
 
     if(gkey_t.key_power == power_on){
@@ -615,7 +610,7 @@ static void power_on_init_function(void)
     //temperature value inti
     gpro_t.set_temperature_value_success=0;
 
-    wifi_t.set_wind_speed_value=0; //init 
+    wifi_t.set_wind_speed_value=0; //init is wind speed is max
 
     //timig init
     gpro_t.gTimer_run_total=0;

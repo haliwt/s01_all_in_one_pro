@@ -67,14 +67,19 @@ static serviceInfo    sg_info;
 //static char *sg_property_name[] = {"opne", "sonic", "find", "nowtemperature","state","ptc","Anion","temperature","Humidity"};
 void Mqtt_Value_Init(void)
 {
-    wifi_t.set_wind_speed_value=100;
+
+    static uint8_t wind_speed_grade;
+    if(wifi_t.set_wind_speed_value==0){
+        wind_speed_grade=100;
+     }
+   
     gctl_t.gSet_temperature_value =40;
    	sg_info.open=1;
     sg_info.state=1;
     sg_info.ptc=1; 
     sg_info.anion=1;  //灭菌
 	sg_info.sonic =1;  //驱虫
-    sg_info.find= wifi_t.set_wind_speed_value;
+    sg_info.find= wind_speed_grade;
 	sg_info.set_temperature = gctl_t.gSet_temperature_value ;
 	
 }
@@ -101,14 +106,19 @@ static void Mqtt_Value_update_data(void)
 
 static void Mqtt_power_off_Value(void)
 {
-    wifi_t.set_wind_speed_value=10;
+
+   static uint8_t wind_speed_grade;
+   wifi_t.set_wind_speed_value=0;
+   if(wifi_t.set_wind_speed_value==0){
+        wind_speed_grade=100;
+    }
 	gctl_t.gSet_temperature_value=20;
    	sg_info.open=0;
     sg_info.state=1;
     sg_info.ptc=0; 
     sg_info.anion=0;  //灭菌
 	sg_info.sonic =0;  //驱虫
-    sg_info.find= wifi_t.set_wind_speed_value;
+    sg_info.find= wind_speed_grade;
 	if(gctl_t.gSet_temperature_value <20)gctl_t.gSet_temperature_value = 20;
 	else if(gctl_t.gSet_temperature_value > 40 )gctl_t.gSet_temperature_value = 40;
 	sg_info.set_temperature =  gctl_t.gSet_temperature_value ;
@@ -118,7 +128,12 @@ static void Mqtt_power_off_Value(void)
 static void mqtt_smart_phone_power_on_ref(void)
 {
 		
-	   sg_info.open = 1;
+    static uint8_t wind_speed_grade;
+    if(wifi_t.set_wind_speed_value==0){
+        wind_speed_grade=100;
+     }
+
+       sg_info.open = 1;
 	   if(gctl_t.ai_flag==0)gctl_t.ai_flag =1;
 	   sg_info.state = gctl_t.ai_flag;
 	   sg_info.ptc	= gctl_t.ptc_flag;
