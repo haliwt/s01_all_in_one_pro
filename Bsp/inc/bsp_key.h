@@ -13,8 +13,9 @@
 
 typedef enum{
 
-    KEY_UP,
+    
     KEY_DOWN,
+    KEY_UP,
     
 
 }key_pressed_t;
@@ -50,7 +51,7 @@ typedef enum mode_key_t{
    
    uint8_t  key_power;
    uint8_t  key_mode;
-  
+
    uint8_t  key_mode_be_pressed;
 
  
@@ -78,6 +79,7 @@ typedef enum mode_key_t{
    uint8_t gTimer_key_temp_timing;
 
    uint8_t gTimer_power_key_counter;
+ 
 	
 
 }key_fun_t;

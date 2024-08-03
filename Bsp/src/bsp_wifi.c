@@ -28,9 +28,7 @@ uint8_t get_beijing_flag;
 void WIFI_Process_Handler(void)
 {
 
-
-
-    RunWifi_Command_Handler();
+   RunWifi_Command_Handler();
 
 }
 /**********************************************************************
@@ -202,17 +200,14 @@ void wifi_get_beijint_time_handler(void)
 
     static uint8_t alternate_flag,flag_switch,auto_link_net_flag;
 
-     if(wifi_t.get_rx_beijing_time_enable==0){
+    if(wifi_t.get_rx_beijing_time_enable==0){
     
          Tencent_Cloud_Rx_Handler();
     	 Json_Parse_Command_Fun();
   
-      }
+     }
 
-
-   clear_rx_copy_data();
-
-  
+  clear_rx_copy_data();
   if(wifi_link_net_state()==1 && gpro_t.gTimer_get_data_from_tencent_data > 9){
        
                    gpro_t.gTimer_get_data_from_tencent_data =0;
@@ -349,20 +344,41 @@ void wifi_get_beijint_time_handler(void)
                 wifi_t.get_rx_beijing_time_enable=0; //enable beijing times
 
                 if(wifi_t.real_hours < 25 && wifi_t.real_minutes < 61 ){
-                if(wifi_t.real_hours == 0x08 && (wifi_t.real_minutes < 0x06)){
-                get_beijing_flag = 0;
+                if(wifi_t.real_hours == 0x08 && (wifi_t.real_minutes < 0x07) ||(wifi_t.real_hours == 0 && wifi_t.real_minutes ==0)){
+                    get_beijing_flag = 0;
 
                 }
                 else{
 
 
-                    gctl_t.disp_works_hours = wifi_t.real_hours;    
-                    gctl_t.disp_works_minutes = wifi_t.real_minutes;
+                   gpro_t.disp_works_hours_value  = wifi_t.real_hours;    
+                   gpro_t.disp_works_hours_value = wifi_t.real_minutes;
 
                     gpro_t.gTimer_works_counter_sencods =  wifi_t.real_seconds;
 
-                    gctl_t.get_beijing_time_success = 1; //WT.2024.04.25
+               
 
+                    gctl_t.get_beijing_time_success = 1; //WT.2024.04.25
+                    if(gkey_t.key_mode == disp_works_timing  && gctl_t.ai_flag == 1 && gpro_t.gPower_On  == power_on ){
+
+                         glcd_t.number5_low = gpro_t.disp_works_hours_value / 10;
+                		glcd_t.number5_high = gpro_t.disp_works_hours_value / 10;
+
+
+                		glcd_t.number6_low = gpro_t.disp_works_hours_value  % 10;
+                		glcd_t.number6_high = gpro_t.disp_works_hours_value % 10;
+
+
+                        glcd_t.number7_low = gpro_t.disp_works_minutes_value / 10;
+                		glcd_t.number7_high = gpro_t.disp_works_minutes_value / 10;
+
+
+                		glcd_t.number8_low = gpro_t.disp_works_minutes_value  % 10;
+                		glcd_t.number8_high = gpro_t.disp_works_minutes_value % 10;
+                        
+                        LCD_Number_FiveSixSeveEight_Hours();
+
+                    }
                    
 
                 }

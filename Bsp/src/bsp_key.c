@@ -21,7 +21,7 @@ void power_long_short_key_fun(void)
 {
 
   
-    if(KEY_POWER_VALUE() == 1 && gkey_t.power_key_long_counter > 0 && gkey_t.power_key_long_counter < 60){
+    if(KEY_POWER_VALUE() == KEY_DOWN && gkey_t.power_key_long_counter > 0 && gkey_t.power_key_long_counter < 60){
 
 
         gkey_t.power_key_long_counter++;
@@ -51,7 +51,7 @@ void power_long_short_key_fun(void)
         }
 
     }
-    else if(KEY_POWER_VALUE() == 0 && gkey_t.power_key_long_counter >0 && gkey_t.power_key_long_counter<30){ //short key of function
+    else if(KEY_POWER_VALUE() == KEY_UP && gkey_t.power_key_long_counter >0 && gkey_t.power_key_long_counter<30){ //short key of function
 
         gkey_t.power_key_long_counter=0;
 
@@ -118,7 +118,7 @@ void smartphone_power_on_handler(void)
 *********************************************************************************/
 void mode_long_short_key_fun(void)
 {
-    if(KEY_MODE_VALUE() == 1 && gkey_t.key_mode_long_counter < 100 && gkey_t.key_mode_long_counter >0){
+    if(KEY_MODE_VALUE() == KEY_DOWN && gkey_t.key_mode_long_counter < 100 && gkey_t.key_mode_long_counter >0){
 
 
         gkey_t.key_mode_long_counter++;
@@ -137,7 +137,7 @@ void mode_long_short_key_fun(void)
         }
 
     }
-    else if(KEY_MODE_VALUE() == 0 && gkey_t.key_mode_long_counter >0 && gkey_t.key_mode_long_counter<30){ //short key of function
+    else if(KEY_MODE_VALUE() ==  KEY_UP && gkey_t.key_mode_long_counter >0 && gkey_t.key_mode_long_counter<30){ //short key of function
 
         gkey_t.key_mode_long_counter=0;
 
@@ -325,7 +325,7 @@ void Dec_Key_Fun(uint8_t cmd)
 void Add_Key_Fun(uint8_t cmd)
 {
 
-  static uint8_t add_key;
+ // static uint8_t add_key;
    switch(cmd){
         
     case set_temp_value_item:  //set temperature value 

@@ -590,7 +590,7 @@ void LCD_Number_FiveSixSeveEight_Hours(void)
 
 /*****************************************************************************
  * 
- * Function Name:  void LCD_Number_FiveSixSeveEight_Hours(void)
+ * Function Name:  void Set_LCD_Timer_Numbers_FiveSixSeveEight_Hours(void)
  * Function:
  * Input Ref:
  * Return Ref:

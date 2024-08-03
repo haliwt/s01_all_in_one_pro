@@ -176,7 +176,7 @@ static void Display_LCD_Works_Timing(void)
 void LCD_Disp_Timer_Timing_Init(void)
 {
 
-    //LCD_Number_FiveSixSeveEight_Hours();
+  
         glcd_t.number5_low = gpro_t.set_timer_timing_hours / 10;
 		 glcd_t.number5_high = gpro_t.set_timer_timing_hours / 10;
 	 

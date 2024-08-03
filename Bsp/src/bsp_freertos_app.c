@@ -174,7 +174,7 @@ static void vTaskStart(void *pvParameters)
 {
    BaseType_t xResult;
    const TickType_t xMaxBlockTime = pdMS_TO_TICKS(20); /* 设置最大等待时间为50ms */
-   static uint8_t sound_flag,power_on_first;
+  
    uint32_t ulValue;
    static uint8_t add_flag,dec_flag,power_sound_flag,smart_phone_sound;
 
@@ -296,6 +296,7 @@ static void vTaskStart(void *pvParameters)
           LcdDisp_Init();
           
           buzzer_sound();
+       
         
 
         }
@@ -403,12 +404,13 @@ static void AppTaskCreate (void)
 }
 
 
-void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
+void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin)
 {
-   static volatile uint8_t first_dc_power_on;
- 
+   
+   __HAL_GPIO_EXTI_CLEAR_FALLING_IT(GPIO_Pin);
    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-    __HAL_GPIO_EXTI_CLEAR_RISING_IT(GPIO_Pin);
+ 
+  
  
    switch(GPIO_Pin){
 
@@ -417,11 +419,7 @@ void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
      
         if(KEY_POWER_VALUE()==KEY_DOWN){
 
-        if(first_dc_power_on==0){
-            first_dc_power_on ++;
 
-        }
-        else{
      
 
         xTaskNotifyFromISR(xHandleTaskMsgPro,  /* 目标任务 */
@@ -433,7 +431,7 @@ void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
         portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 
 
-        }
+        
 
         }
        
