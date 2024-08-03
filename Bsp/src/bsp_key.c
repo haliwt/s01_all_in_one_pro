@@ -25,7 +25,7 @@ void power_long_short_key_fun(void)
 
 
         gkey_t.power_key_long_counter++;
-        if( gkey_t.power_key_long_counter > 29   && KEY_POWER_VALUE() == 1){
+        if( gkey_t.power_key_long_counter > 29   && KEY_POWER_VALUE() == KEY_DOWN){
              gkey_t.power_key_long_counter = 200;
 
           
