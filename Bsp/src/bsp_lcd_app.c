@@ -103,25 +103,37 @@ void Display_Works_Timing(void)
 
 	     gpro_t.disp_works_hours_value++;
 
-
-
-		//display hours works
-        if(gpro_t.disp_works_hours_value > 99){
+         //display hours works
+        if(gpro_t.disp_works_hours_value > 99 &&   gctl_t.get_beijing_time_success ==0){
                gpro_t.disp_works_hours_value=0;
         
         
           }
 
-
-       
-	}
+     }
     
 
    
-    //Display_LCD_Works_Timing();
+        glcd_t.number5_low = gpro_t.disp_works_hours_value / 10;
+		glcd_t.number5_high = gpro_t.disp_works_hours_value / 10;
+
+
+		glcd_t.number6_low = gpro_t.disp_works_hours_value  % 10;
+		glcd_t.number6_high = gpro_t.disp_works_hours_value % 10;
+
+
+        glcd_t.number7_low = gpro_t.disp_works_minutes_value / 10;
+		glcd_t.number7_high = gpro_t.disp_works_minutes_value / 10;
+
+
+		glcd_t.number8_low = gpro_t.disp_works_minutes_value  % 10;
+		glcd_t.number8_high = gpro_t.disp_works_minutes_value % 10;
+        Display_LCD_Works_Timing();
 
    }
+}
 
+#if 0
     if(( minutes_change_flag != gpro_t.disp_works_minutes_value) || gpro_t.disp_timer_switch_time_flag >0){
  
          if(minutes_change_flag != gpro_t.disp_works_minutes_value)minutes_change_flag = gpro_t.disp_works_minutes_value;
@@ -152,7 +164,7 @@ void Display_Works_Timing(void)
    
 
 }
-
+#endif 
 
 
 /**********************************************************************************************************
