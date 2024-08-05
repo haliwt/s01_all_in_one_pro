@@ -560,17 +560,14 @@ void Json_Parse_Command_Fun(void)
 	  	if(power_on_state() ==power_on && ptc_error_state()==0 && fan_error_state()==0){
 			buzzer_sound();
 			Plasma_On();
-	     //   LED_KILL_ICON_ON();
+	     
             MqttData_Publish_SetPlasma(1);
 		    osDelay(100);//HAL_Delay(50);//350
            gctl_t.plasma_flag=1;
-		 //   wifi_t.gTimer_auto_detected_net_state_times=0;
-			
-			 wifi_t.linking_tencent_cloud_doing =0;
+		 
+			wifi_t.linking_tencent_cloud_doing =0;
 		   
-			
-		
-	  	}
+		}
        
 	   wifi_t.response_wifi_signal_label=0xff;
 	    break;
@@ -617,9 +614,10 @@ void Json_Parse_Command_Fun(void)
                gkey_t.key_mode=disp_timer_timing;
                
               gctl_t.ai_flag = 0 ; //timer model
+              disp_ai_iocn();
+   
 
-               
-              LCD_Disp_Timer_Timing_Init();
+              Display_Timer_Timing();
               
               MqttData_Publish_SetState(2); //timer model  = 2
               osDelay(100);//HAL_Delay(50);
@@ -642,8 +640,9 @@ void Json_Parse_Command_Fun(void)
               buzzer_sound();
               gkey_t.key_mode=disp_works_timing;
               gctl_t.ai_flag = 1;//AI mode
-
-                LCD_Disp_Works_Timing_Init();
+         
+              disp_ai_iocn();
+              Display_Works_Timing();
               MqttData_Publish_SetState(1); //beijing timing = 1
               osDelay(200);//HAL_Delay(50);
              

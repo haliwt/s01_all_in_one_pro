@@ -82,6 +82,7 @@ typedef struct {
    //WIFI
    uint8_t run_process_step;
    uint8_t disp_dht11_value;
+ 
   
    uint8_t disp_works_hours_value;
    uint8_t disp_works_minutes_value;
@@ -140,8 +141,8 @@ void power_on_run_handler(void);
 
 void mainboard_active_handler(void);
 
-void Detected_Fan_Error(void);
-void Detected_Ptc_Error(void);
+void Detected_Fan_Works_State(void);
+void Detected_Ptc_Works_State(void);
 
 void disp_works_or_timer_timing_fun(void);
 

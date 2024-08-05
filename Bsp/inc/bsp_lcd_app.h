@@ -51,6 +51,7 @@ void LCD_Disp_Set_Timer_Timing(void);
 void Record_WorksOr_Timer_Timing_DonotDisp_Handler(void);
 
 
+void Display_LCD_Works_Timing(void);
 
 
 //void Set_Timer_Timing_Lcd_Blink_Off(void);

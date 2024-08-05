@@ -99,7 +99,9 @@ void power_on_run_handler(void)
         
            gpro_t.first_disp_work_time=0;
             
-		    gctl_t.step_process = 1;
+		   gctl_t.step_process = 1;
+
+           glcd_t.gTimer_fan_blink =0;
 
 
 		  break;
@@ -158,7 +160,7 @@ void power_on_run_handler(void)
 	 break;
 
   case 5: //check works times 
-			  if(gpro_t.gTimer_run_total > 119){//119 //120 minutes
+		if(gpro_t.gTimer_run_total > 119){//119 //120 minutes
 			       gpro_t.gTimer_run_total =0;
 				   gpro_t.gTimer_run_time_out=0;  //time out recoder start 10 minutes
 				   gpro_t.gTimer_run_one_mintue =0;
@@ -171,9 +173,9 @@ void power_on_run_handler(void)
                  gctl_t.step_process=7;
                 
           }
-			  else{
+		  else{
 				  gctl_t.step_process=1;
-        }
+          }
 
 		  break;
 
@@ -631,24 +633,18 @@ static void power_on_init_function(void)
 
     }
    
+       LED_Mode_On();
+       LED_Power_On();
+       Backlight_On();
 
-
-    LED_Mode_On();
-    LED_Power_On();
-    Backlight_On();
-
-
-   // LCD_Numbers1234_Init();
    
-
     Update_DHT11_Value();
     
-
-
-
     LCD_Wind_Run_Icon(0);
     Disp_HumidityTemp_Init();
 
+    Display_LCD_Works_Timing();
+   
 
     //fan on
     Mainboard_Action_Fun();
@@ -663,14 +659,14 @@ static void power_on_init_function(void)
 
     }
 
-    
+ 
 
 
 }
 
 
 
-void Detected_Fan_Error(void)
+void Detected_Fan_Works_State(void)
 {
     if(gpro_t.gTimer_run_adc > 13 && gctl_t.interval_stop_run_flag==0){ //2 minute 180s
 				gpro_t.gTimer_run_adc=0;
@@ -686,7 +682,7 @@ void Detected_Fan_Error(void)
 
 }
 
-void Detected_Ptc_Error(void)
+void Detected_Ptc_Works_State(void)
 {
 
    if(gpro_t.gTimer_ptc_detected > 6 ){ //3 minutes 120s

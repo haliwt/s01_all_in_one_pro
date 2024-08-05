@@ -4,7 +4,7 @@
 
 //static void Display_Timer_Timing(int8_t hours,int8_t minutes);
 
-static void Display_LCD_Works_Timing(void);
+//static void Display_LCD_Works_Timing(void);
 
 /*
 *********************************************************************************************************
@@ -175,8 +175,7 @@ void Display_Works_Timing(void)
 *	返 回 值: 无
 *
 **********************************************************************************************************/
-
-static void Display_LCD_Works_Timing(void)
+void Display_LCD_Works_Timing(void)
 {
 
 
@@ -401,6 +400,7 @@ void Display_WorksTimingr_Handler(uint8_t sel_item)
                switch_counter =0;
               }
             disp_ai_iocn();
+
             Display_Works_Timing();
             
 
@@ -410,7 +410,7 @@ void Display_WorksTimingr_Handler(uint8_t sel_item)
           LCD_Fault_Numbers_Code();
 
         }
-       
+      
     break;
     
     case disp_timer_timing:

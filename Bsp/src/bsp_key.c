@@ -304,9 +304,8 @@ void Dec_Key_Fun(uint8_t cmd)
                 
 
 
-         Set_Timer_Timing_Lcd_Blink();
-         //Set_Timer_Timing_Lcd_Blink_Off();
-        // Set_Timer_Timing_Lcd_Blink_On();
+                Set_Timer_Timing_Lcd_Blink();
+        
        
 
          break;
@@ -411,9 +410,7 @@ void Add_Key_Fun(uint8_t cmd)
         glcd_t.number8_low = 0;
         glcd_t.number8_high =  0;
 
-       // gkey_t.gTimer_disp_set_timer_blink =0;
-        
-        //LCD_Disp_Timer_Timing();
+
         Set_Timer_Timing_Lcd_Blink();
          
         

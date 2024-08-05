@@ -42,6 +42,7 @@ typedef struct _bsp_ctl{
 	uint8_t plasma_flag;
 	uint8_t ultrasonic_flag;
     uint8_t ai_flag;
+  
     uint8_t wifi_flag;
     uint8_t gSet_temperature_value;
     uint8_t step_process;
@@ -49,6 +50,7 @@ typedef struct _bsp_ctl{
     uint8_t send_ptc_state_data_flag;
     uint8_t get_beijing_time_success;
     uint8_t manual_operation_ptc_flag ;
+    
 
 
 

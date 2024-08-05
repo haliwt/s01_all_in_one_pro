@@ -191,6 +191,12 @@ void lcd_power_off_handler(void);
 
 void power_off_disp_fan_run_handler(void);
 
+
+void numbers_six_seven_init(void);
+
+
+
+
 #endif 
 
 
