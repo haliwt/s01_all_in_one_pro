@@ -134,6 +134,13 @@ static void vTaskMsgPro(void *pvParameters)
 							eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
                
             }
+             else if((ulValue & PHONE_POWER_OFF_9 ) != 0){
+                xTaskNotify(xHandleTaskStart, /* 目标任务 */
+				RUN_POWER_4 ,//PHONE_POWER_ON_10 ,            /* 设置目标任务事件标志位bit0  */
+				eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
+               
+            }
+                
             else if((ulValue & MODE_KEY_1) != 0){
 
                //switch timer timing and works timing 
@@ -179,7 +186,8 @@ static void vTaskStart(void *pvParameters)
    const TickType_t xMaxBlockTime = pdMS_TO_TICKS(20); /* 设置最大等待时间为50ms */
   
    uint32_t ulValue;
-   static uint8_t add_flag,dec_flag,power_sound_flag,smart_phone_sound;
+   static uint8_t add_flag,dec_flag,power_sound_flag,smart_phone_power_off_sound;
+ 
 
     while(1)
     {
@@ -205,6 +213,7 @@ static void vTaskStart(void *pvParameters)
                 else{
                     gkey_t.power_key_long_counter =1;
                     gpro_t.gTimer_shut_off_backlight =0;
+                 
                 }
                
             }
@@ -229,23 +238,7 @@ static void vTaskStart(void *pvParameters)
               
                 
             }
-            else if((ulValue & PHONE_POWER_OFF_9 ) != 0){
-               if(gpro_t.shut_Off_backlight_flag == turn_off){
-
-                     gpro_t.gTimer_shut_off_backlight =0;
-                     wake_up_backlight_on();
-                     buzzer_sound();
-
-                  }
-                 else{
-                    smart_phone_sound = 1;
-                    gpro_t.gTimer_shut_off_backlight =0;
-                
-
-                }
-               
-            }
-            else if((ulValue & RUN_DEC_6 ) != 0){   /* 接收到消息，检测那个位被按下 */
+             else if((ulValue & RUN_DEC_6 ) != 0){   /* 接收到消息，检测那个位被按下 */
                 if(gkey_t.key_power==power_on){
 
                    if(gpro_t.shut_Off_backlight_flag == turn_off){
@@ -305,13 +298,9 @@ static void vTaskStart(void *pvParameters)
         }
 
 
-        
-         if(smart_phone_sound == 1){
-            smart_phone_sound++;
-            smartphone_power_on_handler();
-          }
-          else 
-             power_long_short_key_fun();
+         power_long_short_key_fun();
+
+           
           
          
         

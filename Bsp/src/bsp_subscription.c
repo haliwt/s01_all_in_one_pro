@@ -469,12 +469,12 @@ void Json_Parse_Command_Fun(void)
        
 		wifi_t.esp8266_login_cloud_success=1;
 		
-         App_PowerOff_Handler();
+        
         MqttData_Publish_SetOpen(0);  
 	    osDelay(200);//HAL_Delay(200);//350
             
 		
-	   // wifi_t.gTimer_auto_detected_net_state_times=0; //don't need check wifi if has or not
+	    App_PowerOff_Handler();
 		wifi_t.response_wifi_signal_label = 0xff;
         
 	  break;
@@ -487,7 +487,7 @@ void Json_Parse_Command_Fun(void)
 		osDelay(200);//HAL_Delay(200);//300
 		
 		
-		
+		smartphone_turn_on_handler();
 
 		gctl_t.ptc_warning =0;
 		gctl_t.fan_warning =0;
