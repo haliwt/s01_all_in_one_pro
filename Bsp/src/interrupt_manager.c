@@ -21,10 +21,10 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
            
 	  if(wifi_t.linking_tencent_cloud_doing  ==1){ //link tencent netware of URL
 
-			wifi_t.wifi_data[wifi_t.wifi_uart_counter] = wifi_t.usart1_dataBuf[0];
+			wifi_t.wifi_data[wifi_t.wifi_uart_counter] = wifi_t.usart2_dataBuf[0];
 			wifi_t.wifi_uart_counter++;
 
-			if(*wifi_t.usart1_dataBuf==0X0A) // 0x0A = "\n"
+			if(*wifi_t.usart2_dataBuf==0X0A) // 0x0A = "\n"
 			{
 				//wifi_t.usart2_rx_flag = 1;
 				Wifi_Rx_Link_Net_InputInfo_Handler();
@@ -35,7 +35,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		  else{
 
 		         if(wifi_t.get_rx_beijing_time_enable==1){
-					wifi_t.wifi_data[wifi_t.wifi_uart_counter] = wifi_t.usart1_dataBuf[0];
+					wifi_t.wifi_data[wifi_t.wifi_uart_counter] = wifi_t.usart2_dataBuf[0];
 					wifi_t.wifi_uart_counter++;
 				}
 				else{
@@ -50,7 +50,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	__HAL_UART_CLEAR_OREFLAG(&huart2);
 	//__HAL_UART_CLEAR_IDLEFLAG(&huart2);
 	//__HAL_UART_CLEAR_TXFECF(&huart2);
-	 HAL_UART_Receive_IT(&huart2,wifi_t.usart1_dataBuf,1);
+	 HAL_UART_Receive_IT(&huart2,wifi_t.usart2_dataBuf,1);
      
 	}
 

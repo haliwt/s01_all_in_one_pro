@@ -106,7 +106,7 @@ typedef struct _WIFI_FUN{
 	uint8_t  wifi_data[300]; 
 
  
-	uint8_t usart1_dataBuf[1];
+	uint8_t usart2_dataBuf[1];
   
     uint8_t once_rx_data_done;
 

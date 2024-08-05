@@ -25,7 +25,10 @@ uint8_t  dc_power_on;
 #define RUN_ADD_7           (1 << 7)
 
 #define PHONE_POWER_ON_RX_8       (1<<8)
-#define PHONE_POWER_ON_9         (1<<9)
+#define PHONE_POWER_OFF_9         (1<<9)
+
+#define PHONE_POWER_ON_10         (1<<10)
+
 /*
 **********************************************************************************************************
 											函数声明
@@ -127,7 +130,7 @@ static void vTaskMsgPro(void *pvParameters)
             else if((ulValue & PHONE_POWER_ON_RX_8 ) != 0)
             {
                          xTaskNotify(xHandleTaskStart, /* 目标任务 */
-							PHONE_POWER_ON_9 ,            /* 设置目标任务事件标志位bit0  */
+							RUN_POWER_4 ,//PHONE_POWER_ON_10 ,            /* 设置目标任务事件标志位bit0  */
 							eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
                
             }
@@ -226,7 +229,7 @@ static void vTaskStart(void *pvParameters)
               
                 
             }
-            else if((ulValue & PHONE_POWER_ON_9 ) != 0){
+            else if((ulValue & PHONE_POWER_OFF_9 ) != 0){
                if(gpro_t.shut_Off_backlight_flag == turn_off){
 
                      gpro_t.gTimer_shut_off_backlight =0;
@@ -505,4 +508,23 @@ void smartphone_turn_on_handler(void)
     eSetBits);  /* 将目标任务的事件标志位与BIT_0进行或操作， 将结果赋值给事件标志位 */
 
 }
+
+/*****************************************************************************
+ * 
+ * Function Name: void App_PowerOff_Handler(void)
+ * Function:
+ * Input Ref: NO
+ * Return Ref: NO
+ * 
+*****************************************************************************/
+void App_PowerOff_Handler(void)
+{
+     
+     xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
+	 PHONE_POWER_OFF_9,            /* 设置目标任务事件标志位bit0  */
+	 eSetBits);             /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
+     
+
+}
+
 
