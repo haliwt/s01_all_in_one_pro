@@ -269,6 +269,7 @@ void Dec_Key_Fun(uint8_t cmd)
 
 
             }
+           gctl_t.smart_phone_manual_on_off=0; //unfreeze maybe turn on PTC heat 
            gpro_t.app_ptc_flag = 0;
          break;
 
@@ -378,7 +379,7 @@ void Add_Key_Fun(uint8_t cmd)
 
             }
 
-       
+       gctl_t.smart_phone_manual_on_off=0; //unfreeze maybe turn on PTC heat 
        gpro_t.app_ptc_flag = 0;
     break;
 

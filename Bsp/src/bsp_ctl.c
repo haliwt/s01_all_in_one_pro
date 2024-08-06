@@ -286,51 +286,36 @@ void  Power_On_Handler(uint8_t(*power_handler)(void))
 void SetTemp_Compare_SensoTemp(void)
 {
 
-     static uint8_t ptc_counter_on,ptc_counter_off, ptc_on_init=0xff,ptc_off_init = 0xff;
+     static uint8_t ptc_counter_on;
      switch(gpro_t.set_temperature_value_success){
 
       case 1:
            //compare with by read temperature of sensor value  
-      if(gctl_t.gSet_temperature_value > gctl_t.dht11_temp_value){
+            if(gctl_t.gSet_temperature_value > gctl_t.dht11_temp_value &&   gctl_t.smart_phone_manual_on_off ==0){
 
                 gkey_t.gTimer_set_temp_value  =0;
               
                 gctl_t.ptc_flag = 1;
                 Ptc_On();
 
-               
-
-                  ptc_counter_off ++;
-
-                 if(ptc_on_init !=ptc_counter_on){
-                       ptc_on_init =ptc_counter_on;
-                
-                 if(wifi_link_net_state()==1){
+                if(wifi_link_net_state()==1){
                     MqttData_Publis_SetTemp(gctl_t.gSet_temperature_value);
                     osDelay(100);
 
                     MqttData_Publish_SetPtc(gctl_t.ptc_flag);
                     osDelay(100);
-            	  }
-
-                  }
-                
+            	}
 
             }
             else if(gctl_t.gSet_temperature_value <   gctl_t.dht11_temp_value || gctl_t.gSet_temperature_value ==   gctl_t.dht11_temp_value){
 
 
-                gkey_t.gTimer_set_temp_value  =0;
+                 gkey_t.gTimer_set_temp_value  =0;
              
                  gctl_t.ptc_flag = 0;
                  Ptc_Off();
                
 
-
-                   ptc_counter_on ++;
-
-                  if(ptc_off_init != ptc_counter_off){
-                    ptc_off_init = ptc_counter_off;
                   if(wifi_link_net_state()==1){
                     MqttData_Publis_SetTemp(gctl_t.gSet_temperature_value);
                     osDelay(100);
@@ -339,13 +324,8 @@ void SetTemp_Compare_SensoTemp(void)
                     osDelay(100);
             	  }
 
-                 }
-
-
             }
-
-
-      break;
+       break;
 
 
        case 0:
@@ -353,56 +333,37 @@ void SetTemp_Compare_SensoTemp(void)
          if(gctl_t.dht11_temp_value > 40 || gctl_t.dht11_temp_value==40){
 
                     
-                      ptc_counter_off ++;
+                       ptc_counter_on =1;
                        gctl_t.ptc_flag = 0;
-                         Ptc_Off();
+                        Ptc_Off();
                      
-
-                         if(ptc_on_init !=ptc_counter_on){
-                            ptc_on_init =ptc_counter_on;
-                            if(wifi_link_net_state()==1){
-                               // MqttData_Publis_SetTemp(gctl_t.gSet_temperature_value);
-                               // osDelay(100);
-
-                                MqttData_Publish_SetPtc(gctl_t.ptc_flag);
+                         if(wifi_link_net_state()==1){
+                              MqttData_Publish_SetPtc(gctl_t.ptc_flag);
                                 osDelay(100);
-                        	  }
-
                          }
+
+                         
                          
          }
-         else if(gctl_t.dht11_temp_value < 39){ // gctl_t.dht11_temp_value
+         else if(gctl_t.dht11_temp_value < 39 && ptc_counter_on ==1){ // gctl_t.dht11_temp_value
 
-              if(gpro_t.app_ptc_flag == 0){
-                ptc_counter_on ++;
+              
 
                 gctl_t.ptc_flag = 1;
                 Ptc_On();
 
              
 
-                if(ptc_off_init != ptc_counter_off){
-                    ptc_off_init = ptc_counter_off;
-                   if(wifi_link_net_state()==1){
-                   // MqttData_Publis_SetTemp(gctl_t.gSet_temperature_value);
-                  //  osDelay(100);
+              if(wifi_link_net_state()==1){ //逻辑错误
+                 
 
                     MqttData_Publish_SetPtc(gctl_t.ptc_flag);
                     osDelay(100);
-            	  }
-
-                 }
-
               }
-
 
          }
 
-
-        
-
-
-       break;
+         break;
 
       }
 }

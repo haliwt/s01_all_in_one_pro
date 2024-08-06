@@ -510,7 +510,7 @@ void Json_Parse_Command_Fun(void)
 	    if(ptc_error_state() ==0){
 			
 		 buzzer_sound()	;
-          gctl_t.manual_operation_ptc_flag  =  ptc_manual_on;
+         gctl_t.smart_phone_manual_on_off = 0;
      
 		 Ptc_On();
 	    // LED_PTC_ICON_ON();
@@ -532,7 +532,8 @@ void Json_Parse_Command_Fun(void)
 	  	if(power_on_state() ==power_on && ptc_error_state()==0 && fan_error_state()==0){
 		 buzzer_sound()	;
        
-         gctl_t.manual_operation_ptc_flag  =  ptc_manual_off;
+     
+         gctl_t.smart_phone_manual_on_off = 1;
 		 Ptc_Off();
 	  //   LED_PTC_ICON_OFF();
 		 
@@ -841,12 +842,14 @@ static void smartphone_app_timer_power_on_handler(void)
 
 		if(strstr((char *)TCMQTTRCVPUB,"ptc\":1")){
 
-		gctl_t.ptc_flag=1;
+		  gctl_t.ptc_flag=1;
+          gctl_t.smart_phone_manual_on_off = 0;
+          
 		}
 		else{ //if(strstr((char *)TCMQTTRCVPUB,"ptc\":0")){
 
-		gctl_t.ptc_flag=0;
-	//	gpro_t.gTimer_gpro_temp_delay =0;
+		     gctl_t.ptc_flag=0;
+	         gctl_t.smart_phone_manual_on_off = 1;
 
 		}
 

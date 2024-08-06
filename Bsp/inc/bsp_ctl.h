@@ -49,7 +49,8 @@ typedef struct _bsp_ctl{
     uint8_t interval_stop_run_flag;
     uint8_t send_ptc_state_data_flag;
     uint8_t get_beijing_time_success;
-    uint8_t manual_operation_ptc_flag ;
+ 
+    uint8_t smart_phone_manual_on_off;
     
 
 

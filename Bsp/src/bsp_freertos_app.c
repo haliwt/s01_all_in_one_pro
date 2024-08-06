@@ -186,7 +186,7 @@ static void vTaskStart(void *pvParameters)
    const TickType_t xMaxBlockTime = pdMS_TO_TICKS(20); /* 设置最大等待时间为50ms */
   
    uint32_t ulValue;
-   static uint8_t add_flag,dec_flag,power_sound_flag,smart_phone_power_off_sound;
+   static uint8_t add_flag,dec_flag,power_sound_flag;
  
 
     while(1)
@@ -350,7 +350,7 @@ static void vTaskStart(void *pvParameters)
               }
               
               Detected_Fan_Works_State();
-                Detected_Ptc_Works_State();
+              Detected_Ptc_Works_State();
               key_add_dec_set_temp_value_fun();
               key_mode_be_pressed_send_data_wifi();
               backlight_on_off_state();
