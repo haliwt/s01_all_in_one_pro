@@ -347,9 +347,6 @@ static void vTaskStart(void *pvParameters)
 
                   WIFI_Process_Handler();
                   detection_net_link_state_handler();
-                 
-
-
               }
               
               Detected_Fan_Works_State();
@@ -360,9 +357,7 @@ static void vTaskStart(void *pvParameters)
               disp_works_or_timer_timing_fun();
               bsp_Idle();
               mainboard_active_handler();
-           
-              
-                LCD_Timer_Colon_Flicker();
+              LCD_Timer_Colon_Flicker();
              
              
 
@@ -372,7 +367,7 @@ static void vTaskStart(void *pvParameters)
              power_off_run_handler();
 
             }
-            if(gkey_t.wifi_led_fast_blink_flag==0){
+            if(gkey_t.wifi_led_fast_blink_flag==0 && gctl_t.ptc_warning ==0   && gctl_t.fan_warning ==0 ){
                 wifi_get_beijint_time_handler();
                 MainBoard_Self_Inspection_PowerOn_Fun();
             }

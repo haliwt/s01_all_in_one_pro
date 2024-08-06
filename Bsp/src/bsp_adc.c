@@ -79,7 +79,7 @@ void Get_PTC_Temperature_Voltage(uint32_t channel,uint8_t times)
 
 	if(ptc_temp_voltage < 373 || ptc_temp_voltage ==373){ //87 degree
   
-	    gctl_t.plasma_flag = 0; //turn off
+	    gctl_t.ptc_flag = 0; //turn off
 	    Ptc_Off(); //turn off
 
         gctl_t.ptc_warning = 1;
@@ -174,6 +174,9 @@ void Get_Fan_Adc_Fun(uint32_t channel,uint8_t times)
 
 		  Buzzer_Fan_Error_Sound();
 
+           gctl_t.ptc_flag = 0; //turn off
+           Ptc_Off(); //turn off
+
            wifi_t.set_wind_speed_value = 2; //wind speed is min 
           
        
@@ -185,10 +188,10 @@ void Get_Fan_Adc_Fun(uint32_t channel,uint8_t times)
 	       HAL_Delay(200);//osDelay(350);//HAL_Delay(350);
 
 
-          LCD_Fault_Numbers_Code();
+      
 
             }
-
+             //  LCD_Fault_Numbers_Code();
           }
 		detect_error_times++;
 

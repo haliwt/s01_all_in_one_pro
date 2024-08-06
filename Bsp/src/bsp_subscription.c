@@ -473,8 +473,12 @@ void Json_Parse_Command_Fun(void)
         MqttData_Publish_SetOpen(0);  
 	    osDelay(200);//HAL_Delay(200);//350
             
-		
-	    App_PowerOff_Handler();
+		if(gkey_t.key_power==power_off){
+
+
+        }
+        else
+	        App_PowerOff_Handler();
 		wifi_t.response_wifi_signal_label = 0xff;
         
 	  break;
@@ -482,12 +486,17 @@ void Json_Parse_Command_Fun(void)
 	  case OPEN_ON_ITEM:
    
 		wifi_t.esp8266_login_cloud_success=1;
-	    smartphone_turn_on_handler();
+
 		MqttData_Publish_SetOpen(1);  
 		osDelay(200);//HAL_Delay(200);//300
 		
-		
-		smartphone_turn_on_handler();
+		if(gkey_t.key_power==power_on){
+
+
+        }
+        else{
+		   smartphone_turn_on_handler();
+        }
 
 		gctl_t.ptc_warning =0;
 		gctl_t.fan_warning =0;
@@ -544,7 +553,7 @@ void Json_Parse_Command_Fun(void)
 	  	if(power_on_state() ==power_on && ptc_error_state()==0 && fan_error_state()==0){
 			buzzer_sound();
 		    Plasma_Off();
-	     //   LED_KILL_ICON_OFF();
+
 			
             MqttData_Publish_SetPlasma(0);
 			osDelay(100);//HAL_Delay(100);
@@ -869,7 +878,7 @@ static void smartphone_app_timer_power_on_handler(void)
 
 	if(app_step==1){
 	  
-		buzzer_sound();
+		//buzzer_sound();
 
 		//Device_Action_Publish_Handler();
 		if(gkey_t.key_power == power_off ){

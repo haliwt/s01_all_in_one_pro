@@ -115,7 +115,7 @@ void power_on_run_handler(void)
                   Update_DHT11_Value();
                   Disp_HumidityTemp_Value();
 
-                  if(gctl_t.interval_stop_run_flag==0){
+                  if(gctl_t.interval_stop_run_flag==0 && gctl_t.ptc_warning == 0 && gctl_t.fan_warning ==0){
                      SetTemp_Compare_SensoTemp();
 
                   }
@@ -552,23 +552,18 @@ static void power_off_function(void)
 		gpro_t.power_off_flag++;
 		MqttData_Publish_PowerOff_Ref();
         osDelay(200);
-		wifi_t.runCommand_order_lable= wifi_publish_update_tencent_cloud_data;
+		
 	     
 		 
 		  
 	}
-	if(wifi_link_net_state() ==1   && wifi_t.gTimer_wifi_sub_power_off > 32){
+	if(wifi_link_net_state() ==1   && wifi_t.gTimer_wifi_sub_power_off > 62){
 		
 		wifi_t.gTimer_wifi_sub_power_off=0;
-        Subscriber_Data_FromCloud_Handler();
-        osDelay(300);
-
         MqttData_Publish_PowerOff_Ref();
-        osDelay(300);
-        wifi_t.runCommand_order_lable= wifi_publish_update_tencent_cloud_data;
-	  
-	
-    }
+        osDelay(200);
+        
+	}
    
 	
     if(	gpro_t.power_off_flag ==3){

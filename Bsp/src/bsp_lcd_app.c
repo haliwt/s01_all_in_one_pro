@@ -431,9 +431,9 @@ void Display_WorksTimingr_Handler(uint8_t sel_item)
                 LCD_Disp_Timer_Timing_Init();
 
                 switch_counter ++;
-                if( switch_counter> 20){
+                if( switch_counter> 200){
                     gpro_t.disp_timer_switch_time_flag ++ ;
-                 gkey_t.key_mode = disp_works_timing;
+                    gkey_t.key_mode = disp_works_timing;
                   
 
                }
