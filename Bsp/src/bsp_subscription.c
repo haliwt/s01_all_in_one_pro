@@ -1011,14 +1011,15 @@ void Wifi_Rx_Link_Net_InputInfo_Handler(void)
                       wifi_t.linking_tencent_cloud_doing=1; //release this flag. usart
                     
               }
-              else  if(strstr((char*)wifi_t.wifi_data,"ERROR:208")){
-                 	wifi_t.esp8266_login_cloud_success =0;
-        			wifi_t.runCommand_order_lable=wifi_link_tencent_cloud;
-        			wifi_t.wifi_config_net_lable= wifi_set_restor;
-                    wifi_t.link_tencent_step_counter=0;
-                    wifi_t.gTimer_linking_tencent_duration=0; //122 -2分
+              else  if(strstr((char*)wifi_t.wifi_data,"WIFI CONNECTED")){
+          
+                      wifi_t.esp8266_login_cloud_success =0;
+                      wifi_t.get_rx_beijing_time_enable=0;
+                      wifi_t.linking_tencent_cloud_doing=1; //release this flag. usart
+                      wifi_t.gTimer_get_beijing_time =100;
                     
               }
+             
 
 			 
 

@@ -361,7 +361,7 @@ static void vTaskStart(void *pvParameters)
               mainboard_active_handler();
               LCD_Timer_Colon_Flicker();
              
-             
+              Disip_Wifi_Icon_State();
 
             }
             else {
@@ -369,7 +369,7 @@ static void vTaskStart(void *pvParameters)
              power_off_run_handler();
 
             }
-            if(gkey_t.wifi_led_fast_blink_flag==0 && gctl_t.ptc_warning ==0   && gctl_t.fan_warning ==0 ){
+            if(gkey_t.wifi_led_fast_blink_flag==0){
                 wifi_get_beijint_time_handler();
                 MainBoard_Self_Inspection_PowerOn_Fun();
             }
