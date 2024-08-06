@@ -347,6 +347,8 @@ static void vTaskStart(void *pvParameters)
 
                   WIFI_Process_Handler();
                   detection_net_link_state_handler();
+                  Disip_Wifi_Icon_State();
+              
               }
               
               Detected_Fan_Works_State();

@@ -97,8 +97,14 @@ void ReConnect_Wifi_Net_ATReset_Hardware(void)
           gpro_t.gTimer_get_data_from_tencent_data=0;
 		  wifi_t.link_tencent_step_counter=driver_esp8266_rest;
 		   WIFI_IC_DISABLE();
-           HAL_Delay(1000);
-       
+            osDelay(200);//HAL_Delay(300);
+           Disip_Wifi_Icon_State();
+            osDelay(200);//HAL_Delay(300);
+           Disip_Wifi_Icon_State();
+
+            osDelay(200);//HAL_Delay(300);
+           Disip_Wifi_Icon_State();
+            osDelay(200);
 		   
 	   }
 	
@@ -106,7 +112,14 @@ void ReConnect_Wifi_Net_ATReset_Hardware(void)
 		   wifi_t.gTimer_login_tencent_times_0=0;
 		   wifi_t.link_tencent_step_counter=driver_esp8266_step_2;
 		   WIFI_IC_ENABLE();
-		   HAL_Delay(1000);
+		   osDelay(200);//HAL_Delay(200);
+           Disip_Wifi_Icon_State();
+
+            osDelay(200);//HAL_Delay(200);
+           Disip_Wifi_Icon_State();
+
+            osDelay(200);//HAL_Delay(200);
+           Disip_Wifi_Icon_State();
           
 
 		}
@@ -119,7 +132,13 @@ void ReConnect_Wifi_Net_ATReset_Hardware(void)
          #if 1
 		 at_send_data("AT+RST\r\n", strlen("AT+RST\r\n"));
 		//  at_send_data("AT+RESTORE\r\n", strlen("AT+RESTORE\r\n"));
-          HAL_Delay(1000);
+           osDelay(200);//HAL_Delay(200);
+          Disip_Wifi_Icon_State();
+           osDelay(200);//HAL_Delay(200);
+          Disip_Wifi_Icon_State();
+
+          osDelay(200);//HAL_Delay(200);
+          Disip_Wifi_Icon_State();
 
          wifi_t.gTimer_login_tencent_times_1=0;
          #endif 
@@ -128,7 +147,7 @@ void ReConnect_Wifi_Net_ATReset_Hardware(void)
 
         if( wifi_t.gTimer_login_tencent_times_1 > 3 &&  wifi_t.link_tencent_step_counter==driver_esp8266_step_3){
 		  
-		   wifi_t.gTimer_login_tencent_times_1 =0;
+		  // wifi_t.gTimer_login_tencent_times_1 =0;
 
           wifi_t.link_tencent_step_counter=driver_esp8266_step_4;
           
@@ -229,7 +248,7 @@ void Wifi_SoftAP_Config_Handler(void)
       
 	     if(wifi_t.link_tencent_step_counter ==driver_esp8266_step_6){
 		 	wifi_t.link_tencent_step_counter =driver_esp8266_step_7;
-			 wifi_t.linking_tencent_cloud_doing  =1;
+			// wifi_t.linking_tencent_cloud_doing  =1;
 		     
 		     HAL_UART_Transmit(&huart2, "AT+TCDEVREG\r\n", strlen("AT+TCDEVREG\r\n"), 0xffff); //态注册 
 		       wifi_t.gTimer_login_tencent_step_3 =0;
@@ -253,7 +272,7 @@ void Wifi_SoftAP_Config_Handler(void)
 		 	wifi_t.link_tencent_step_counter =driver_esp8266_step_8;
 			  wifi_t.gTimer_login_tencent_step_3 =0;
               wifi_t.soft_ap_config_flag =1;
-              wifi_t.linking_tencent_cloud_doing  =1;
+            //  wifi_t.linking_tencent_cloud_doing  =1;
 
 	        sprintf((char *)device_massage, "AT+TCSAP=\"UYIJIA01-%d\"\r\n",ic_id);
             usart2_flag = at_send_data(device_massage, strlen((const char *)device_massage));
@@ -280,18 +299,24 @@ void Wifi_SoftAP_Config_Handler(void)
       
 	   if(wifi_t.gTimer_login_tencent_step_3 > 3 && wifi_t.soft_ap_config_success==0){
          wifi_t.gTimer_login_tencent_step_3=0;
+         wifi_t.linking_tencent_cloud_doing =1;
 		 wifi_t.wifi_uart_counter=0;
         HAL_UART_Transmit(&huart2, "AT+TCPRDINFOSET?\r\n", strlen("AT+TCPRDINFOSET?\r\n"), 0xffff); //动
         wifi_t.wifi_config_net_lable=0xff;//
         gpro_t.gTimer_get_data_from_tencent_data=0;
         }
 
+       break;
+
 	}
+
+
+    
+
+     
   free(device_massage);
-	
-	
-	
-}
+
+ }
 
 /****************************************************************************************************
 **
@@ -306,8 +331,8 @@ void SmartPhone_LinkTencent_Cloud(void)
    
     if(wifi_t.soft_ap_config_success==1){
 
-       wifi_t.soft_ap_config_success=0;
-	   wifi_t.gTimer_login_tencent_times=0;
+       wifi_t.soft_ap_config_success++;
+	   wifi_t.gTimer_login_tencent_net=0;
        gpro_t.gTimer_get_data_from_tencent_data=0;
 	    HAL_UART_Transmit(&huart2, "AT+TCMQTTCONN=1,5000,240,0,1\r\n", strlen("AT+TCMQTTCONN=1,5000,240,0,1\r\n"), 5000);//开始连接
 	    HAL_Delay(1000);
@@ -315,14 +340,14 @@ void SmartPhone_LinkTencent_Cloud(void)
 
 	}
 
-    if(wifi_t.gTimer_login_tencent_times >1){
+    if(wifi_t.gTimer_login_tencent_net >3 && (wifi_t.soft_ap_config_success==2)){
 	   	  wifi_t.gTimer_login_tencent_times =0;
 	     if(wifi_link_net_state()==1){
 			   
 				wifi_t.get_rx_beijing_time_enable=0;
 			    
             }
-         
+        
     }
 	
 }

@@ -43,7 +43,7 @@ void power_long_short_key_fun(void)
 			
 
             
-			wifi_t.gTimer_linking_tencent_duration=0; //166s -2分7秒
+			wifi_t.gTimer_linking_tencent_duration=0; //122 -2分7秒
 			gpro_t.gTimer_get_data_from_tencent_data=0;
          
             Buzzer_KeySound();

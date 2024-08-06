@@ -44,7 +44,7 @@ void bsp_Idle(void)
          if(gkey_t.key_mode  != mode_set_timer){
              LCD_Wind_Run_Icon(wifi_t.set_wind_speed_value);
 
-              Disip_Wifi_Icon_State();
+             
 
             }
 
@@ -532,7 +532,7 @@ static void power_off_function(void)
     		wifi_t.link_tencent_thefirst_times=0;
     	
     		wifi_t.gTimer_wifi_pub_power_off=0;	
-            wifi_t.gTimer_linking_tencent_duration=0; //166s -2分7秒
+            wifi_t.gTimer_linking_tencent_duration=0; //120s -2分7秒
 
             wifi_t.repeat_login_tencent_cloud_init_ref=0;
     	    wifi_t.runCommand_order_lable= 0xff;

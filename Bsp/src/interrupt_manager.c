@@ -176,6 +176,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
          wifi_t.gTimer_login_tencent_times_0++;
         wifi_t.gTimer_login_tencent_times_1++;
         wifi_t.gTimer_login_tencent_times_2++;
+        wifi_t.gTimer_login_tencent_net++;
 
         
 

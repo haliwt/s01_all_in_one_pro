@@ -365,6 +365,9 @@ void Disip_Wifi_Icon_State(void)
 
 
 }
+
+
+
 /*****************************************************************************
  * 
  * Function Name:  void LCD_Disp_Temperature_Value_Handler(void)

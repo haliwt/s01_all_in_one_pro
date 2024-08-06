@@ -184,6 +184,7 @@ typedef struct _WIFI_FUN{
     uint8_t gTimer_login_tencent_times_0;
     uint8_t gTimer_login_tencent_times_1;
     uint8_t gTimer_login_tencent_times_2;
+    uint8_t gTimer_login_tencent_net;
 
 	uint32_t randomName[1];
 	
