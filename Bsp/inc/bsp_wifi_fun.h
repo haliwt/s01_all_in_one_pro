@@ -171,7 +171,7 @@ typedef struct _WIFI_FUN{
 	uint8_t gTimer_wifi_power_on_detect ;
 
 	uint8_t gTimer_main_gpro_times;
-	uint8_t gTimer_wifi_sub_power_off;
+
 	uint8_t gTimer_wifi_rx_error;
  
     uint8_t gTimer_normal_send_dat_tencent ;

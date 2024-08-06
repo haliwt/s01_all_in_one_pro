@@ -502,12 +502,14 @@ static void interval_continuce_works_fun(void)
 static void power_off_function(void)
 {
 
+  static uint8_t fan_run_one_minute_flag ;
   if(gpro_t.power_off_flag == 1){
     		gpro_t.power_off_flag ++;
+            fan_run_one_minute_flag =1;
     	    
            //key set ref 
 
-           gkey_t.gTimer_power_off_run_times=0;
+          
            gkey_t.wifi_led_fast_blink_flag=0;
             gctl_t.ptc_flag =0;
             gctl_t.plasma_flag =0;
@@ -539,6 +541,8 @@ static void power_off_function(void)
 
             gpro_t.gTimer_run_dht11=20;
             gpro_t.set_temperature_value_success=0;
+
+             gkey_t.gTimer_power_off_run_times=0;
            
     	    //stop main board function ref.
     	    PowerOff_Off_Led();
@@ -547,35 +551,20 @@ static void power_off_function(void)
 		
 	  }
 
-     if(wifi_link_net_state() ==1 && gpro_t.power_off_flag==2 ){
-		wifi_t.gTimer_wifi_pub_power_off=0;
-		gpro_t.power_off_flag++;
-		MqttData_Publish_PowerOff_Ref();
-        osDelay(200);
-		
-	     
-		 
-		  
-	}
-	if(wifi_link_net_state() ==1   && wifi_t.gTimer_wifi_sub_power_off > 62){
-		
-		wifi_t.gTimer_wifi_sub_power_off=0;
-        MqttData_Publish_PowerOff_Ref();
-        osDelay(200);
-        
-	}
+    
+	
    
 	
-    if(	gpro_t.power_off_flag ==3){
+    if(fan_run_one_minute_flag ==1){
            if(gkey_t.gTimer_power_off_run_times < 61){
                 Fan_Run();
 				power_off_disp_fan_run_handler();
-                wifi_t.gTimer_wifi_sub_power_off =0;
+               
 				
 
 		   }
 		   else{
-              gpro_t.power_off_flag++;
+               fan_run_one_minute_flag++;
 			   Fan_Stop();
 		       Backlight_Off();
                Lcd_Display_Off();
@@ -583,6 +572,16 @@ static void power_off_function(void)
 			   
 		  }
 
+	}
+
+    if(wifi_link_net_state() ==1 && gpro_t.power_off_flag==2 ){
+		wifi_t.gTimer_wifi_pub_power_off=0;
+		gpro_t.power_off_flag++;
+		MqttData_Publish_PowerOff_Ref();
+        osDelay(200);
+		
+	     
+		 
 	}
 
 }
