@@ -72,7 +72,7 @@ void Get_PTC_Temperature_Voltage(uint32_t channel,uint8_t times)
       printf("ptc= %d",run_t.ptc_temp_voltage);
 	#endif 
 
- 
+       ptc_temp_voltage = 200;
 
     #endif 
 

@@ -292,7 +292,7 @@ static void vTaskStart(void *pvParameters)
           LcdDisp_Init();
           
           buzzer_sound();
-       
+     
         
 
         }
@@ -350,7 +350,7 @@ static void vTaskStart(void *pvParameters)
               }
               
               Detected_Fan_Works_State();
-              Detected_Ptc_Works_State();
+                Detected_Ptc_Works_State();
               key_add_dec_set_temp_value_fun();
               key_mode_be_pressed_send_data_wifi();
               backlight_on_off_state();
