@@ -965,18 +965,21 @@ glcd_t.number7_high = 0;
      else if(gctl_t.ptc_warning ==1 && gctl_t.fan_warning ==1){ //code is "02" ==1){ 
 
           if(alternate_flag ==0 ){
-                alternate_flag ++;
+                alternate_flag =1;
+             glcd_t.number7_low = 0;
+             glcd_t.number7_high = 0;
 
               glcd_t.number8_low = 1;
              glcd_t.number8_high = 1;
-            TM1723_Write_Display_Data(0xCA,lcdNumber5_Low_E[0]+lcdNumber6_High_r[0]);//display digital 'r'
+             TM1723_Write_Display_Data(0xCA,lcdNumber5_Low_E[0]+lcdNumber6_High_r[0]);//display digital 'r'
              TM1723_Write_Display_Data(0xCB,lcdNumber6_Low_r[0]+lcdNumber7_High[glcd_t.number7_high]);//
              TM1723_Write_Display_Data(0xCC,T14+lcdNumber7_Low[glcd_t.number7_low]+lcdNumber8_High[glcd_t.number8_high]);//display "1"
              TM1723_Write_Display_Data(0xCE,T13+lcdNumber8_Low[glcd_t.number8_low]+ T17_T18_T19);//display "t,c
             }
-            else{
-             alternate_flag =0;
-
+            else if(alternate_flag == 2){
+             alternate_flag =3;
+             glcd_t.number7_low = 0;
+             glcd_t.number7_high = 0;
              glcd_t.number8_low = 2;
              glcd_t.number8_high = 2;
             TM1723_Write_Display_Data(0xCA,lcdNumber5_Low_E[0]+lcdNumber6_High_r[0]);//display digital 'r'
@@ -1016,7 +1019,8 @@ glcd_t.number7_high = 0;
      }
      else if(gctl_t.ptc_warning==1 &&  gctl_t.fan_warning ==1 ){
 
-       
+       if(alternate_flag ==1) alternate_flag =2;
+       else if(alternate_flag ==3) alternate_flag =0;
       TM1723_Write_Display_Data(0xCA,T15+lcdNumber5_Low_E[0]+lcdNumber6_High_r[0]);//display digital 'r'
       
        TM1723_Write_Display_Data(0xCB,lcdNumber6_Low_r[0]+lcdNumber7_High[10]);//
