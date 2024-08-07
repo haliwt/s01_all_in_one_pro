@@ -187,17 +187,20 @@ static void  Dht11_Read_TempHumidity_Handler(DHT11_Data_TypeDef * pdth11)
 		   gctl_t.dht11_temp_value= pdth11->temp_high8bit;
 
       //humidity data
-		   glcd_t.number3_high = pdth11->humi_high8bit /10;
-		   glcd_t.number3_low  = pdth11->humi_high8bit /10;
+		   glcd_t.number3_high =   gctl_t.dht11_humidity_value /10;
+		   glcd_t.number3_low  =   gctl_t.dht11_humidity_value /10;
 
-		   glcd_t.number4_low = pdth11->humi_high8bit %10;
-		   glcd_t.number4_high = pdth11->humi_high8bit %10;
+		   glcd_t.number4_low =   gctl_t.dht11_humidity_value %10;
+		   glcd_t.number4_high =   gctl_t.dht11_humidity_value %10;
         //temperature data
-           glcd_t.number1_low = pdth11->temp_high8bit /10;
-           glcd_t.number1_high = pdth11->temp_high8bit /10;
+           glcd_t.number1_low = gctl_t.dht11_temp_value /10;
+           glcd_t.number1_high = gctl_t.dht11_temp_value /10;
 
-           glcd_t.number2_low =  pdth11->temp_high8bit % 10;
-           glcd_t.number2_high =  pdth11->temp_high8bit % 10;
+           glcd_t.number2_low =  gctl_t.dht11_temp_value % 10;
+           glcd_t.number2_high =  gctl_t.dht11_temp_value % 10;
+
+
+           
 		   
 	   
 	 }

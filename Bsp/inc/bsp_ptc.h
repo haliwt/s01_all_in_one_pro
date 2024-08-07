@@ -9,6 +9,8 @@ void Ptc_On(void);
 
 void Ptc_Off(void);
 
+void set_ptc_value_conifrm_handler(uint8_t value);
+
 
 
 #endif 

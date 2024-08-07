@@ -362,7 +362,7 @@ void wifi_get_beijint_time_handler(void)
                
 
                     gctl_t.get_beijing_time_success = 1; //WT.2024.04.25
-                    if(gkey_t.key_mode == disp_works_timing  && gctl_t.ai_flag == 1 && gkey_t.key_power==power_on){
+                    if(gkey_t.key_mode == disp_works_timing  && gctl_t.ai_flag == 1){
 
                          glcd_t.number5_low = gpro_t.disp_works_hours_value  /10 ;
                 		glcd_t.number5_high = gpro_t.disp_works_hours_value /10;

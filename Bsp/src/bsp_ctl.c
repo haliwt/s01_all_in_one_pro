@@ -293,7 +293,7 @@ void SetTemp_Compare_SensoTemp(void)
            //compare with by read temperature of sensor value  
             if(gctl_t.gSet_temperature_value > gctl_t.dht11_temp_value &&   gctl_t.smart_phone_manual_on_off ==0){
 
-                gkey_t.gTimer_set_temp_value  =0;
+      
               
                 gctl_t.ptc_flag = 1;
                 Ptc_On();
@@ -310,7 +310,7 @@ void SetTemp_Compare_SensoTemp(void)
             else if(gctl_t.gSet_temperature_value <   gctl_t.dht11_temp_value || gctl_t.gSet_temperature_value ==   gctl_t.dht11_temp_value){
 
 
-                 gkey_t.gTimer_set_temp_value  =0;
+    
              
                  gctl_t.ptc_flag = 0;
                  Ptc_Off();
@@ -337,10 +337,7 @@ void SetTemp_Compare_SensoTemp(void)
                        gctl_t.ptc_flag = 0;
                         Ptc_Off();
                      
-                         if(wifi_link_net_state()==1){
-                              MqttData_Publish_SetPtc(gctl_t.ptc_flag);
-                                osDelay(100);
-                         }
+                       
 
                          
                          
@@ -354,20 +351,15 @@ void SetTemp_Compare_SensoTemp(void)
 
              
 
-              if(wifi_link_net_state()==1){ //逻辑错误
-                 
-
-                    MqttData_Publish_SetPtc(gctl_t.ptc_flag);
-                    osDelay(100);
-              }
+           
 
          }
 
          break;
 
       }
-}
 
+ }
 /*****************************************************************************
  * 
  * Function Name:  void local_read_latency_minutes(void)
@@ -430,4 +422,79 @@ void  wake_up_backlight_on_handler(void (*backlight_on_handler)(void))
 
 }
 
+void disp_set_temperature_value_handler(void)
+{
+
+    
+    //set temperature value 
+     if(gctl_t.gTimer_set_temp_value  > 2 && gkey_t.set_temp_value_be_pressed ==2 ){
+       
+        gkey_t.set_temp_value_be_pressed++ ;
+
+        gpro_t.set_temperature_value_success=1;
+
+        gpro_t.gTimer_run_main_fun=2;
+        gpro_t.gTimer_run_dht11=0;  //at once display sensor of temperature value 
+
+        gctl_t.gTimer_compare_ptc_value=0;
+        set_ptc_value_conifrm_handler(gctl_t.dht11_temp_value);
+
+         //compare with by read temperature of sensor value  
+         if(gctl_t.gSet_temperature_value > gctl_t.dht11_temp_value){
+
+            
+                
+                gctl_t.ptc_flag = 1;
+                 Ptc_On();
+        
+               
+
+                 gpro_t.gTimer_run_dht11=0;  //at once display sensor of temperature value 
+
+                   if(wifi_link_net_state()==1){
+                         MqttData_Publish_SetPtc(gctl_t.ptc_flag);
+                         osDelay(100);
+                    }
+                
+
+            }
+            else if(gctl_t.gSet_temperature_value <   gctl_t.dht11_temp_value || gctl_t.gSet_temperature_value ==   gctl_t.dht11_temp_value){
+
+    
+                
+
+                 gctl_t.ptc_flag = 0;
+                 Ptc_Off();
+  
+                 if(wifi_link_net_state()==1){ //逻辑错误
+                 
+
+                    MqttData_Publish_SetPtc(gctl_t.ptc_flag);
+                    osDelay(100);
+                  }
+
+
+           }
+          
+           
+
+
+     }
+
+
+    //display set temperature value 
+     if(gctl_t.gTimer_compare_ptc_value > 5){
+
+        gctl_t.gTimer_compare_ptc_value=0;
+
+     if(gctl_t.interval_stop_run_flag==0 && gctl_t.ptc_warning == 0 && gctl_t.fan_warning ==0){
+           SetTemp_Compare_SensoTemp();
+
+      }
+
+
+     }
+
+
+}
 

@@ -47,7 +47,7 @@ typedef struct _bsp_ctl{
     uint8_t gSet_temperature_value;
     uint8_t step_process;
     uint8_t interval_stop_run_flag;
-    uint8_t send_ptc_state_data_flag;
+
     uint8_t get_beijing_time_success;
  
     uint8_t smart_phone_manual_on_off;
@@ -73,7 +73,9 @@ typedef struct _bsp_ctl{
     uint8_t gTimer_wifi_blink;
 
     uint8_t gTimer_wifi_fast_blink;
-    uint8_t gTimer_ctl_wifi_state ;
+
+    uint8_t gTimer_compare_ptc_value;
+    uint8_t gTimer_set_temp_value;
 
     
    
@@ -138,6 +140,7 @@ uint8_t Fan_Error_Default_Handler(void);
 void SetTemp_Compare_SensoTemp(void);
 
 
+void disp_set_temperature_value_handler(void);
 
 
 

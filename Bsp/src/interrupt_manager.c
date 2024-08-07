@@ -121,20 +121,21 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
       
           //control timer
         gctl_t.gTimer_wifi_blink++;
-        gctl_t.gTimer_ctl_wifi_state ++;
+     
+        gctl_t.gTimer_compare_ptc_value++ ;
 
 
 
         //lcd timer
        glcd_t.gTimer_error_times++;
-       
+       gctl_t.gTimer_set_temp_value++;
     
   
 	   
        //key timer
 	
         gkey_t.gTimer_power_off_run_times++;
-        gkey_t.gTimer_set_temp_value++;
+        
         gkey_t.gTimer_disp_set_timer++;
   
        

@@ -235,42 +235,18 @@ void Dec_Key_Fun(uint8_t cmd)
 				
 			glcd_t.number1_low =  gctl_t.gSet_temperature_value   / 10 ;
             glcd_t.number1_high =  gctl_t.gSet_temperature_value   / 10 ;
+           
 			glcd_t.number2_low  = gctl_t.gSet_temperature_value   % 10; //
             glcd_t.number2_high =  gctl_t.gSet_temperature_value   % 10; //
 
         
-          
-            gctl_t.send_ptc_state_data_flag =0;  //send data to tencent to tell ptc on or off state .
+          gkey_t.set_temp_value_be_pressed =1; //flag 
+           gctl_t.gTimer_set_temp_value =0;
+
          
-            gkey_t.set_temp_value_be_pressed =1;
-    
-            //compare with by read temperature of sensor value  
-            if(gctl_t.gSet_temperature_value > gctl_t.dht11_temp_value){
-
-                gkey_t.gTimer_set_temp_value  =0;
-                gpro_t.set_temperature_value_success=1;
-                gctl_t.ptc_flag = 1;
-              
-                 gpro_t.gTimer_run_main_fun=2;
-
-               gpro_t.gTimer_run_dht11=0;  //at once display sensor of temperature value 
-
-            }
-            else if(gctl_t.gSet_temperature_value <   gctl_t.dht11_temp_value || gctl_t.gSet_temperature_value ==   gctl_t.dht11_temp_value){
-
-
-                 gkey_t.gTimer_set_temp_value  =0;
-                 gpro_t.set_temperature_value_success=1;
-                 gctl_t.ptc_flag = 0;
-             
-                gpro_t.gTimer_run_main_fun=2;
-
-                  gpro_t.gTimer_run_dht11=0;  //at once display sensor of temperature value 
-
-
-            }
            gctl_t.smart_phone_manual_on_off=0; //unfreeze maybe turn on PTC heat 
-           gpro_t.app_ptc_flag = 0;
+      
+         //   LCD_Disp_Temperature_Value_Handler();
          break;
 
          case mode_set_timer: //set timer timing value 
@@ -344,43 +320,14 @@ void Add_Key_Fun(uint8_t cmd)
         glcd_t.number2_low  =gctl_t.gSet_temperature_value   % 10; //
         glcd_t.number2_high = gctl_t.gSet_temperature_value  % 10; //
 
-     
-        gkey_t.gTimer_set_temp_value=0;
-      
-        gctl_t.send_ptc_state_data_flag =0; //send data to tencent to tell ptc on or off state .
-    
-        //add_key = 1;
+         //add_key = 1;
         gkey_t.set_temp_value_be_pressed = 1;
+        gctl_t.gTimer_set_temp_value =0;
 
-         //compare with by read temperature of sensor value  
-         if(gctl_t.gSet_temperature_value > gctl_t.dht11_temp_value){
-
-                gkey_t.gTimer_set_temp_value  =0;
-                gpro_t.set_temperature_value_success=1;
-                gctl_t.ptc_flag = 1;
-        
-                gpro_t.gTimer_run_main_fun=2;
-
-                 gpro_t.gTimer_run_dht11=0;  //at once display sensor of temperature value 
-                
-
-            }
-            else if(gctl_t.gSet_temperature_value <   gctl_t.dht11_temp_value || gctl_t.gSet_temperature_value ==   gctl_t.dht11_temp_value){
-
-                gkey_t.gTimer_set_temp_value  =0;
-                gpro_t.set_temperature_value_success=1;
-
-                 gctl_t.ptc_flag = 0;
-  
-                 gpro_t.gTimer_run_main_fun=2;
-
-                 gpro_t.gTimer_run_dht11=0;  //at once display sensor of temperature value 
-
-
-            }
-
+       
        gctl_t.smart_phone_manual_on_off=0; //unfreeze maybe turn on PTC heat 
-       gpro_t.app_ptc_flag = 0;
+      
+       // LCD_Disp_Temperature_Value_Handler();
     break;
 
     case mode_set_timer: //set timer timing value 
@@ -427,8 +374,9 @@ void key_add_dec_set_temp_value_fun(void)
 
     if(gkey_t.set_temp_value_be_pressed == 1){
        gkey_t.set_temp_value_be_pressed ++;
-
-      Disp_SetTemp_Value(gctl_t.gSet_temperature_value );
+        gpro_t.gTimer_run_dht11=0; 
+    //  Disp_SetTemp_Value(gctl_t.gSet_temperature_value );
+       LCD_Disp_Temperature_Value_Handler();
 
       if(wifi_link_net_state()==1){
         

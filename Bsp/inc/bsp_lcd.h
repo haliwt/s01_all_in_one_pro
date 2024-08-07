@@ -167,7 +167,7 @@ void lcd_disp_ai_icon(void);
 
 void Disp_SetTemp_Value(uint8_t temp_value);
 
-
+void lcd_donot_temp_value_fun(void);
 
 
 
@@ -195,6 +195,7 @@ void power_off_disp_fan_run_handler(void);
 void numbers_six_seven_init(void);
 
 
+void LCD_Disp_Temperature_Value_Handler(void);
 
 
 #endif 

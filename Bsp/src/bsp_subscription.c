@@ -680,7 +680,7 @@ void Json_Parse_Command_Fun(void)
               osDelay(100);//HAL_Delay(100);//350
 
               gkey_t.key_add_dec_mode = set_temp_value_item; //set_temp_value_item;
-            gkey_t.gTimer_set_temp_value  = 0;
+         
             gpro_t.set_temperature_value_success =1;
         
            gpro_t.gTimer_run_dht11=0; 
@@ -892,7 +892,7 @@ static void smartphone_app_timer_power_on_handler(void)
 		}
         
 		
-		if(gctl_t.ptc_flag ==0)gpro_t.app_ptc_flag = 1;
+	
 
         MqttData_Publis_App_PowerOn_Ref();
   

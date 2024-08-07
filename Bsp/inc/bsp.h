@@ -91,7 +91,7 @@ typedef struct {
    uint8_t first_disp_work_time;
    uint8_t disp_timer_switch_time_flag;
 
-   uint8_t app_ptc_flag;
+
 
 
    int8_t set_timer_timing_hours;

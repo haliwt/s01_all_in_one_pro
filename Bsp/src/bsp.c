@@ -102,7 +102,7 @@ void power_on_run_handler(void)
 		   gctl_t.step_process = 1;
 
            glcd_t.gTimer_fan_blink =0;
-
+           Disp_HumidityTemp_Value();
 
 		  break;
 
@@ -114,12 +114,12 @@ void power_on_run_handler(void)
                 power_on_run_dht11_times++;
                   Update_DHT11_Value();
                   Disp_HumidityTemp_Value();
+                  LCD_Disp_Humidity_value_Handler();
+                  
 
-                  if(gctl_t.interval_stop_run_flag==0 && gctl_t.ptc_warning == 0 && gctl_t.fan_warning ==0){
-                     SetTemp_Compare_SensoTemp();
-
-                  }
+                
           }
+
          gctl_t.step_process=3;
 		  
       break;
@@ -208,7 +208,7 @@ void mainboard_active_handler(void)
   if(gpro_t.gTimer_run_main_fun > 0){
     gpro_t.gTimer_run_main_fun =0;
     if(gctl_t.interval_stop_run_flag  ==0){
-    Process_Dynamical_Action();
+     Process_Dynamical_Action();
     }
     else{
     interval_two_hours_stop_action();
@@ -343,11 +343,11 @@ static void Process_Dynamical_Action(void)
 
     if(gctl_t.ai_flag == 1){
 
-           // disp_ai_symbol();
+            disp_ai_symbol();
 
      }
      else{
-      // donot_disp_ai_symbol();
+       donot_disp_ai_symbol();
 
      }
 
@@ -635,7 +635,8 @@ static void power_on_init_function(void)
     Update_DHT11_Value();
     
     LCD_Wind_Run_Icon(0);
-    Disp_HumidityTemp_Init();
+ 
+    Disp_HumidityTemp_Value();
 
     Display_LCD_Works_Timing();
    
