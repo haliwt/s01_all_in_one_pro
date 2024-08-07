@@ -448,7 +448,7 @@ void lcd_donot_temp_value_fun(void)
 		 	TM1723_Write_Display_Data(0xC3,(lcdNumber1_Low[0x0A]+AI_NO_Symbol+lcdNumber2_High[0x0A]) & 0xff);//display  "AI icon
 
 		 //display address 0xC4 -> temperature icon T7
-		 TM1723_Write_Display_Data(0xC4,(0x01+lcdNumber2_Low[0x0A]+lcdNumber3_High[0x0A])&0xff);//display "t,c"
+		 TM1723_Write_Display_Data(0xC4,(0x01+lcdNumber2_Low[0x0A]+lcdNumber3_High[glcd_t.number3_high])&0xff);//display "t,c"
 
 
 }
@@ -460,10 +460,19 @@ void lcd_donot_temp_value_fun(void)
  * Return Ref:
  * 
 *****************************************************************************/
-void LCD_Disp_Humidity_value_Handler(void)
+void LCD_Disp_Humidity_value_Handler(uint8_t hum_value)
 {
 
-  
+    glcd_t.number3_high =  hum_value /10;
+    //glcd_t.number3_low  =   hum_value /10;
+    glcd_t.number3_low =  glcd_t.number3_high ;
+
+   glcd_t.number4_low =   hum_value %10;
+   //glcd_t.number4_high =  hum_value  %10;
+    glcd_t.number4_high =    glcd_t.number4_low;
+
+
+
    TM1723_Write_Display_Data(0xC4,(0x01+lcdNumber2_Low[glcd_t.number2_low]+lcdNumber3_High[glcd_t.number3_high])&0xff);
 
    if(wifi_link_net_state()==1){
@@ -1306,37 +1315,15 @@ void Disp_HumidityTemp_Value(void)
 
 
     LCD_Disp_Temperature_Value_Handler();
+    LCD_Disp_Humidity_value_Handler(  gctl_t.dht11_humidity_value);
    
-   
 }
 
 
-void Disp_HumidityTemp_Init(void)
-{
-
-    LCD_Disp_Temperature_Value_Handler();
- 
-
-}
 
 
-void Disp_SetTemp_Value(uint8_t temp_value)
-{
-
-   glcd_t.number1_low  = temp_value /10;
-  glcd_t.number1_high = temp_value / 10;
-
-   glcd_t.number2_low =  temp_value % 10;
-   glcd_t.number2_high = temp_value % 10;
-
-    
-     
-
-    LCD_Disp_Temperature_Value_Handler();
-    
 
 
-}
 
 /*************************************************************************************
 	*

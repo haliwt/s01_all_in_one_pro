@@ -299,8 +299,7 @@ void SetTemp_Compare_SensoTemp(void)
                 Ptc_On();
 
                 if(wifi_link_net_state()==1){
-                    MqttData_Publis_SetTemp(gctl_t.gSet_temperature_value);
-                    osDelay(100);
+                  
 
                     MqttData_Publish_SetPtc(gctl_t.ptc_flag);
                     osDelay(100);
@@ -317,8 +316,7 @@ void SetTemp_Compare_SensoTemp(void)
                
 
                   if(wifi_link_net_state()==1){
-                    MqttData_Publis_SetTemp(gctl_t.gSet_temperature_value);
-                    osDelay(100);
+             
 
                     MqttData_Publish_SetPtc(gctl_t.ptc_flag);
                     osDelay(100);
@@ -429,15 +427,17 @@ void disp_set_temperature_value_handler(void)
     //set temperature value 
      if(gctl_t.gTimer_set_temp_value  > 2 && gkey_t.set_temp_value_be_pressed ==2 ){
        
-        gkey_t.set_temp_value_be_pressed++ ;
-
-        gpro_t.set_temperature_value_success=1;
+       gctl_t.gTimer_compare_ptc_value =0;
 
         gpro_t.gTimer_run_main_fun=2;
         gpro_t.gTimer_run_dht11=0;  //at once display sensor of temperature value 
 
         gctl_t.gTimer_compare_ptc_value=0;
         set_ptc_value_conifrm_handler(gctl_t.dht11_temp_value);
+        gpro_t.set_temperature_value_success=1;
+
+
+        if(gpro_t.set_temperature_value_success==1){
 
          //compare with by read temperature of sensor value  
          if(gctl_t.gSet_temperature_value > gctl_t.dht11_temp_value){
@@ -445,7 +445,7 @@ void disp_set_temperature_value_handler(void)
             
                 
                 gctl_t.ptc_flag = 1;
-                 Ptc_On();
+                Ptc_On();
         
                
 
@@ -476,14 +476,25 @@ void disp_set_temperature_value_handler(void)
 
            }
           
-           
+          if(wifi_link_net_state()==1){
+        
+                MqttData_Publis_SetTemp(gctl_t.gSet_temperature_value);
+                osDelay(100);
 
+             
+        
+         }
+
+          lcd_disp_ptc_value(gctl_t.dht11_temp_value);
+
+        }
+           gkey_t.set_temp_value_be_pressed++ ;
 
      }
 
 
     //display set temperature value 
-     if(gctl_t.gTimer_compare_ptc_value > 5){
+     if(gctl_t.gTimer_compare_ptc_value > 10){
 
         gctl_t.gTimer_compare_ptc_value=0;
 

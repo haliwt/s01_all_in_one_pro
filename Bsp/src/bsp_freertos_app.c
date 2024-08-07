@@ -340,10 +340,11 @@ static void vTaskStart(void *pvParameters)
                }  
          }
          if(gkey_t.key_power==power_on){
-
+            
+              power_on_run_handler();
               key_add_dec_set_temp_value_fun();
               key_mode_be_pressed_send_data_wifi();
-              power_on_run_handler();
+             
               Record_WorksOr_Timer_Timing_DonotDisp_Handler();
 
               if(gkey_t.wifi_led_fast_blink_flag==1 && gctl_t.fan_warning ==0 && gctl_t.ptc_warning == 0){
@@ -354,12 +355,12 @@ static void vTaskStart(void *pvParameters)
               
               }
               
-            
+              mainboard_active_handler();
               disp_set_temperature_value_handler();
               backlight_on_off_state();
               disp_works_or_timer_timing_fun();
               bsp_Idle();
-              mainboard_active_handler();
+            
               LCD_Timer_Colon_Flicker();
              
               Disip_Wifi_Icon_State();

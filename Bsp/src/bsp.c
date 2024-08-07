@@ -81,7 +81,7 @@ void power_off_run_handler(void)
 void power_on_run_handler(void)
 {
 
-   static uint8_t power_on_run_dht11_times ;
+ 
      switch(gctl_t.step_process){
 
 
@@ -102,6 +102,7 @@ void power_on_run_handler(void)
 		   gctl_t.step_process = 1;
 
            glcd_t.gTimer_fan_blink =0;
+           gpro_t.gTimer_run_dht11 = 20;
            Disp_HumidityTemp_Value();
 
 		  break;
@@ -109,12 +110,12 @@ void power_on_run_handler(void)
 
       case 1:   //run dht11 display 
 
-        if(gpro_t.gTimer_run_dht11 > 12  || power_on_run_dht11_times < 10){
+        if(gpro_t.gTimer_run_dht11 > 12 &&  gkey_t.set_temp_value_be_pressed !=1 && gkey_t.set_temp_value_be_pressed !=2){
                 gpro_t.gTimer_run_dht11=0;
-                power_on_run_dht11_times++;
+          
                   Update_DHT11_Value();
-                  Disp_HumidityTemp_Value();
-                  LCD_Disp_Humidity_value_Handler();
+                  lcd_disp_ptc_value(gctl_t.dht11_temp_value);
+                  LCD_Disp_Humidity_value_Handler(  gctl_t.dht11_humidity_value);
                   
 
                 
@@ -351,6 +352,7 @@ static void Process_Dynamical_Action(void)
 
      }
 
+   
    if(ptc_state() ==1){
 
 
@@ -365,7 +367,7 @@ static void Process_Dynamical_Action(void)
      Ptc_Off();
      //Disp_Dry_Icon();
     }
-            
+       
 
     if(plasma_state() ==1){
 		

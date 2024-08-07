@@ -138,7 +138,7 @@ void LCD_Display_Wind_Icon_Handler(void);
 void Wifi_Icon_FastBlink(void);
 
 
-void Disp_HumidityTemp_Init(void);
+
 
 
 
@@ -165,7 +165,7 @@ void Disip_Wifi_Icon_State(void  );
 
 void lcd_disp_ai_icon(void);
 
-void Disp_SetTemp_Value(uint8_t temp_value);
+
 
 void lcd_donot_temp_value_fun(void);
 
@@ -181,7 +181,7 @@ void donot_disp_ai_symbol(void);
 
 void Display_Kill_Dry_Ster_Icon(void);
 
-void LCD_Disp_Humidity_value_Handler(void);
+void LCD_Disp_Humidity_value_Handler(uint8_t hum_value);
 
 
 void Set_LCD_Timer_Numbers_FiveSixSeveEight_Hours(void);

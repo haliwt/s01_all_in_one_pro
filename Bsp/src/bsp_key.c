@@ -226,6 +226,7 @@ void Dec_Key_Fun(uint8_t cmd)
 
              gpro_t.gTimer_run_main_fun =0;
              gpro_t.gTimer_run_dht11=0; //不显示，实际的温度值，显示设置的温度
+             gctl_t.gTimer_compare_ptc_value=0;
          
              gctl_t.gSet_temperature_value  --;
 			if( gctl_t.gSet_temperature_value  <20)  gctl_t.gSet_temperature_value  =40;
@@ -308,6 +309,8 @@ void Add_Key_Fun(uint8_t cmd)
 
          gpro_t.gTimer_run_main_fun=0;
          gpro_t.gTimer_run_dht11=0;
+        gctl_t.gTimer_compare_ptc_value=0;
+        
         gctl_t.gSet_temperature_value   ++;
         if(gctl_t.gSet_temperature_value   < 20){
             gctl_t.gSet_temperature_value  =20;
@@ -375,18 +378,10 @@ void key_add_dec_set_temp_value_fun(void)
     if(gkey_t.set_temp_value_be_pressed == 1){
        gkey_t.set_temp_value_be_pressed ++;
         gpro_t.gTimer_run_dht11=0; 
-    //  Disp_SetTemp_Value(gctl_t.gSet_temperature_value );
+        gctl_t.gTimer_compare_ptc_value=0;
        LCD_Disp_Temperature_Value_Handler();
 
-      if(wifi_link_net_state()==1){
-        
-        MqttData_Publis_SetTemp(gctl_t.gSet_temperature_value);
-        osDelay(20);
-
-        MqttData_Publish_SetPtc(gctl_t.ptc_flag);
-        osDelay(20);
-        
-   }
+    
 
 }
 }

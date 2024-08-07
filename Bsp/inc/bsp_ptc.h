@@ -11,6 +11,7 @@ void Ptc_Off(void);
 
 void set_ptc_value_conifrm_handler(uint8_t value);
 
+void lcd_disp_ptc_value(uint8_t value);
 
 
 #endif 

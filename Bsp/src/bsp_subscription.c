@@ -686,7 +686,7 @@ void Json_Parse_Command_Fun(void)
            gpro_t.gTimer_run_dht11=0; 
            
          
-            Disp_SetTemp_Value(gctl_t.gSet_temperature_value );
+           lcd_disp_ptc_value(gctl_t.gSet_temperature_value);
 
             
 			
