@@ -359,7 +359,7 @@ static void vTaskStart(void *pvParameters)
               disp_set_temperature_value_handler();
               backlight_on_off_state();
               disp_works_or_timer_timing_fun();
-              bsp_Idle();
+              fan_run_state_handler();
             
               LCD_Timer_Colon_Flicker();
              

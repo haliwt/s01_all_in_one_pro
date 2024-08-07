@@ -1314,7 +1314,7 @@ void Disp_HumidityTemp_Value(void)
 {
 
 
-    LCD_Disp_Temperature_Value_Handler();
+    lcd_disp_ptc_value(gctl_t.dht11_temp_value);
     LCD_Disp_Humidity_value_Handler(  gctl_t.dht11_humidity_value);
    
 }

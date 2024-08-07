@@ -122,7 +122,7 @@ void mode_long_short_key_fun(void)
 
 
         gkey_t.key_mode_long_counter++;
-        if(gkey_t.key_mode_long_counter >  29  && KEY_MODE_VALUE() == 1){
+        if(gkey_t.key_mode_long_counter >  29  && KEY_MODE_VALUE() == KEY_DOWN){
             gkey_t.key_mode_long_counter = 150;
 
             gkey_t.key_mode = mode_set_timer;
