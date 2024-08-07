@@ -90,6 +90,7 @@ void power_on_run_handler(void)
             power_on_init_function();
 
              gctl_t.ai_flag = 1; // AI DISPLAY AI ICON
+             
              gkey_t.key_mode  = disp_works_timing;
 
            gpro_t.gTimer_timer_Counter =0;
@@ -103,6 +104,7 @@ void power_on_run_handler(void)
 
            glcd_t.gTimer_fan_blink =0;
            gpro_t.gTimer_run_dht11 = 20;
+           
            Disp_HumidityTemp_Value();
 
 		  break;
@@ -620,6 +622,21 @@ static void power_on_init_function(void)
           gpro_t.disp_works_minutes_value=0;
           gpro_t.disp_works_hours_value =0;
           gpro_t.gTimer_works_counter_sencods =0;
+
+          gpro_t.set_timer_timing_hours =0;
+
+        glcd_t.number5_low =  0;
+        glcd_t.number5_high = 0;
+
+        glcd_t.number6_low = 0;
+        glcd_t.number6_high =  0;
+
+        glcd_t.number7_low =  0;
+        glcd_t.number7_high = 0;
+
+        glcd_t.number8_low = 0;
+        glcd_t.number8_high =  0;
+          
 
      }
 

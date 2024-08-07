@@ -350,10 +350,12 @@ void Add_Key_Fun(uint8_t cmd)
              }
 	//display hours
         glcd_t.number5_low =  gpro_t.set_timer_timing_hours / 10 ;
-        glcd_t.number5_high =  gpro_t.set_timer_timing_hours / 10 ;
+        //glcd_t.number5_high =  gpro_t.set_timer_timing_hours / 10 ;
+        glcd_t.number5_high = glcd_t.number5_low ;
 
         glcd_t.number6_low  = gpro_t.set_timer_timing_hours% 10; //
-        glcd_t.number6_high =  gpro_t.set_timer_timing_hours % 10; //
+        //glcd_t.number6_high =  gpro_t.set_timer_timing_hours % 10; //
+        glcd_t.number6_high =  glcd_t.number6_low;
         //dispaly minutes 
         glcd_t.number7_low =  0;
         glcd_t.number7_high = 0;
