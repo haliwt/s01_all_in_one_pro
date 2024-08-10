@@ -1,12 +1,12 @@
 #include "bsp.h"
-#include "queue.h"
+//#include "queue.h"
 
-uint8_t recieve_flag;
-uint8_t receive_key_message;
-uint8_t receive_task_start;
-uint8_t key_long_counter;
-uint16_t power_key_long_counter ;
-uint8_t  dc_power_on;
+
+
+uint32_t mode_key_long_conter;
+uint32_t power_key_long_conter;
+
+
 
 
 /*
@@ -19,10 +19,10 @@ uint8_t  dc_power_on;
 #define DEC_KEY_2           (1 << 2)
 #define ADD_KEY_3           (1 << 3)
 
-#define RUN_POWER_4         (1 << 4)
-#define RUN_MODE_5          (1 << 5)
-#define RUN_DEC_6           (1 << 6)
-#define RUN_ADD_7           (1 << 7)
+#define POWER_LONG_KEY_4         (1 << 4)
+#define MODE_LONG_KEY_5          (1 << 5)
+///#define RUN_DEC_6           (1 << 6)
+//#define RUN_ADD_7           (1 << 7)
 
 #define PHONE_POWER_ON_RX_8       (1<<8)
 #define PHONE_POWER_OFF_9         (1<<9)
@@ -84,10 +84,11 @@ static void vTaskMsgPro(void *pvParameters)
 {
    // MSG_T *ptMsg;
     BaseType_t xResult;
-	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(200); /* 设置最大等待时间为500ms */
+	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(30); /* 设置最大等待时间为500ms */
 	uint32_t ulValue;
-   
-   
+    static uint8_t add_flag,dec_flag,smart_phone_sound,key_mode_sound;
+    static uint8_t key_power_long_sound ,power_on_sound,key_mode_long_sound;
+    static uint8_t power_sound_flag;
 	
     while(1)
     {
@@ -120,90 +121,7 @@ static void vTaskMsgPro(void *pvParameters)
              
 			if((ulValue & POWER_KEY_0) != 0)
 			{
-   
-                     
-                 xTaskNotify(xHandleTaskStart, /* 目标任务 */
-							RUN_POWER_4 ,            /* 设置目标任务事件标志位bit0  */
-							eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
-				                                    
-			}
-            else if((ulValue & PHONE_POWER_ON_RX_8 ) != 0)
-            {
-                         xTaskNotify(xHandleTaskStart, /* 目标任务 */
-							RUN_POWER_4 ,//PHONE_POWER_ON_10 ,            /* 设置目标任务事件标志位bit0  */
-							eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
-               
-            }
-             else if((ulValue & PHONE_POWER_OFF_9 ) != 0){
-                xTaskNotify(xHandleTaskStart, /* 目标任务 */
-				RUN_POWER_4 ,//PHONE_POWER_ON_10 ,            /* 设置目标任务事件标志位bit0  */
-				eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
-               
-            }
-                
-            else if((ulValue & MODE_KEY_1) != 0){
-
-               //switch timer timing and works timing 
-
-                xTaskNotify(xHandleTaskStart, /* 目标任务 */
-							RUN_MODE_5 ,            /* 设置目标任务事件标志位bit0  */
-							eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
-               
-            }   
-            else if((ulValue & DEC_KEY_2) != 0){
-
-               
-                xTaskNotify(xHandleTaskStart, /* 目标任务 */
-							RUN_DEC_6 ,            /* 设置目标任务事件标志位bit0  */
-							eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
-               
-
-               
-            }
-            else if((ulValue & ADD_KEY_3) != 0){
-                  
-                  xTaskNotify(xHandleTaskStart, /* 目标任务 */
-							RUN_ADD_7 ,            /* 设置目标任务事件标志位bit0  */
-							eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
-
-              
-                    
-            }
-        }
-    }
-}
-
-/**********************************************************************************************************
-*	函 数 名: vTaskStart
-*	功能说明: 启动任务，也就是最高优先级任务，这里用作按键扫描。
-*	形    参: pvParameters 是在创建该任务时传递的形参
-*	返 回 值: 无
-*   优 先 级: 4  
-**********************************************************************************************************/
-static void vTaskStart(void *pvParameters)
-{
-   BaseType_t xResult;
-   const TickType_t xMaxBlockTime = pdMS_TO_TICKS(20); /* 设置最大等待时间为50ms */
-  
-   uint32_t ulValue;
-   static uint8_t add_flag,dec_flag,power_sound_flag;
- 
-
-    while(1)
-    {
-		/* 按键扫描 */
-		//bsp_KeyScan();
-
-       xResult = xTaskNotifyWait(0x00000000,      
-						           0xFFFFFFFF,      
-						          &ulValue,        /* 保存ulNotifiedValue到变量ulValue中 */
-						          xMaxBlockTime);  /* 最大允许延迟时间 */
-        if( xResult == pdPASS ){
-		    
-            /* 接收到消息，检测那个位被按下 */
-            if((ulValue & RUN_POWER_4 ) != 0)
-            {
-                if(gpro_t.shut_Off_backlight_flag == turn_off){
+              if(gpro_t.shut_Off_backlight_flag == turn_off){
 
                      gpro_t.gTimer_shut_off_backlight =0;
                      wake_up_backlight_on();
@@ -211,14 +129,72 @@ static void vTaskStart(void *pvParameters)
 
                 }
                 else{
-                    gkey_t.power_key_long_counter =1;
+                    //gkey_t.power_key_long_counter =1;
+                    power_on_sound = 1;
+                    power_key_long_conter=0;
                     gpro_t.gTimer_shut_off_backlight =0;
-                 
+                }
+                     
+                
+				                                    
+			}
+            else if((ulValue & PHONE_POWER_ON_RX_8 ) != 0)
+            {
+                 if(gpro_t.shut_Off_backlight_flag == turn_off){
+
+                     gpro_t.gTimer_shut_off_backlight =0;
+                     wake_up_backlight_on();
+                     buzzer_sound();
+
+                  }
+                 else{
+                    smart_phone_sound = 1;
+                    power_key_long_conter=0;
+                    gpro_t.gTimer_shut_off_backlight =0;
+                
+
+                }
+                       
+            }
+            else if((ulValue & POWER_LONG_KEY_4) != 0){
+
+               if(gkey_t.key_power == power_on){
+
+              if(gpro_t.shut_Off_backlight_flag == turn_off){
+
+                     gpro_t.gTimer_shut_off_backlight =0;
+                     wake_up_backlight_on();
+                     buzzer_sound();
+
+               }
+              else{
+
+                   key_power_long_sound =1;
+                   mode_key_long_conter = 0;
+                   gpro_t.gTimer_exit_mode_long_key =0;
+                 }
+               }
+             }
+            else if((ulValue & PHONE_POWER_OFF_9 ) != 0){
+               if(gpro_t.shut_Off_backlight_flag == turn_off){
+
+                     gpro_t.gTimer_shut_off_backlight =0;
+                     wake_up_backlight_on();
+                     buzzer_sound();
+
+                }
+                else{
+                    //gkey_t.power_key_long_counter =1;
+                    power_on_sound = 1;
+                    power_key_long_conter=0;
+                    gpro_t.gTimer_shut_off_backlight =0;
                 }
                
             }
-            else if((ulValue & RUN_MODE_5 ) != 0){   /* 接收到消息，检测那个位被按下 */
-               if(gkey_t.key_power == power_on ){
+            else if((ulValue & MODE_KEY_1) != 0){
+
+               //switch timer timing and works timing 
+                if(gkey_t.key_power == power_on ){
 
                   if(gpro_t.shut_Off_backlight_flag == turn_off){
 
@@ -228,18 +204,46 @@ static void vTaskStart(void *pvParameters)
 
                   }
                   else{
-                     gkey_t.key_mode_long_counter=1;
+                     //gkey_t.key_mode_long_counter=1;
+                     key_mode_sound =1;
+                     power_key_long_conter=0;
+                     mode_key_long_conter = 0;
                      gpro_t.gTimer_shut_off_backlight =0;
 
                     }
 
                 }
+
+            }   
+            else if((ulValue & MODE_LONG_KEY_5) != 0){
                
-              
+                if(gkey_t.key_power==power_on){
+
+
+                   if(gpro_t.shut_Off_backlight_flag == turn_off){
+
+                     gpro_t.gTimer_shut_off_backlight =0;
+                     wake_up_backlight_on();
+                     buzzer_sound();
+
+                  }
+                  else{
+                   
+                    key_mode_long_sound= 1;
+                    
+                   power_key_long_conter =0;
+                   gpro_t.gTimer_exit_mode_long_key =0;
+                 }
+
+                }
                 
             }
-             else if((ulValue & RUN_DEC_6 ) != 0){   /* 接收到消息，检测那个位被按下 */
-                if(gkey_t.key_power==power_on){
+            else if((ulValue & DEC_KEY_2) != 0){
+
+                   
+                 power_key_long_conter=0;
+                 mode_key_long_conter = 0;
+                 if(gkey_t.key_power==power_on){
 
                    if(gpro_t.shut_Off_backlight_flag == turn_off){
 
@@ -255,11 +259,13 @@ static void vTaskStart(void *pvParameters)
 
                    }
                   }
-              
-
+               
             }
-            else if((ulValue & RUN_ADD_7 ) != 0){   /* 接收到消息，检测那个位被按下 */
-                if(gkey_t.key_power==power_on){
+            else if((ulValue & ADD_KEY_3) != 0){
+
+                 power_key_long_conter=0;
+                 mode_key_long_conter = 0;
+                  if(gkey_t.key_power==power_on){
 
                  if(gpro_t.shut_Off_backlight_flag == turn_off){
 
@@ -275,13 +281,12 @@ static void vTaskStart(void *pvParameters)
 
                 }
                 
-                
-              
-
+                }
+                 
+                    
             }
         }
-        }
-        else{
+        else {
             
               
         if(power_sound_flag==0){
@@ -296,36 +301,67 @@ static void vTaskStart(void *pvParameters)
         
 
         }
+        else{
+
+         if(power_on_sound ==1 ||key_power_long_sound ==1 ||key_mode_sound== 1|| key_mode_long_sound==1||add_flag==1 || dec_flag==1 || smart_phone_sound == 1 ){
 
 
-         power_long_short_key_fun();
 
-           
-          
-         
-        
-        
-          if(gkey_t.power_key_long_counter ==0 || gkey_t.power_key_long_counter==200){
+            if(power_on_sound == 1){
+                power_on_sound++;
+                power_on_key_handler();
+            
+                 buzzer_sound();
+
+            }else if(key_power_long_sound ==1){
+
+                  
+                  key_power_long_sound++;
+                   buzzer_sound();
+                   power_long_key_fun();
+                 
+             }
+             else if(key_mode_sound == 1){
+                 key_mode_sound++;
+                  buzzer_sound();
+                 mode_key_fun();
+             }
+             else if(key_mode_long_sound == 1){
+
+                  key_mode_long_sound++;
+                  
+                  mode_long_key_fun();
+                  buzzer_sound();
+
+
+             }
+             else if(add_flag ==1){
+                     add_flag ++;
+                      buzzer_sound();
+                     osDelay(20);
+
+             }
+             else if(dec_flag ==1){
+                     dec_flag ++;
+                      buzzer_sound();
+                     osDelay(20);
+
+             }
+             else if(smart_phone_sound == 1){
+
+                   smart_phone_sound++;
+             
+                  buzzer_sound();
+                  smartphone_power_on_handler();
+
+             }
+            }
 
             if(gkey_t.key_power==power_on){
-                
-                 mode_long_short_key_fun();
 
-                if(add_flag ==1){
-                     add_flag ++;
-                     Buzzer_KeySound();
-                     osDelay(20);
 
-                 }
-                 else if(dec_flag ==1){
-                     dec_flag ++;
-                     Buzzer_KeySound();
-                     osDelay(20);
-
-                 }
-
-                 
-                 if(add_flag ==2){
+              
+                if(add_flag ==2){
                     add_flag ++;
                     Add_Key_Fun(gkey_t.key_add_dec_mode);
                  
@@ -336,10 +372,6 @@ static void vTaskStart(void *pvParameters)
                        dec_flag ++;
                        Dec_Key_Fun(gkey_t.key_add_dec_mode);
                  }
-
-               }  
-         }
-         if(gkey_t.key_power==power_on){
             
               power_on_run_handler();
               key_add_dec_set_temp_value_fun();
@@ -368,6 +400,26 @@ static void vTaskStart(void *pvParameters)
               Detected_Fan_Works_State();
               Detected_Ptc_Works_State();
 
+              if(gpro_t.gTimer_exit_mode_long_key > 1 && (key_power_long_sound  == 2 || key_mode_long_sound==2)){
+
+                 if(key_power_long_sound ==2){
+                     power_key_long_conter =0; //clear power key loong flag .
+                     key_power_long_sound = 0;
+                       
+
+                  }
+                  else if(key_mode_long_sound==2){
+                      key_mode_long_sound =0;
+                      mode_key_long_conter =0;
+
+
+
+                  }
+
+
+
+              }
+
             }
             else {
             
@@ -378,10 +430,92 @@ static void vTaskStart(void *pvParameters)
                 wifi_get_beijint_time_handler();
                 MainBoard_Self_Inspection_PowerOn_Fun();
             }
-        
-          }
+           }
+        }
+    }
+}
 
-      }
+/**********************************************************************************************************
+*	函 数 名: vTaskStart
+*	功能说明: 启动任务，也就是最高优先级任务，这里用作按键扫描。
+*	形    参: pvParameters 是在创建该任务时传递的形参
+*	返 回 值: 无
+*   优 先 级: 4  
+**********************************************************************************************************/
+static void vTaskStart(void *pvParameters)
+{
+ 
+     while(1)
+    {
+   
+
+      if(KEY_POWER_VALUE()==KEY_DOWN){
+
+        while(KEY_POWER_VALUE() == KEY_DOWN && power_key_long_conter < 2965500){
+
+               power_key_long_conter++;
+               if(power_key_long_conter > 2950000){
+                   power_key_long_conter = 2965900;
+
+                xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
+                            POWER_LONG_KEY_4,            /* 设置目标任务事件标志位bit0  */
+                            eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
+
+                }
+
+         }
+
+        
+        if(power_key_long_conter < 2950000 ){
+      
+            xTaskNotify(xHandleTaskMsgPro,  /* 目标任务 */
+            POWER_KEY_0,      /* 设置目标任务事件标志位bit0  */
+            eSetBits);  /* 将目标任务的事件标志位与BIT_0进行或操作， 将结果赋值给事件标志位 */
+        }
+
+       }
+       else if(KEY_MODE_VALUE() == KEY_DOWN   ){
+
+        while(KEY_MODE_VALUE() == KEY_DOWN && mode_key_long_conter < 2965500 ){
+          mode_key_long_conter++;
+         if(mode_key_long_conter > 2950000){
+                 
+                  mode_key_long_conter = 2965900;
+               
+               xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
+                         MODE_LONG_KEY_5,            /* 设置目标任务事件标志位bit0  */
+                         eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
+               buzzer_sound();
+
+           }
+
+
+         }
+
+
+        if(mode_key_long_conter < 2950000  ){
+           xTaskNotify(xHandleTaskMsgPro,  /* 目标任务 */
+               MODE_KEY_1,     /* 设置目标任务事件标志位bit0  */
+               eSetBits);  /* 将目标任务的事件标志位与BIT_0进行或操作， 将结果赋值给事件标志位 */
+        }
+
+       }
+      else if(KEY_ADD_VALUE() == KEY_DOWN){
+         xTaskNotify(xHandleTaskMsgPro,  /* 目标任务 */
+                ADD_KEY_3,     /* 设置目标任务事件标志位bit0  */
+                eSetBits);  /* 将目标任务的事件标志位与BIT_0进行或操作， 将结果赋值给事件标志位 */
+               
+     }
+     else if(KEY_DEC_VALUE() == KEY_DOWN){
+        xTaskNotify(xHandleTaskMsgPro,  /* 目标任务 */
+                DEC_KEY_2,     /* 设置目标任务事件标志位bit0  */
+                eSetBits);  /* 将目标任务的事件标志位与BIT_0进行或操作， 将结果赋值给事件标志位 */
+                
+  
+     }
+        
+     vTaskDelay(20);
+    }
 
  }
   
@@ -398,7 +532,7 @@ static void AppTaskCreate (void)
 	
 	xTaskCreate( vTaskMsgPro,     		/* 任务函数  */
                  "vTaskMsgPro",   		/* 任务名    */
-                 128,             		/* 任务栈大小，单位word，也就是4字节 */
+                 256,             		/* 任务栈大小，单位word，也就是4字节 */
                  NULL,           		/* 任务参数  */
                  1,               		/* 任务优先级*/
                  &xHandleTaskMsgPro );  /* 任务句柄  */
@@ -406,96 +540,14 @@ static void AppTaskCreate (void)
 	
 	xTaskCreate( vTaskStart,     		/* 任务函数  */
                  "vTaskStart",   		/* 任务名    */
-                 256,            		/* 任务栈大小，单位word，也就是4字节 */
+                 128,            		/* 任务栈大小，单位word，也就是4字节 */
                  NULL,           		/* 任务参数  */
                  2,              		/* 任务优先级*/
                  &xHandleTaskStart );   /* 任务句柄  */
 }
 
 
-void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin)
-{
-   
-   __HAL_GPIO_EXTI_CLEAR_FALLING_IT(GPIO_Pin);
-   BaseType_t xHigherPriorityTaskWoken = pdFALSE;
- 
-  
- 
-   switch(GPIO_Pin){
 
-   case KEY_POWER_Pin:
-        DISABLE_INT();
-     
-        if(KEY_POWER_VALUE()==KEY_DOWN){
-
-
-     
-
-        xTaskNotifyFromISR(xHandleTaskMsgPro,  /* 目标任务 */
-        POWER_KEY_0,      /* 设置目标任务事件标志位bit0  */
-        eSetBits,  /* 将目标任务的事件标志位与BIT_0进行或操作， 将结果赋值给事件标志位 */
-        &xHigherPriorityTaskWoken);
-
-        /* Èç¹ûxHigherPriorityTaskWoken = pdTRUE£¬ÄÇÃ´ÍË³öÖÐ¶ÏºóÇÐµ½µ±Ç°×î¸ßÓÅÏÈ¼¶ÈÎÎñÖ´ÐÐ */
-        portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
-
-
-        
-
-        }
-       
-            
-       ENABLE_INT();
-   break;
-
-   case KEY_MODE_Pin: //be changed power on of GPIO
-      DISABLE_INT();
-      
-      if(KEY_MODE_VALUE() == KEY_DOWN){
-        xTaskNotifyFromISR(xHandleTaskMsgPro,  /* 目标任务 */
-               MODE_KEY_1,     /* 设置目标任务事件标志位bit0  */
-               eSetBits,  /* 将目标任务的事件标志位与BIT_0进行或操作， 将结果赋值给事件标志位 */
-               &xHigherPriorityTaskWoken);
-
-        /* 如果xHigherPriorityTaskWoken = pdTRUE，那么退出中断后切到当前最高优先级任务执行 */
-        portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
-
-      }
-    
-      ENABLE_INT();
-   
-   break;
-
-
-   case KEY_UP_Pin:
-       DISABLE_INT();
-       if(KEY_ADD_VALUE() == KEY_DOWN){
-         xTaskNotifyFromISR(xHandleTaskMsgPro,  /* 目标任务 */
-                ADD_KEY_3,     /* 设置目标任务事件标志位bit0  */
-                eSetBits,  /* 将目标任务的事件标志位与BIT_0进行或操作， 将结果赋值给事件标志位 */
-                &xHigherPriorityTaskWoken);
-   
-         /* 如果xHigherPriorityTaskWoken = pdTRUE，那么退出中断后切到当前最高优先级任务执行 */
-         portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
-        }
-       ENABLE_INT();
-   break;
-
-   case KEY_DOWN_Pin:
-         DISABLE_INT();
-        if(KEY_DEC_VALUE() == KEY_DOWN){
-        xTaskNotifyFromISR(xHandleTaskMsgPro,  /* 目标任务 */
-                DEC_KEY_2,     /* 设置目标任务事件标志位bit0  */
-                eSetBits,  /* 将目标任务的事件标志位与BIT_0进行或操作， 将结果赋值给事件标志位 */
-                &xHigherPriorityTaskWoken);
-   
-         /* 如果xHigherPriorityTaskWoken = pdTRUE，那么退出中断后切到当前最高优先级任务执行 */
-         portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
-            }
-        ENABLE_INT();
-   break;
-    }
-}
 
 /*********************************************************************
 *

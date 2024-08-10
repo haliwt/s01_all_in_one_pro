@@ -87,9 +87,10 @@ typedef enum mode_key_t{
 
  extern key_fun_t gkey_t;
 
-void power_long_short_key_fun(void);
+void power_long_key_fun(void);
 
-void mode_long_short_key_fun(void);
+void mode_long_key_fun(void);
+
 
 
 void Dec_Key_Fun(uint8_t cmd);
@@ -102,6 +103,11 @@ void key_add_dec_set_temp_value_fun(void);
 void  key_mode_be_pressed_send_data_wifi(void);
 
 void smartphone_power_on_handler(void);
+
+void power_on_key_handler(void);
+
+void mode_key_fun(void);
+
 
 
 #endif 

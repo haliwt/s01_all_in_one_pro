@@ -29,7 +29,7 @@
 
 /* ���Ͷ��� ------------------------------------------------------------------*/
 /************************ DHT11 �������Ͷ���******************************/
-typedef struct
+typedef struct 
 {
 	uint8_t  humi_high8bit;		//ԭʼ���ݣ�ʪ�ȸ�8λ
 	uint8_t  humi_low8bit;	 	//ԭʼ���ݣ�ʪ�ȵ�8λ
@@ -40,7 +40,7 @@ typedef struct
   float    temperature;        //ʵ���¶�  
 } DHT11_Data_TypeDef;
 
-//extern DHT11_Data_TypeDef DHT11;
+extern DHT11_Data_TypeDef DHT11;
 
 
 /* ��չ���� ------------------------------------------------------------------*/

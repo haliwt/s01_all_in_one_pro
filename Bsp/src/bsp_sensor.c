@@ -11,9 +11,9 @@ static void DHT11_Mode_Out_PP(void);
 static uint8_t DHT11_ReadByte(void);
 static void  Dht11_Read_TempHumidity_Handler(DHT11_Data_TypeDef * pdth11);
 
+
+
 DHT11_Data_TypeDef DHT11;
-
-
 
 //锟饺达拷us锟斤拷锟斤拷
 //void delay_us(unsigned long i)
