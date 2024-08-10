@@ -84,7 +84,7 @@ static void vTaskMsgPro(void *pvParameters)
 {
    // MSG_T *ptMsg;
     BaseType_t xResult;
-	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(100); /* 设置最大等待时间为50ms */
+	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(40); /* 设置最大等待时间为100ms */
 	uint32_t ulValue;
     static uint8_t add_flag,dec_flag,smart_phone_sound,key_mode_sound;
     static uint8_t key_power_long_sound ,power_on_sound,key_mode_long_sound;
@@ -129,7 +129,7 @@ static void vTaskMsgPro(void *pvParameters)
 
                 }
                 else{
-                    //gkey_t.power_key_long_counter =1;
+            
                     power_on_sound = 1;
                     power_key_long_conter=0;
                     gpro_t.gTimer_shut_off_backlight =0;
@@ -184,7 +184,7 @@ static void vTaskMsgPro(void *pvParameters)
 
                 }
                 else{
-                    //gkey_t.power_key_long_counter =1;
+                
                     power_on_sound = 1;
                     power_key_long_conter=0;
                     gpro_t.gTimer_shut_off_backlight =0;
@@ -317,9 +317,9 @@ static void vTaskMsgPro(void *pvParameters)
 
                   
                   key_power_long_sound++;
-                   buzzer_sound();
+                   
                    power_long_key_fun();
-                 
+                   buzzer_sound();
              }
              else if(key_mode_sound == 1){
                  key_mode_sound++;

@@ -21,7 +21,7 @@ void power_long_key_fun(void)
 {
 
   
-    gkey_t.power_key_long_counter++;
+
        
          
 
@@ -52,7 +52,7 @@ void power_long_key_fun(void)
    
 void power_on_key_handler(void)
 {
-        gkey_t.power_key_long_counter=0;
+        
 
       
            if(gkey_t.key_power==power_off){
@@ -84,7 +84,7 @@ void smartphone_power_on_handler(void)
 {
 
       
-      gkey_t.power_key_long_counter=0;
+  
 
       gkey_t.key_power=power_on;
       gkey_t.key_mode = disp_timer_timing;
