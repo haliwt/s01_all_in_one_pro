@@ -451,11 +451,11 @@ static void vTaskStart(void *pvParameters)
 
       if(KEY_POWER_VALUE()==KEY_DOWN){
 
-        while(KEY_POWER_VALUE() == KEY_DOWN && power_key_long_conter < 2965500){
+        while(KEY_POWER_VALUE() == KEY_DOWN && power_key_long_conter < 296001){
 
                power_key_long_conter++;
-               if(power_key_long_conter > 2950000){
-                   power_key_long_conter = 2965900;
+               if(power_key_long_conter > 295000){
+                   power_key_long_conter =296009;
 
                 xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
                             POWER_LONG_KEY_4,            /* 设置目标任务事件标志位bit0  */
@@ -466,7 +466,7 @@ static void vTaskStart(void *pvParameters)
          }
 
         
-        if(power_key_long_conter < 2950000 ){
+        if(power_key_long_conter < 295000){
       
             xTaskNotify(xHandleTaskMsgPro,  /* 目标任务 */
             POWER_KEY_0,      /* 设置目标任务事件标志位bit0  */
@@ -476,11 +476,11 @@ static void vTaskStart(void *pvParameters)
        }
        else if(KEY_MODE_VALUE() == KEY_DOWN   ){
 
-        while(KEY_MODE_VALUE() == KEY_DOWN && mode_key_long_conter < 2965500 ){
+        while(KEY_MODE_VALUE() == KEY_DOWN && mode_key_long_conter < 296001 ){
           mode_key_long_conter++;
-         if(mode_key_long_conter > 2950000){
+         if(mode_key_long_conter > 295000){
                  
-                  mode_key_long_conter = 2965900;
+                  mode_key_long_conter = 296009;
                
                xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
                          MODE_LONG_KEY_5,            /* 设置目标任务事件标志位bit0  */
@@ -493,7 +493,7 @@ static void vTaskStart(void *pvParameters)
          }
 
 
-        if(mode_key_long_conter < 2950000  ){
+        if(mode_key_long_conter < 295000){
            xTaskNotify(xHandleTaskMsgPro,  /* 目标任务 */
                MODE_KEY_1,     /* 设置目标任务事件标志位bit0  */
                eSetBits);  /* 将目标任务的事件标志位与BIT_0进行或操作， 将结果赋值给事件标志位 */
