@@ -348,7 +348,7 @@ void Add_Key_Fun(uint8_t cmd)
 		          gpro_t.set_timer_timing_hours=0;//run_t.dispTime_hours =0;
 		                
              }
-	//display hours
+	    //display hours
         glcd_t.number5_low =  gpro_t.set_timer_timing_hours / 10 ;
         //glcd_t.number5_high =  gpro_t.set_timer_timing_hours / 10 ;
         glcd_t.number5_high = glcd_t.number5_low ;
@@ -377,15 +377,13 @@ void Add_Key_Fun(uint8_t cmd)
 void key_add_dec_set_temp_value_fun(void)
 {
 
-    if(gkey_t.set_temp_value_be_pressed == 1){
+    // 如果gkey_t结构体中的set_temp_value_be_pressed成员的值为1
+if(gkey_t.set_temp_value_be_pressed == 1){
        gkey_t.set_temp_value_be_pressed ++;
         gpro_t.gTimer_run_dht11=0; 
         gctl_t.gTimer_compare_ptc_value=0;
        LCD_Disp_Temperature_Value_Handler();
-
-    
-
-}
+    }
 }
     
  
