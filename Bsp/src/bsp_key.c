@@ -116,9 +116,9 @@ void mode_long_key_fun(void)
     
 
 
-        gkey_t.key_mode_long_counter++;
+        
   
-            gkey_t.key_mode_long_counter = 150;
+   
 
             gkey_t.key_mode = mode_set_timer;
            gkey_t.key_add_dec_mode = mode_set_timer;
@@ -139,15 +139,15 @@ void mode_key_fun(void)
 {
   
 
-        gkey_t.key_mode_long_counter=0;
+     
 
      
          if(gkey_t.key_mode  == disp_works_timing){
              gkey_t.key_mode  = disp_timer_timing;
            
-               gctl_t.ai_flag = 0; // DON'T DISP AI ICON
+             gctl_t.ai_flag = 0; // DON'T DISP AI ICON
                //counter exit timing this "mode_set_timer"
-            gkey_t.key_mode_switch_flag = 1;
+            gkey_t.key_mode_switch_flag++;
             gkey_t.key_add_dec_mode = set_temp_value_item;
             
              //LCD_Disp_Timer_Timing_Init();
@@ -165,8 +165,8 @@ void mode_key_fun(void)
            
 
         }
-        else{
-            gkey_t.key_mode_switch_flag = 1;
+        else if( gkey_t.key_mode  == disp_timer_timing){
+            gkey_t.key_mode_switch_flag++;
             gkey_t.key_mode  = disp_works_timing;
             gkey_t.key_add_dec_mode = set_temp_value_item;
             gctl_t.ai_flag = 1; // AI DISPLAY AI ICON

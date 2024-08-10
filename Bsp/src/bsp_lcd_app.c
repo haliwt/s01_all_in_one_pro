@@ -112,7 +112,7 @@ void Display_Works_Timing(void)
 
      }
     
-
+      LCD_Number_FiveSixSeveEight_Hours(gpro_t.disp_works_hours_value,gpro_t.disp_works_minutes_value);
    
 //        glcd_t.number5_low = gpro_t.disp_works_hours_value / 10;
 //		glcd_t.number5_high = gpro_t.disp_works_hours_value / 10;
@@ -128,7 +128,7 @@ void Display_Works_Timing(void)
 //
 //		glcd_t.number8_low = gpro_t.disp_works_minutes_value  % 10;
 //		glcd_t.number8_high = gpro_t.disp_works_minutes_value % 10;
-        Display_LCD_Works_Timing();
+      
 
    }
 }
@@ -286,30 +286,12 @@ void Display_Timer_Timing(void)
     			gpro_t.set_timer_timing_minutes=0;
     			gkey_t.key_power = power_off;
                 gpro_t.power_off_flag = 1;
-    			//gkey_t.gTimer_power_off_run_times=0;
+    			
              
            
-			
-			
-	      }
+		}
 
-         //display hours timing
-//	     glcd_t.number5_low = gpro_t.set_timer_timing_hours / 10;
-//		 glcd_t.number5_high = gpro_t.set_timer_timing_hours / 10;
-//	 
-//	 
-//		 glcd_t.number6_low = gpro_t.set_timer_timing_hours   % 10;
-//		 glcd_t.number6_high = gpro_t.set_timer_timing_hours % 10;
-//		 
-//	      //display minutes 
-//		 glcd_t.number7_low = gpro_t.set_timer_timing_minutes / 10;
-//		 glcd_t.number7_high = gpro_t.set_timer_timing_minutes / 10;
-//		 
-//							
-//		 glcd_t.number8_low = gpro_t.set_timer_timing_minutes   % 10;
-//		 glcd_t.number8_high = gpro_t.set_timer_timing_minutes % 10;
 
-        // LCD_Disp_Timer_Timing();
          LCD_Number_FiveSixSeveEight_Hours(gpro_t.set_timer_timing_hours,gpro_t.set_timer_timing_minutes);
 		    
      }
@@ -389,7 +371,7 @@ void Set_LCD_Disp_Timer_Value(void)
 void Display_WorksTimingr_Handler(uint8_t sel_item)
 {
 
-   static uint8_t switch_counter;
+   static uint8_t switch_counter,default_timing = 0xff,default_timer = 0xff,switch_1_2;
  
     switch(sel_item){
 
@@ -403,9 +385,19 @@ void Display_WorksTimingr_Handler(uint8_t sel_item)
             if(switch_counter>0){
                switch_counter =0;
               }
-            disp_ai_iocn();
+            
 
-            Display_Works_Timing();
+           
+
+           if( default_timing != gkey_t.key_mode_switch_flag || switch_1_2 == 2){
+                default_timing  = gkey_t.key_mode_switch_flag;
+                switch_1_2 = 1;      
+
+               LCD_Number_FiveSixSeveEight_Hours(gpro_t.disp_works_hours_value,gpro_t.disp_works_minutes_value);
+               disp_ai_iocn();
+
+            }
+             Display_Works_Timing();
             
 
         }
@@ -423,8 +415,20 @@ void Display_WorksTimingr_Handler(uint8_t sel_item)
       if(gctl_t.fan_warning ==0 && gctl_t.ptc_warning==0 ){
             if(gkey_t.set_timer_timing_success ==1){
                gctl_t.ai_flag = 0; // don't  DISPLAY AI ICON
-               disp_ai_iocn();
-               Display_Timer_Timing();
+              
+              
+
+               if(default_timer != gpro_t.disp_timer_switch_time_flag || switch_1_2 == 1 ){
+
+                    default_timer  = gpro_t.disp_timer_switch_time_flag;
+
+                    switch_1_2  =2;
+                    LCD_Number_FiveSixSeveEight_Hours(gpro_t.set_timer_timing_hours,gpro_t.set_timer_timing_minutes);
+
+                     disp_ai_iocn();
+               }
+
+                Display_Timer_Timing();
              
 
             }
@@ -432,19 +436,19 @@ void Display_WorksTimingr_Handler(uint8_t sel_item)
 
                
                 gctl_t.ai_flag =0;
-                LCD_Disp_Timer_Timing_Init();
+                //LCD_Disp_Timer_Timing_Init();
 
-                switch_counter ++;
-                if( switch_counter> 200){
-                    gpro_t.disp_timer_switch_time_flag ++ ;
-                    gkey_t.key_mode = disp_works_timing;
+                LCD_Number_FiveSixSeveEight_Hours(gpro_t.set_timer_timing_hours,gpro_t.set_timer_timing_minutes);
+
+        
+                 gpro_t.disp_timer_switch_time_flag ++ ;
+                 gkey_t.key_mode = disp_works_timing;
                   
 
                }
                
-            }
-       }
-        else{
+        }
+         else{
 
             LCD_Fault_Numbers_Code();
 
@@ -470,6 +474,7 @@ void Display_WorksTimingr_Handler(uint8_t sel_item)
                 gkey_t.key_mode =disp_works_timing;
                 gpro_t.first_disp_work_time =0; //at once display works times of value ;
                 gkey_t.key_add_dec_mode = set_temp_value_item;
+                gpro_t.disp_timer_switch_time_flag ++ ;
                 //LCD_Disp_Works_Timing_Init();
                 LCD_Number_FiveSixSeveEight_Hours(gpro_t.disp_works_hours_value,gpro_t.disp_works_minutes_value);
                 disp_ai_iocn();
@@ -481,17 +486,17 @@ void Display_WorksTimingr_Handler(uint8_t sel_item)
                 gpro_t.gTimer_timer_Counter =0; //start recoder timer timing is "0",from "0" start
 
                 gctl_t.ai_flag = 0;
-              
+                gpro_t.disp_timer_switch_time_flag ++ ;
                 gkey_t.key_mode = disp_timer_timing;
                 gkey_t.key_add_dec_mode = set_temp_value_item;
 
-                 LCD_Disp_Timer_Timing_Init();
-                
+                // LCD_Disp_Timer_Timing_Init();
+                 LCD_Number_FiveSixSeveEight_Hours(gpro_t.set_timer_timing_hours,gpro_t.set_timer_timing_minutes);
      
 
                 if(wifi_link_net_state()==1){
                     MqttData_Publish_SetState(2); //ai-mode = 2 is ->timer model  = 2, 
-                    osDelay(200);
+                    osDelay(100);
                 }
                
             }

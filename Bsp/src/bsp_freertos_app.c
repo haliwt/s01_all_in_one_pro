@@ -204,7 +204,7 @@ static void vTaskMsgPro(void *pvParameters)
 
                   }
                   else{
-                     //gkey_t.key_mode_long_counter=1;
+                  
                      key_mode_sound =1;
                      power_key_long_conter=0;
                      mode_key_long_conter = 0;
