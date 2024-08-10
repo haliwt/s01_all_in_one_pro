@@ -470,18 +470,22 @@ void LCD_Number_FiveSixSeveEight_Hours(uint8_t hours_n,uint8_t minutes_n)
    static uint8_t alternate_flag;
 
     glcd_t.number5_low = hours_n  /10 ;
+  
 	glcd_t.number5_high = glcd_t.number5_low;
 
 
 	glcd_t.number6_low = hours_n  %10 ;
+   
 	glcd_t.number6_high = glcd_t.number6_low ;
 
-
+    //display minutes
     glcd_t.number7_low = minutes_n / 10 ;
+   
 	glcd_t.number7_high =  glcd_t.number7_low ;
 
 
 	glcd_t.number8_low = minutes_n % 10 ;
+    
 	glcd_t.number8_high = glcd_t.number8_low ;
    
     //FAN LEAF T14
@@ -1350,60 +1354,59 @@ void LCD_Timer_Colon_Flicker(void)
 {
 
    if(gkey_t.key_mode != mode_set_timer){
+
    if(gctl_t.ptc_warning ==0 && gctl_t.fan_warning ==0){
-   if(glcd_t.gTimer_colon_blink > 4 && glcd_t.gTimer_colon_blink < 7){
+   if(glcd_t.gTimer_colon_blink < 40){ //20 * 10
 
         
       
-        if(gkey_t.key_mode == mode_set_timer && gpro_t.gTimer_timer_led_blink < 1){
+        //if(gpro_t.gTimer_timer_led_blink < 1){
 
-           
-           TM1723_Write_Display_Data(0xCB,COLON_SYMBOL+lcdNumber6_Low[glcd_t.number6_low]+lcdNumber7_High[glcd_t.number7_high]);//display "6,7"
-        
-
-        }
-        else if(gkey_t.key_mode == mode_set_timer && gpro_t.gTimer_timer_led_blink> 0 && gpro_t.gTimer_timer_led_blink < 2){
-
-            glcd_t.number6_low  = gpro_t.set_timer_timing_hours% 10; //
-            glcd_t.number7_high =  0;
-            
-           TM1723_Write_Display_Data(0xCB,COLON_SYMBOL+lcdNumber6_Low[glcd_t.number6_low]+lcdNumber7_High[glcd_t.number7_high]);//display "6,7"
+           if(gkey_t.key_mode  == disp_timer_timing){
+              TM1723_Write_Display_Data(0xCB,COLON_SYMBOL+lcdNumber6_Low[glcd_t.number6_low]+lcdNumber7_High[glcd_t.number7_high]);//display "6,7"
+           }
+           else if(gkey_t.key_mode  == disp_works_timing){
 
 
-        }
-        else if(gkey_t.key_mode != mode_set_timer){
-          
-           TM1723_Write_Display_Data(0xCB,COLON_SYMBOL+lcdNumber6_Low[glcd_t.number6_low]+lcdNumber7_High[glcd_t.number7_high]);//display "6,7"
-        }
+           }
+
+       // }
+//        else if(gpro_t.gTimer_timer_led_blink> 0 && gpro_t.gTimer_timer_led_blink < 2){
+//
+//           
+//            if(gkey_t.key_mode  == disp_timer_timing){
+//            
+//               TM1723_Write_Display_Data(0xCB,COLON_SYMBOL+lcdNumber6_Low[glcd_t.number6_low]+lcdNumber7_High[glcd_t.number7_high]);//display "6,7"
+//            }
+//            else if(gkey_t.key_mode  == disp_works_timing){
+//
+//
+//           }
+//
+//        }
+       
           
         
    
    }
-   else if(glcd_t.gTimer_colon_blink > 6  && glcd_t.gTimer_colon_blink < 9){
+   else if(glcd_t.gTimer_colon_blink > 39  && glcd_t.gTimer_colon_blink < 81){
 
     
-        if(gkey_t.key_mode == mode_set_timer && gpro_t.gTimer_timer_led_blink < 1){
+       // if(gpro_t.gTimer_timer_led_blink < 1){
            
- 
-          TM1723_Write_Display_Data(0xCB,NO_COLON_SYMBOL+lcdNumber6_Low[glcd_t.number6_low]+lcdNumber7_High[glcd_t.number7_high]);//display "6,7"
+          if(gkey_t.key_mode  == disp_timer_timing){
+               TM1723_Write_Display_Data(0xCB,NO_COLON_SYMBOL+lcdNumber6_Low[glcd_t.number6_low]+lcdNumber7_High[glcd_t.number7_high]);//display "6,7"
+            }
+            else if(gkey_t.key_mode  == disp_works_timing){
 
 
-         }
-         else if(gkey_t.key_mode == mode_set_timer && gpro_t.gTimer_timer_led_blink> 0 && gpro_t.gTimer_timer_led_blink < 2){
+           }
 
-            glcd_t.number6_low  = gpro_t.set_timer_timing_hours% 10; //
-            glcd_t.number7_high =  0;
-            
-           TM1723_Write_Display_Data(0xCB,COLON_SYMBOL+lcdNumber6_Low[glcd_t.number6_low]+lcdNumber7_High[glcd_t.number7_high]);//display "6,7"
-
-
-        }
-        else if(gkey_t.key_mode != mode_set_timer){
          
-            TM1723_Write_Display_Data(0xCB,NO_COLON_SYMBOL+lcdNumber6_Low[glcd_t.number6_low]+lcdNumber7_High[glcd_t.number7_high]);//display "6,7"
-      }
-   } 
-   else if(glcd_t.gTimer_colon_blink > 8){
+         
+
+   }
+   else if(glcd_t.gTimer_colon_blink > 80){
 
       glcd_t.gTimer_colon_blink =0;
 

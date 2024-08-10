@@ -150,7 +150,9 @@ void mode_key_fun(void)
             gkey_t.key_mode_switch_flag = 1;
             gkey_t.key_add_dec_mode = set_temp_value_item;
             
-             LCD_Disp_Timer_Timing_Init();
+             //LCD_Disp_Timer_Timing_Init();
+            LCD_Number_FiveSixSeveEight_Hours(gpro_t.set_timer_timing_hours,gpro_t.set_timer_timing_minutes);
+             osDelay(100);
              disp_ai_iocn();
            
           
@@ -169,7 +171,9 @@ void mode_key_fun(void)
             gkey_t.key_add_dec_mode = set_temp_value_item;
             gctl_t.ai_flag = 1; // AI DISPLAY AI ICON
            
-            LCD_Disp_Works_Timing_Init();
+    
+            LCD_Number_FiveSixSeveEight_Hours(gpro_t.disp_works_hours_value,gpro_t.disp_works_minutes_value);
+             osDelay(100);
             disp_ai_iocn();
             gkey_t.key_mode_be_pressed = 1;
              

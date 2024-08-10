@@ -84,7 +84,7 @@ static void vTaskMsgPro(void *pvParameters)
 {
    // MSG_T *ptMsg;
     BaseType_t xResult;
-	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(30); /* 设置最大等待时间为500ms */
+	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(100); /* 设置最大等待时间为50ms */
 	uint32_t ulValue;
     static uint8_t add_flag,dec_flag,smart_phone_sound,key_mode_sound;
     static uint8_t key_power_long_sound ,power_on_sound,key_mode_long_sound;
@@ -323,8 +323,9 @@ static void vTaskMsgPro(void *pvParameters)
              }
              else if(key_mode_sound == 1){
                  key_mode_sound++;
+                  
+                  mode_key_fun();
                   buzzer_sound();
-                 mode_key_fun();
              }
              else if(key_mode_long_sound == 1){
 
@@ -528,7 +529,7 @@ static void AppTaskCreate (void)
                  "vTaskMsgPro",   		/* 任务名    */
                  256,             		/* 任务栈大小，单位word，也就是4字节 */
                  NULL,           		/* 任务参数  */
-                 1,               		/* 任务优先级*/
+                 2,               		/* 任务优先级*/
                  &xHandleTaskMsgPro );  /* 任务句柄  */
 	
 	
@@ -536,7 +537,7 @@ static void AppTaskCreate (void)
                  "vTaskStart",   		/* 任务名    */
                  128,            		/* 任务栈大小，单位word，也就是4字节 */
                  NULL,           		/* 任务参数  */
-                 2,              		/* 任务优先级*/
+                 1,              		/* 任务优先级*/
                  &xHandleTaskStart );   /* 任务句柄  */
 }
 
