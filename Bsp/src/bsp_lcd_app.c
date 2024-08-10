@@ -179,7 +179,7 @@ void Display_LCD_Works_Timing(void)
 {
 
 
-    LCD_Number_FiveSixSeveEight_Hours();
+     LCD_Number_FiveSixSeveEight_Hours(gpro_t.disp_works_hours_value,gpro_t.disp_works_minutes_value);
 
 
 
@@ -188,23 +188,23 @@ void LCD_Disp_Timer_Timing_Init(void)
 {
 
   
-        glcd_t.number5_low = gpro_t.set_timer_timing_hours / 10;
-		 glcd_t.number5_high = gpro_t.set_timer_timing_hours / 10;
-	 
-	 
-		 glcd_t.number6_low = gpro_t.set_timer_timing_hours   % 10;
-		 glcd_t.number6_high = gpro_t.set_timer_timing_hours % 10;
-		 
-	      //display minutes 
-		 glcd_t.number7_low = gpro_t.set_timer_timing_minutes / 10;
-		 glcd_t.number7_high = gpro_t.set_timer_timing_minutes / 10;
-		 
-							
-		 glcd_t.number8_low = gpro_t.set_timer_timing_minutes   % 10;
-		 glcd_t.number8_high = gpro_t.set_timer_timing_minutes % 10;
+//        glcd_t.number5_low = gpro_t.set_timer_timing_hours / 10;
+//		 glcd_t.number5_high = gpro_t.set_timer_timing_hours / 10;
+//	 
+//	 
+//		 glcd_t.number6_low = gpro_t.set_timer_timing_hours   % 10;
+//		 glcd_t.number6_high = gpro_t.set_timer_timing_hours % 10;
+//		 
+//	      //display minutes 
+//		 glcd_t.number7_low = gpro_t.set_timer_timing_minutes / 10;
+//		 glcd_t.number7_high = gpro_t.set_timer_timing_minutes / 10;
+//		 
+//							
+//		 glcd_t.number8_low = gpro_t.set_timer_timing_minutes   % 10;
+//		 glcd_t.number8_high = gpro_t.set_timer_timing_minutes % 10;
 
         // LCD_Disp_Timer_Timing();
-         LCD_Number_FiveSixSeveEight_Hours();
+         LCD_Number_FiveSixSeveEight_Hours(gpro_t.set_timer_timing_hours,gpro_t.set_timer_timing_minutes);
 		    
 
 
@@ -291,23 +291,23 @@ void Display_Timer_Timing(void)
 	      }
 
          //display hours timing
-	     glcd_t.number5_low = gpro_t.set_timer_timing_hours / 10;
-		 glcd_t.number5_high = gpro_t.set_timer_timing_hours / 10;
-	 
-	 
-		 glcd_t.number6_low = gpro_t.set_timer_timing_hours   % 10;
-		 glcd_t.number6_high = gpro_t.set_timer_timing_hours % 10;
-		 
-	      //display minutes 
-		 glcd_t.number7_low = gpro_t.set_timer_timing_minutes / 10;
-		 glcd_t.number7_high = gpro_t.set_timer_timing_minutes / 10;
-		 
-							
-		 glcd_t.number8_low = gpro_t.set_timer_timing_minutes   % 10;
-		 glcd_t.number8_high = gpro_t.set_timer_timing_minutes % 10;
+//	     glcd_t.number5_low = gpro_t.set_timer_timing_hours / 10;
+//		 glcd_t.number5_high = gpro_t.set_timer_timing_hours / 10;
+//	 
+//	 
+//		 glcd_t.number6_low = gpro_t.set_timer_timing_hours   % 10;
+//		 glcd_t.number6_high = gpro_t.set_timer_timing_hours % 10;
+//		 
+//	      //display minutes 
+//		 glcd_t.number7_low = gpro_t.set_timer_timing_minutes / 10;
+//		 glcd_t.number7_high = gpro_t.set_timer_timing_minutes / 10;
+//		 
+//							
+//		 glcd_t.number8_low = gpro_t.set_timer_timing_minutes   % 10;
+//		 glcd_t.number8_high = gpro_t.set_timer_timing_minutes % 10;
 
         // LCD_Disp_Timer_Timing();
-         LCD_Number_FiveSixSeveEight_Hours();
+         LCD_Number_FiveSixSeveEight_Hours(gpro_t.set_timer_timing_hours,gpro_t.set_timer_timing_minutes);
 		    
      }
 
@@ -328,7 +328,8 @@ void Display_Timer_Timing(void)
 void LCD_Disp_Set_Timer_Timing(void)
 {
 
-   LCD_Number_FiveSixSeveEight_Hours();
+   //LCD_Number_FiveSixSeveEight_Hours();
+   LCD_Number_FiveSixSeveEight_Hours(gpro_t.set_timer_timing_hours,gpro_t.set_timer_timing_minutes);
    
   
 

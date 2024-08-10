@@ -210,28 +210,47 @@ void wifi_get_beijint_time_handler(void)
      }
 
   clear_rx_copy_data();
+
+  switch(get_beijing_flag){
+
+
+  case 0:
+
+
   if(wifi_link_net_state()==1 && gpro_t.gTimer_get_data_from_tencent_data > 9){
        
                    gpro_t.gTimer_get_data_from_tencent_data =0;
                    flag_switch++;
-                   Subscriber_Data_FromCloud_Handler();
-                   osDelay(200);//HAL_Delay(200)
-    
-             
-                 if(flag_switch > 1 && gpro_t.gPower_On == power_off){
-                    flag_switch=0;
-                   // property_topic_publish(); 
-                    Update_Dht11_Totencent_Value();
-                    osDelay(200);//HAL_Delay(200)
+                   if(flag_switch ==1){
+                       Subscriber_Data_FromCloud_Handler();
+                       osDelay(100);//HAL_Delay(200)
+                       get_beijing_flag =1;
+                    }
+                   else if(flag_switch > 1 && gpro_t.gPower_On == power_off){
+                        flag_switch=0;
+                       // property_topic_publish(); 
+                        Update_Dht11_Totencent_Value();
+                        osDelay(200);//HAL_Delay(200)
+                        get_beijing_flag =1;
 
-                 }
+                   }
+                   else{
+
+                       flag_switch=0;
+                       get_beijing_flag =1;
+
+
+                   }
        
     }
+    else 
+       get_beijing_flag =1;
 
-    switch(get_beijing_flag){
+
+  break;
 
 
-   case 0:
+   case 1:
 
         if(wifi_t.gTimer_get_beijing_time > 100){
 
@@ -240,8 +259,8 @@ void wifi_get_beijint_time_handler(void)
           if(wifi_link_net_state()==1){
 
      
-    		    get_beijing_flag = 1;
-                beijing_step =1;
+    		    get_beijing_flag = 2;
+         
                 alternate_flag++;
                 wifi_t.linking_tencent_cloud_doing  =0; //receive from tencent command state .
                
@@ -258,17 +277,14 @@ void wifi_get_beijint_time_handler(void)
       break;
 
 
-      case 1:
+      case 2:
 
 
-	    
-	   
-
-	   if(gctl_t.get_beijing_time_success == 0){
+	  if(gctl_t.get_beijing_time_success == 0){
 		
 
-         get_beijing_flag = 2;
-	      
+         get_beijing_flag = 3;
+	     beijing_step =0;
 	
 	
 		wifi_t.get_rx_beijing_time_enable=0;//disenable get beijing timing
@@ -285,8 +301,9 @@ void wifi_get_beijint_time_handler(void)
 		
 			wifi_t.get_rx_beijing_time_enable=0;//disenable get beijing timing
 		
-		    get_beijing_flag = 2;
-			
+		    get_beijing_flag = 3;
+			beijing_step =0;
+	
 
         }
 		else{
@@ -297,14 +314,16 @@ void wifi_get_beijint_time_handler(void)
 		}
 
 	   }
-
+      
      
     break;
 
 
-     case 2:
+     case 3:
 
-         if(beijing_step ==1){
+     switch(beijing_step){
+
+        case 0:
 
             //disable publish data to tencent cloud.
             gpro_t.gTimer_get_data_from_tencent_data=0;
@@ -317,10 +336,14 @@ void wifi_get_beijint_time_handler(void)
     		
 
             wifi_t.link_beijing_times_flag ++;
-            beijing_step =2;
+            beijing_step =1;
 
-           }
-           else if(wifi_t.gTimer_read_beijing_time > 0   && beijing_step ==2 ){//
+           
+         break;
+
+         case 1:
+     
+           if(wifi_t.gTimer_read_beijing_time > 0){//
     		
             wifi_t.gTimer_read_beijing_time=0;
              //disable publish data to tencent cloud.
@@ -334,10 +357,15 @@ void wifi_get_beijint_time_handler(void)
     		HAL_Delay(20);
             
     		wifi_t.gTimer_read_beijing_time=0;
-             beijing_step =3;
+             beijing_step =2;
           
             }
-            else if(beijing_step ==3){
+
+
+          break;
+
+          case 2:
+        
 
                 wifi_t.real_hours = (wifi_t.wifi_data[41]-0x30)*10 + wifi_t.wifi_data[42]-0x30;
                 wifi_t.real_minutes =(wifi_t.wifi_data[44]-0x30)*10 + wifi_t.wifi_data[45]-0x30;
@@ -364,22 +392,9 @@ void wifi_get_beijint_time_handler(void)
                     gctl_t.get_beijing_time_success = 1; //WT.2024.04.25
                     if(gkey_t.key_mode == disp_works_timing  && gctl_t.ai_flag == 1){
 
-                         glcd_t.number5_low = gpro_t.disp_works_hours_value  /10 ;
-                		glcd_t.number5_high = gpro_t.disp_works_hours_value /10;
+                      
 
-
-                		glcd_t.number6_low = gpro_t.disp_works_hours_value  %10 ;
-                		glcd_t.number6_high = gpro_t.disp_works_hours_value %  10 ;
-
-
-                        glcd_t.number7_low = gpro_t.disp_works_minutes_value / 10 ;
-                		glcd_t.number7_high = gpro_t.disp_works_minutes_value / 10 ;
-
-
-                		glcd_t.number8_low = gpro_t.disp_works_minutes_value  % 10 ;
-                		glcd_t.number8_high = gpro_t.disp_works_minutes_value % 10 ;
-                        
-                        LCD_Number_FiveSixSeveEight_Hours();
+                         LCD_Number_FiveSixSeveEight_Hours(gpro_t.disp_works_hours_value,gpro_t.disp_works_minutes_value);
 
                     }
                    
@@ -397,8 +412,9 @@ void wifi_get_beijint_time_handler(void)
             get_beijing_flag = 0;
 
             }
+         
+         break;
        }
-
     break;
 
 

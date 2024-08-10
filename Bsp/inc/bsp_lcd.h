@@ -124,7 +124,7 @@ extern lcd_ref glcd_t;
 void LcdDisp_Init(void);
 
 
-void Lcd_Display_Detials(void);
+
 
 void LCD_Display_Wind_Icon_Handler(void);
 
@@ -152,7 +152,7 @@ void Disp_HumidityTemp_Value(void);
 
 
 
-void LCD_Number_FiveSixSeveEight_Hours(void);
+void LCD_Number_FiveSixSeveEight_Hours(uint8_t numbers,uint8_t number2);
 
 
 void LCD_Wind_Run_Icon(uint8_t speed_valu);
@@ -197,6 +197,8 @@ void numbers_six_seven_init(void);
 
 void LCD_Disp_Temperature_Value_Handler(void);
 
+
+void LCD_disp_default_FiveSixSeveEight_Codes(void);
 
 #endif 
 

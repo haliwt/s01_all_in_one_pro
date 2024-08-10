@@ -485,14 +485,8 @@ static void vTaskStart(void *pvParameters)
                xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
                          MODE_LONG_KEY_5,            /* 设置目标任务事件标志位bit0  */
                          eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
-              
-
-           }
-
-
-         }
-
-
+            }
+        }
         if(mode_key_long_conter < 895000){
            xTaskNotify(xHandleTaskMsgPro,  /* 目标任务 */
                MODE_KEY_1,     /* 设置目标任务事件标志位bit0  */
