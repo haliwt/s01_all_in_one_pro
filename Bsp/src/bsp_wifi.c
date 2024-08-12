@@ -282,6 +282,10 @@ void wifi_get_beijint_time_handler(void)
              }
 	
        }
+       else{
+          
+         get_beijing_flag =0;
+       }
 
       break;
 

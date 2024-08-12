@@ -620,7 +620,7 @@ static void power_on_init_function(void)
     gpro_t.set_timer_timing_hours =0 ;
     gpro_t.set_timer_timing_minutes =0;
 
-     if(wifi_t.get_beijing_timing_success ==0 || wifi_link_net_state()==0){
+     if(gctl_t.get_beijing_time_success ==0 || wifi_link_net_state()==0){
           gpro_t.disp_works_minutes_value=0;
           gpro_t.disp_works_hours_value =0;
           gpro_t.gTimer_works_counter_sencods =0;
@@ -659,7 +659,7 @@ static void power_on_init_function(void)
  
     Disp_HumidityTemp_Value();
 
-  //  Display_LCD_Works_Timing();
+   // Display_LCD_Works_Timing(); //WT.EDIT 2024.08.12 
    
 
     //fan on
@@ -685,15 +685,15 @@ static void power_on_init_function(void)
 void Detected_Fan_Works_State(void)
 {
     if(gpro_t.gTimer_run_adc > 13 && gctl_t.interval_stop_run_flag==0){ //2 minute 180s
-				gpro_t.gTimer_run_adc=0;
+		gpro_t.gTimer_run_adc=0;
 
-                if( gctl_t.interval_stop_run_flag  ==0){
-				   Get_Fan_Adc_Fun(ADC_CHANNEL_0,20);
-                }
-				
+        if( gctl_t.interval_stop_run_flag  ==0){
+		   Get_Fan_Adc_Fun(ADC_CHANNEL_0,20);
+        }
+		
 	               
 
-		 }
+   }
 
 
 }
