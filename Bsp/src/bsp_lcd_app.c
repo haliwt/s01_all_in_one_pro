@@ -114,57 +114,13 @@ void Display_Works_Timing(void)
     
       LCD_Number_FiveSixSeveEight_Hours(gpro_t.disp_works_hours_value,gpro_t.disp_works_minutes_value);
    
-//        glcd_t.number5_low = gpro_t.disp_works_hours_value / 10;
-//		glcd_t.number5_high = gpro_t.disp_works_hours_value / 10;
-//
-//
-//		glcd_t.number6_low = gpro_t.disp_works_hours_value  % 10;
-//		glcd_t.number6_high = gpro_t.disp_works_hours_value % 10;
-//
-//
-//        glcd_t.number7_low = gpro_t.disp_works_minutes_value / 10;
-//		glcd_t.number7_high = gpro_t.disp_works_minutes_value / 10;
-//
-//
-//		glcd_t.number8_low = gpro_t.disp_works_minutes_value  % 10;
-//		glcd_t.number8_high = gpro_t.disp_works_minutes_value % 10;
+
       
 
    }
 }
 
-#if 0
-    if(( minutes_change_flag != gpro_t.disp_works_minutes_value) || gpro_t.disp_timer_switch_time_flag >0){
- 
-         if(minutes_change_flag != gpro_t.disp_works_minutes_value)minutes_change_flag = gpro_t.disp_works_minutes_value;
 
-         if(gpro_t.disp_timer_switch_time_flag >0) gpro_t.disp_timer_switch_time_flag=0;
-         
-        glcd_t.number5_low = gpro_t.disp_works_hours_value / 10;
-		glcd_t.number5_high = gpro_t.disp_works_hours_value / 10;
-
-
-		glcd_t.number6_low = gpro_t.disp_works_hours_value  % 10;
-		glcd_t.number6_high = gpro_t.disp_works_hours_value % 10;
-
-
-        glcd_t.number7_low = gpro_t.disp_works_minutes_value / 10;
-		glcd_t.number7_high = gpro_t.disp_works_minutes_value / 10;
-
-
-		glcd_t.number8_low = gpro_t.disp_works_minutes_value  % 10;
-		glcd_t.number8_high = gpro_t.disp_works_minutes_value % 10;
-        Display_LCD_Works_Timing();
-
-
-
-
-   }
-
-   
-
-}
-#endif 
 
 
 /**********************************************************************************************************
@@ -210,48 +166,6 @@ void LCD_Disp_Timer_Timing_Init(void)
 
 }
 
-
-/**********************************************************************************************************
-*
-*	Function Name: void Display_Works_Timing(void)
-*	Function: 
-*	Input Ref: 
-*	Return Ref: 
-*
-**********************************************************************************************************/
-#if 0
-void LCD_Disp_Works_Timing_Init(void)
-{
-
-       gctl_t.ai_flag = 1;
-
-   
-//      glcd_t.number5_low = gpro_t.disp_works_hours_value / 10;
-//	  glcd_t.number5_high = gpro_t.disp_works_hours_value / 10;
-//
-//
-//		glcd_t.number6_low = gpro_t.disp_works_hours_value  % 10;
-//		glcd_t.number6_high = gpro_t.disp_works_hours_value % 10;
-//		
-//
-//	
-//	 
-//		  glcd_t.number7_low = gpro_t.disp_works_minutes_value / 10;
-//		  glcd_t.number7_high = gpro_t.disp_works_minutes_value / 10;
-//		
-//						   
-//		  glcd_t.number8_low = gpro_t.disp_works_minutes_value	% 10;
-//		  glcd_t.number8_high = gpro_t.disp_works_minutes_value % 10;
-
-	    
-
-	disp_ai_iocn();
-   
-    LCD_Number_FiveSixSeveEight_Hours(gpro_t.disp_works_hours_value,gpro_t.disp_works_minutes_value);
-
-
-}
-#endif 
 
 /*******************************************************************************************************
 *
@@ -371,6 +285,7 @@ void Set_LCD_Disp_Timer_Value(void)
 void Display_WorksTimingr_Handler(uint8_t sel_item)
 {
 
+ 
    static uint8_t switch_counter,default_timing = 0xff,default_timer = 0xff,switch_1_2;
  
     switch(sel_item){
@@ -386,10 +301,16 @@ void Display_WorksTimingr_Handler(uint8_t sel_item)
                switch_counter =0;
               }
             
+           if(gctl_t.get_beijing_time_success ==1 && (wifi_link_net_state()==1) && gpro_t.power_on_every_times == 1){
 
-           
+                 gpro_t.power_on_every_times ++;
 
-           if( default_timing != gkey_t.key_mode_switch_flag || switch_1_2 == 2){
+                LCD_Number_FiveSixSeveEight_Hours(gpro_t.disp_works_hours_value,gpro_t.disp_works_minutes_value);
+               disp_ai_iocn();
+
+
+            }
+            else if( default_timing != gkey_t.key_mode_switch_flag || switch_1_2 == 2){
                 default_timing  = gkey_t.key_mode_switch_flag;
                 switch_1_2 = 1;      
 
@@ -397,7 +318,11 @@ void Display_WorksTimingr_Handler(uint8_t sel_item)
                disp_ai_iocn();
 
             }
-             Display_Works_Timing();
+            else{
+
+               Display_Works_Timing();
+
+            }
             
 
         }

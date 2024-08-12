@@ -1356,7 +1356,7 @@ void LCD_Timer_Colon_Flicker(void)
    if(gkey_t.key_mode != mode_set_timer){
 
    if(gctl_t.ptc_warning ==0 && gctl_t.fan_warning ==0){
-   if(glcd_t.gTimer_colon_blink < 40){ //20 * 10
+   if(glcd_t.gTimer_colon_blink < 20){ //20 * 10
 
         
       
@@ -1386,7 +1386,7 @@ void LCD_Timer_Colon_Flicker(void)
            }
 
         }
-       else if(glcd_t.gTimer_colon_blink > 39  && glcd_t.gTimer_colon_blink < 81){
+       else if(glcd_t.gTimer_colon_blink > 19  && glcd_t.gTimer_colon_blink < 41){
 
     
      
@@ -1418,7 +1418,7 @@ void LCD_Timer_Colon_Flicker(void)
               TM1723_Write_Display_Data(0xCB,NO_COLON_SYMBOL+lcdNumber6_Low[glcd_t.number6_low]+lcdNumber7_High[glcd_t.number7_high]);//display "6,7"
             }
      }
-     else if(glcd_t.gTimer_colon_blink > 80){
+     else if(glcd_t.gTimer_colon_blink > 40){
 
       glcd_t.gTimer_colon_blink =0;
 

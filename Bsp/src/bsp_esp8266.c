@@ -280,7 +280,7 @@ void Wifi_SoftAP_Config_Handler(void)
            }
 
 		   
-		  if(   wifi_t.gTimer_login_tencent_step_3 > 4){//1
+		  if(   wifi_t.gTimer_login_tencent_step_3 > 3){//1
 		   
 			    wifi_t.gTimer_login_tencent_step_3  = 0;
 
@@ -296,8 +296,9 @@ void Wifi_SoftAP_Config_Handler(void)
      case wifi_inquire_register_codes: //0x06//WT.EDIT 2024.07.22
        wifi_t.gTimer_get_beijing_time=0;
        gpro_t.gTimer_get_data_from_tencent_data=0;
-      
-	   if(wifi_t.gTimer_login_tencent_step_3 > 3 && wifi_t.soft_ap_config_success==0){
+
+      #if 0
+	   if(wifi_t.gTimer_login_tencent_step_3 > 1 && wifi_t.soft_ap_config_success==0){//wifi_t.gTimer_login_tencent_step_3 > 0 
          wifi_t.gTimer_login_tencent_step_3=0;
          wifi_t.linking_tencent_cloud_doing =1;
 		 wifi_t.wifi_uart_counter=0;
@@ -305,6 +306,13 @@ void Wifi_SoftAP_Config_Handler(void)
         wifi_t.wifi_config_net_lable=0xff;//
         gpro_t.gTimer_get_data_from_tencent_data=0;
         }
+
+      #endif 
+
+       
+       wifi_t.wifi_config_net_lable=0xff;//
+       gpro_t.gTimer_get_data_from_tencent_data=0;
+
 
        break;
 

@@ -18,7 +18,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
     //wifi usart1 --wifi 
     if(huart->Instance==USART2)
     {
-           
+      DISABLE_INT()   ; 
 	  if(wifi_t.linking_tencent_cloud_doing  ==1){ //link tencent netware of URL
 
 			wifi_t.wifi_data[wifi_t.wifi_uart_counter] = wifi_t.usart2_dataBuf[0];
@@ -44,12 +44,13 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 				}
 	      }
 	 
-	  
+	  ENABLE_INT();
 //	__HAL_UART_CLEAR_NEFLAG(&huart2);
 	//__HAL_UART_CLEAR_FEFLAG(&huart2);
 	__HAL_UART_CLEAR_OREFLAG(&huart2);
 	//__HAL_UART_CLEAR_IDLEFLAG(&huart2);
 	//__HAL_UART_CLEAR_TXFECF(&huart2);
+	
 	 HAL_UART_Receive_IT(&huart2,wifi_t.usart2_dataBuf,1);
      
 	}

@@ -104,6 +104,8 @@ void power_on_run_handler(void)
 
            glcd_t.gTimer_fan_blink =0;
            gpro_t.gTimer_run_dht11 = 20;
+
+           gpro_t.power_on_every_times = 1;
            
            Disp_HumidityTemp_Value();
 
@@ -657,7 +659,7 @@ static void power_on_init_function(void)
  
     Disp_HumidityTemp_Value();
 
-    Display_LCD_Works_Timing();
+  //  Display_LCD_Works_Timing();
    
 
     //fan on

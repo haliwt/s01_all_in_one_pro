@@ -82,6 +82,7 @@ typedef struct {
    //WIFI
    uint8_t run_process_step;
    uint8_t disp_dht11_value;
+   uint8_t power_on_every_times;
  
   
    uint8_t disp_works_hours_value;

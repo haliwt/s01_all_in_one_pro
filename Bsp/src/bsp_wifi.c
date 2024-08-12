@@ -211,6 +211,15 @@ void wifi_get_beijint_time_handler(void)
 
   clear_rx_copy_data();
 
+  if(gkey_t.key_power== power_off){
+     gkey_t.key_mode = disp_timer_timing;
+
+     Record_WorksOr_Timer_Timing_DonotDisp_Handler();
+
+  }
+
+  
+
   switch(get_beijing_flag){
 
 
@@ -223,7 +232,7 @@ void wifi_get_beijint_time_handler(void)
                    flag_switch++;
                    if(flag_switch ==1){
                        Subscriber_Data_FromCloud_Handler();
-                       osDelay(100);//HAL_Delay(200)
+                       osDelay(200);//HAL_Delay(200)
                        get_beijing_flag =1;
                     }
                    else if(flag_switch > 1 && gpro_t.gPower_On == power_off){
@@ -331,7 +340,7 @@ void wifi_get_beijint_time_handler(void)
         
     		
     		Get_BeiJing_Time_Cmd();
-    		HAL_Delay(20);
+    		HAL_Delay(200);
     		wifi_t.gTimer_read_beijing_time=0;
     		
 
@@ -354,7 +363,7 @@ void wifi_get_beijint_time_handler(void)
     		Get_Beijing_Time();
             wifi_t.get_rx_beijing_time_enable=1; //enable beijing times
     		wifi_t.wifi_uart_counter=0;
-    		HAL_Delay(20);
+    		HAL_Delay(200);
             
     		wifi_t.gTimer_read_beijing_time=0;
              beijing_step =2;
