@@ -1353,69 +1353,68 @@ void LCD_Wind_Run_Icon(uint8_t wind_speed)
 void LCD_Timer_Colon_Flicker(void)
 {
 
+
    if(gkey_t.key_mode != mode_set_timer){
 
    if(gctl_t.ptc_warning ==0 && gctl_t.fan_warning ==0){
    if(glcd_t.gTimer_colon_blink < 20){ //20 * 10
 
         
-      
+         if(gkey_t.key_mode  == disp_works_timing){
 
-
-           if(gkey_t.key_mode  == disp_timer_timing){
-              	glcd_t.number6_low = gpro_t.set_timer_timing_hours %10 ;
-   
-            	glcd_t.number6_high = glcd_t.number6_low ;
-
-                //display minutes
-                glcd_t.number7_low = gpro_t.set_timer_timing_minutes / 10 ;
-               
-            	glcd_t.number7_high =  glcd_t.number7_low ;
-              TM1723_Write_Display_Data(0xCB,COLON_SYMBOL+lcdNumber6_Low[glcd_t.number6_low]+lcdNumber7_High[glcd_t.number7_high]);//display "6,7"
-           }
-           else if(gkey_t.key_mode  == disp_works_timing){
+                
               	glcd_t.number6_low = gpro_t.disp_works_hours_value %10 ;
    
-            	glcd_t.number6_high = glcd_t.number6_low ;
+            	//glcd_t.number6_high = glcd_t.number6_low ;
 
                 //display minutes
-                glcd_t.number7_low = gpro_t.disp_works_minutes_value / 10 ;
+               // glcd_t.number7_low = gpro_t.disp_works_minutes_value / 10 ;
                
-            	glcd_t.number7_high =  glcd_t.number7_low ;
+            	glcd_t.number7_high = gpro_t.disp_works_minutes_value /10 ;
               TM1723_Write_Display_Data(0xCB,COLON_SYMBOL+lcdNumber6_Low[glcd_t.number6_low]+lcdNumber7_High[glcd_t.number7_high]);//display "6,7"
            }
+           else if(gkey_t.key_mode  == disp_timer_timing){
+              	glcd_t.number6_low = gpro_t.set_timer_timing_hours %10 ;
+   
+            	//glcd_t.number6_high = glcd_t.number6_low % 10;
+
+                //display minutes
+               // glcd_t.number7_low = gpro_t.set_timer_timing_minutes / 10 ;
+               
+            	glcd_t.number7_high = gpro_t.set_timer_timing_minutes / 10 ;
+              TM1723_Write_Display_Data(0xCB,COLON_SYMBOL+lcdNumber6_Low[glcd_t.number6_low]+lcdNumber7_High[glcd_t.number7_high]);//display "6,7"
+         }
 
         }
        else if(glcd_t.gTimer_colon_blink > 19  && glcd_t.gTimer_colon_blink < 41){
 
     
      
-           
-          if(gkey_t.key_mode  == disp_timer_timing){
-
-               	glcd_t.number6_low = gpro_t.set_timer_timing_hours %10 ;
-   
-            	glcd_t.number6_high = glcd_t.number6_low ;
-
-                //display minutes
-                glcd_t.number7_low = gpro_t.set_timer_timing_minutes / 10 ;
-               
-            	glcd_t.number7_high =  glcd_t.number7_low ;
-                
-               TM1723_Write_Display_Data(0xCB,NO_COLON_SYMBOL+lcdNumber6_Low[glcd_t.number6_low]+lcdNumber7_High[glcd_t.number7_high]);//display "6,7"
-            }
-            else if(gkey_t.key_mode  == disp_works_timing){
+           if(gkey_t.key_mode  == disp_works_timing){
 
                	glcd_t.number6_low = gpro_t.disp_works_hours_value %10 ;
    
-            	glcd_t.number6_high = glcd_t.number6_low ;
+            	//glcd_t.number6_high = glcd_t.number6_low ;
 
                 //display minutes
-                glcd_t.number7_low = gpro_t.disp_works_minutes_value / 10 ;
+                //glcd_t.number7_low = gpro_t.disp_works_minutes_value / 10 ;
                
-            	glcd_t.number7_high =  glcd_t.number7_low ;
+            	glcd_t.number7_high = gpro_t.disp_works_minutes_value / 10 ;
 
               TM1723_Write_Display_Data(0xCB,NO_COLON_SYMBOL+lcdNumber6_Low[glcd_t.number6_low]+lcdNumber7_High[glcd_t.number7_high]);//display "6,7"
+            }
+            else  if(gkey_t.key_mode  == disp_timer_timing){
+
+               	glcd_t.number6_low = gpro_t.set_timer_timing_hours %10 ;
+   
+            	//glcd_t.number6_high = glcd_t.number6_low ;
+
+                //display minutes
+                //glcd_t.number7_low = gpro_t.set_timer_timing_minutes / 10 ;
+               
+            	glcd_t.number7_high =  gpro_t.set_timer_timing_minutes / 10 ;
+                
+               TM1723_Write_Display_Data(0xCB,NO_COLON_SYMBOL+lcdNumber6_Low[glcd_t.number6_low]+lcdNumber7_High[glcd_t.number7_high]);//display "6,7"
             }
      }
      else if(glcd_t.gTimer_colon_blink > 40){

@@ -585,9 +585,6 @@ static void power_off_function(void)
 		gpro_t.power_off_flag++;
 		MqttData_Publish_PowerOff_Ref();
         osDelay(200);
-		
-	     
-		 
 	}
 
 }
@@ -648,6 +645,8 @@ static void power_on_init_function(void)
 
     }
    
+    Display_LCD_Works_Timing(); //WT.EDIT 2024.08.12 
+
        LED_Mode_On();
        LED_Power_On();
        Backlight_On();
@@ -659,7 +658,7 @@ static void power_on_init_function(void)
  
     Disp_HumidityTemp_Value();
 
-   // Display_LCD_Works_Timing(); //WT.EDIT 2024.08.12 
+   
    
 
     //fan on
