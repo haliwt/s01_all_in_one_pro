@@ -129,19 +129,7 @@ void LcdDisp_Init(void);
 void LCD_Display_Wind_Icon_Handler(void);
 
 
-
-
-
-
-
-
 void Wifi_Icon_FastBlink(void);
-
-
-
-
-
-
 void Lcd_Display_Off(void);
 
 

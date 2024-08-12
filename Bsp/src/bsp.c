@@ -658,9 +658,6 @@ static void power_on_init_function(void)
  
     Disp_HumidityTemp_Value();
 
-   
-   
-
     //fan on
     Mainboard_Action_Fun();
 

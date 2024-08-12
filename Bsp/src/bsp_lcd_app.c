@@ -301,16 +301,7 @@ void Display_WorksTimingr_Handler(uint8_t sel_item)
                switch_counter =0;
               }
             
-           if(gctl_t.get_beijing_time_success ==1 && (wifi_link_net_state()==1) && gpro_t.power_on_every_times == 1){
-
-                 gpro_t.power_on_every_times ++;
-
-                LCD_Number_FiveSixSeveEight_Hours(gpro_t.disp_works_hours_value,gpro_t.disp_works_minutes_value);
-               disp_ai_iocn();
-
-
-            }
-            else if( default_timing != gkey_t.key_mode_switch_flag || switch_1_2 == 2){
+           if(default_timing != gkey_t.key_mode_switch_flag || switch_1_2 == 2){  // gpro_t.power_on_every_times
                 default_timing  = gkey_t.key_mode_switch_flag;
                 switch_1_2 = 1;      
 
