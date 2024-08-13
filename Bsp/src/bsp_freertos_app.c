@@ -323,9 +323,9 @@ static void vTaskMsgPro(void *pvParameters)
              }
              else if(key_mode_sound == 1){
                  key_mode_sound++;
-                  
-                  mode_key_fun();
                   buzzer_sound();
+                  mode_key_fun();
+                
              }
              else if(key_mode_long_sound == 1){
 

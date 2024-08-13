@@ -89,7 +89,7 @@ typedef struct {
    uint8_t disp_works_minutes_value;
    uint8_t gTimer_run_main_fun;
    uint8_t set_temperature_value_success;
-   uint8_t first_disp_work_time;
+
    uint8_t disp_timer_switch_time_flag;
 
 
@@ -121,6 +121,7 @@ typedef struct {
    uint8_t gTimer_timer_led_blink;
    uint8_t gTimer_get_data_from_tencent_data;
    uint8_t gTimer_exit_mode_long_key;
+   uint8_t gTimer_set_timer_times;
 
    
  

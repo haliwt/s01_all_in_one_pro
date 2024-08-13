@@ -451,8 +451,16 @@ void LCD_Disp_Humidity_value_Handler(uint8_t hum_value)
        TM1723_Write_Display_Data(0xC5,(WIFI_NO_Symbol+lcdNumber3_Low[glcd_t.number3_low] + lcdNumber4_High[glcd_t.number4_high]) & 0xff); //Wifi 
 
    }
-   TM1723_Write_Display_Data(0xC9,(HUM_T8+lcdNumber4_Low[glcd_t.number4_low]+lcdNumber5_High[glcd_t.number5_high]) & 0xff);
- 
+   if( gkey_t.key_mode == disp_works_timing){
+       glcd_t.number5_high =gpro_t.disp_works_hours_value /10 ;
+       TM1723_Write_Display_Data(0xC9,(HUM_T8+lcdNumber4_Low[glcd_t.number4_low]+lcdNumber5_High[glcd_t.number5_high]) & 0xff);
+   }
+   else if(gkey_t.key_mode  == disp_timer_timing){
+        glcd_t.number5_high =gpro_t.set_timer_timing_hours /10 ;
+
+        TM1723_Write_Display_Data(0xC9,(HUM_T8+lcdNumber4_Low[glcd_t.number4_low]+lcdNumber5_High[glcd_t.number5_high]) & 0xff);
+
+   }
     
 }
 

@@ -98,7 +98,7 @@ void power_on_run_handler(void)
 		   gpro_t.set_timer_timing_minutes=0;
 
         
-           gpro_t.first_disp_work_time=0;
+    
             
 		   gctl_t.step_process = 1;
 
@@ -645,7 +645,7 @@ static void power_on_init_function(void)
 
     }
    
-    Display_LCD_Works_Timing(); //WT.EDIT 2024.08.12 
+  
 
        LED_Mode_On();
        LED_Power_On();

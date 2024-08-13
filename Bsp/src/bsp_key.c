@@ -113,54 +113,34 @@ void smartphone_power_on_handler(void)
 *********************************************************************************/
 void mode_long_key_fun(void)
 {
+    gkey_t.key_mode = mode_set_timer;
+    gkey_t.key_add_dec_mode = mode_set_timer;
+    gctl_t.ai_flag = 0; //timer tiiming model
+    gkey_t.gTimer_disp_set_timer = 0;       //counter exit timing this "mode_set_timer"
     
 
-
-        
-  
-   
-
-            gkey_t.key_mode = mode_set_timer;
-           gkey_t.key_add_dec_mode = mode_set_timer;
-           gctl_t.ai_flag = 0; //timer tiiming model
-           gkey_t.gTimer_disp_set_timer = 0;       //counter exit timing this "mode_set_timer"
-          
-   
-           gpro_t.gTimer_timer_led_blink =0;
+    gpro_t.gTimer_timer_led_blink =0;
            
 
-        
-
-    
 }
 
 
 void mode_key_fun(void)
 {
-  
-
-     
-
-     
-         if(gkey_t.key_mode  == disp_works_timing){
+          if(gkey_t.key_mode  == disp_works_timing){
              gkey_t.key_mode  = disp_timer_timing;
            
-             gctl_t.ai_flag = 0; // DON'T DISP AI ICON
+          //   gctl_t.ai_flag = 0; // DON'T DISP AI ICON
                //counter exit timing this "mode_set_timer"
             gkey_t.key_mode_switch_flag++;
             gkey_t.key_add_dec_mode = set_temp_value_item;
             
-             //LCD_Disp_Timer_Timing_Init();
-            LCD_Number_FiveSixSeveEight_Hours(gpro_t.set_timer_timing_hours,gpro_t.set_timer_timing_minutes);
-             osDelay(100);
-             disp_ai_iocn();
+    
+            // LCD_Number_FiveSixSeveEight_Hours(gpro_t.set_timer_timing_hours,gpro_t.set_timer_timing_minutes);
+            // osDelay(100);
+            //  disp_ai_iocn();
            
-          
-            // HAL_Delay(10);
-             
-            
-            
-            gkey_t.key_mode_be_pressed = 2;
+          gkey_t.key_mode_be_pressed = 2;
 
            
 
@@ -169,12 +149,12 @@ void mode_key_fun(void)
             gkey_t.key_mode_switch_flag++;
             gkey_t.key_mode  = disp_works_timing;
             gkey_t.key_add_dec_mode = set_temp_value_item;
-            gctl_t.ai_flag = 1; // AI DISPLAY AI ICON
+         //   gctl_t.ai_flag = 1; // AI DISPLAY AI ICON
            
     
-            LCD_Number_FiveSixSeveEight_Hours(gpro_t.disp_works_hours_value,gpro_t.disp_works_minutes_value);
-             osDelay(100);
-            disp_ai_iocn();
+            // LCD_Number_FiveSixSeveEight_Hours(gpro_t.disp_works_hours_value,gpro_t.disp_works_minutes_value);
+            // osDelay(100);
+            // disp_ai_iocn();
             gkey_t.key_mode_be_pressed = 1;
              
         }
@@ -182,24 +162,37 @@ void mode_key_fun(void)
 
 }
 
- 
-
-
 void  key_mode_be_pressed_send_data_wifi(void)
 {
    
-   if(gkey_t.key_mode_be_pressed == 1 && wifi_link_net_state()==1){
+   if(gkey_t.key_mode_be_pressed == 1){
 
          gkey_t.key_mode_be_pressed= 0xff;
-    
-        MqttData_Publish_SetState(1); //timer model  = 2, works model = 1
-        osDelay(20);
+
+          gctl_t.ai_flag = 0;
+
+           LCD_Number_FiveSixSeveEight_Hours(gpro_t.disp_works_hours_value,gpro_t.disp_works_minutes_value);
+            osDelay(50);
+            disp_ai_iocn();
+        if(wifi_link_net_state()==1){
+            MqttData_Publish_SetState(1); //timer model  = 2, works model = 1
+            osDelay(20);
+        }
      }
-     else if(gkey_t.key_mode_be_pressed == 2  && wifi_link_net_state()==1){
+     else if(gkey_t.key_mode_be_pressed == 2  ){
             gkey_t.key_mode_be_pressed= 0xff;
 
-          MqttData_Publish_SetState(2); //timer model  = 2, works model = 1
-           osDelay(20);
+            gctl_t.ai_flag = 1;
+
+            LCD_Number_FiveSixSeveEight_Hours(gpro_t.set_timer_timing_hours,gpro_t.set_timer_timing_minutes);
+            osDelay(50);
+            disp_ai_iocn();
+
+         if(wifi_link_net_state()==1){
+            MqttData_Publish_SetState(2); //timer model  = 2, works model = 1
+            osDelay(20);
+
+          }
        }
 
 

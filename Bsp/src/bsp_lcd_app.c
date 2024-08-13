@@ -51,7 +51,8 @@ void PowerOff_freeFun(void)
 void PowerOff_Off_Led(void)
 {
     LED_Mode_Off();
-    LED_POWER_OFF();
+  //  LED_POWER_OFF();
+    LED_POWER_KEY_SetLow() ;
     Ptc_Off();
     Ultrasonic_Pwm_Stop();
     Plasma_Off();
@@ -119,10 +120,7 @@ void Display_Works_Timing(void)
 
    }
 }
-
-
-
-
+ 
 /**********************************************************************************************************
 *
 *	函 数 名: void Display_Works_Timing(void)
@@ -251,6 +249,7 @@ void Display_WorksTimingr_Handler(uint8_t sel_item)
 
  
    static uint8_t switch_counter,default_timing = 0xff,default_timer = 0xff,switch_1_2;
+   static uint8_t  set_timer_timing_flag ;
  
     switch(sel_item){
 
@@ -264,8 +263,17 @@ void Display_WorksTimingr_Handler(uint8_t sel_item)
             if(switch_counter>0){
                switch_counter =0;
               }
-            
-           if(default_timing != gkey_t.key_mode_switch_flag || switch_1_2 == 2){  // gpro_t.power_on_every_times
+
+             if(set_timer_timing_flag ==1 && gpro_t.gTimer_set_timer_times > 20){
+                set_timer_timing_flag++;
+                gpro_t.gTimer_set_timer_times=0;
+                gctl_t.ai_flag = 1;
+               LCD_Number_FiveSixSeveEight_Hours(gpro_t.disp_works_hours_value,gpro_t.disp_works_minutes_value);
+               disp_ai_iocn();
+
+
+             }
+             else if(default_timing != gkey_t.key_mode_switch_flag || switch_1_2 == 2){  // gpro_t.power_on_every_times
                 default_timing  = gkey_t.key_mode_switch_flag;
                 switch_1_2 = 1;      
 
@@ -350,14 +358,16 @@ void Display_WorksTimingr_Handler(uint8_t sel_item)
 
                 gkey_t.set_timer_timing_success = 0;
 
-                gctl_t.ai_flag = 1;
+            
                 gkey_t.key_mode =disp_works_timing;
-                gpro_t.first_disp_work_time =0; //at once display works times of value ;
+          
                 gkey_t.key_add_dec_mode = set_temp_value_item;
                 gpro_t.disp_timer_switch_time_flag ++ ;
-                //LCD_Disp_Works_Timing_Init();
-                LCD_Number_FiveSixSeveEight_Hours(gpro_t.disp_works_hours_value,gpro_t.disp_works_minutes_value);
-                disp_ai_iocn();
+               
+                set_timer_timing_flag = 1;
+                gpro_t.gTimer_set_timer_times=0;
+               // LCD_Number_FiveSixSeveEight_Hours(gpro_t.disp_works_hours_value,gpro_t.disp_works_minutes_value);
+               /// disp_ai_iocn();
                  
                 
             }
@@ -370,9 +380,9 @@ void Display_WorksTimingr_Handler(uint8_t sel_item)
                 gkey_t.key_mode = disp_timer_timing;
                 gkey_t.key_add_dec_mode = set_temp_value_item;
 
-                // LCD_Disp_Timer_Timing_Init();
+            
                  LCD_Number_FiveSixSeveEight_Hours(gpro_t.set_timer_timing_hours,gpro_t.set_timer_timing_minutes);
-     
+                 osDelay(50);
 
                 if(wifi_link_net_state()==1){
                     MqttData_Publish_SetState(2); //ai-mode = 2 is ->timer model  = 2, 
