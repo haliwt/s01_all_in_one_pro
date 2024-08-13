@@ -235,7 +235,9 @@ void wifi_get_beijint_time_handler(void)
                        osDelay(200);//HAL_Delay(200)
                        get_beijing_flag =1;
                     }
-                   else if(flag_switch > 1 && gpro_t.gPower_On == power_off){
+
+                   
+                   if(flag_switch > 1 && gpro_t.gPower_On == power_off){
                         flag_switch=0;
                        // property_topic_publish(); 
                         Update_Dht11_Totencent_Value();
@@ -491,7 +493,7 @@ void wifi_get_beijint_time_handler(void)
          if(wifi_link_net_state()==0){
 
             wifi_t.linking_tencent_cloud_doing =1;
-        
+            get_beijing_flag = 12;
 
             WIFI_IC_ENABLE();
        
@@ -500,7 +502,7 @@ void wifi_get_beijint_time_handler(void)
             
           
 
-            get_beijing_flag = 12;
+           
             auto_link_net_flag =1;
 
          }
@@ -520,6 +522,8 @@ void wifi_get_beijint_time_handler(void)
 
         if(wifi_t.gTimer_auto_link_net_time > 2 &&    auto_link_net_flag ==1 ){
 
+            auto_link_net_flag =2;
+              get_beijing_flag = 13;
 
             wifi_t.gTimer_auto_link_net_time=0;
             wifi_t.wifi_uart_counter=0;
@@ -529,8 +533,8 @@ void wifi_get_beijint_time_handler(void)
             //HAL_Delay(1000);
             osDelay(1000);
             //HAL_Delay(1000);
-            auto_link_net_flag =2;
-            get_beijing_flag = 13;
+          
+          
            
 		
 	    }
@@ -567,7 +571,7 @@ void wifi_get_beijint_time_handler(void)
                 osDelay(200);//HAL_Delay(200);
 
             }
-            else if(power_on_state() == 0){
+            else if(power_on_state() == power_off){
 
                MqttData_Publish_PowerOff_Ref();
                osDelay(200);//HAL_Delay(200);

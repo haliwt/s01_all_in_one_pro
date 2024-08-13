@@ -91,7 +91,7 @@ void PowerOff_Off_Led(void)
 **********************************************************************************************************/
 void Display_Works_Timing(void)
 {
-    static uint8_t minutes_change_flag = 0xff;
+  //  static uint8_t minutes_change_flag = 0xff;
     if(gpro_t.gTimer_works_counter_sencods > 59){
 
 	  gpro_t.gTimer_works_counter_sencods=0;
@@ -233,42 +233,6 @@ void LCD_Disp_Set_Timer_Timing(void)
   
 
 }
-/*******************************************************************************************************
-*
-*	函 数 名: void Set_LCD_Disp_Timer_Value(void)
-*	功能说明:   display of set up timer timing how many ? value .
-*	形    参: 无
-*	返 回 值: 无
-*
-**********************************************************************************************************/
-void Set_LCD_Disp_Timer_Value(void)
-{
-
-     gctl_t.ai_flag = 0;
-
-   
-//     //display hours timing
-//    glcd_t.number5_low = gpro_t.set_timer_timing_hours / 10;
-//    glcd_t.number5_high = gpro_t.set_timer_timing_hours / 10;
-//
-//
-//    glcd_t.number6_low = gpro_t.set_timer_timing_hours   % 10;
-//    glcd_t.number6_high = gpro_t.set_timer_timing_hours % 10;
-//
-//    //display minutes 
-//    glcd_t.number7_low = gpro_t.set_timer_timing_minutes / 10;
-//    glcd_t.number7_high = gpro_t.set_timer_timing_minutes / 10;
-//
-//    				
-//    glcd_t.number8_low = gpro_t.set_timer_timing_minutes   % 10;
-//    glcd_t.number8_high = gpro_t.set_timer_timing_minutes % 10;
-   // disp_ai_iocn();
-    //LCD_Disp_Timer_Timing();
-    Set_LCD_Timer_Numbers_FiveSixSeveEight_Hours();
-   
-
-}
-
 
 
 
@@ -487,7 +451,7 @@ void Record_WorksOr_Timer_Timing_DonotDisp_Handler(void)
 
 /**********************************************************************************************************
 *
-*	函 数 名: void Set_Timer_Timing_Lcd_Blink_Off(void)
+*	函 数 名: void Set_Timer_Timing_Lcd_Blink(void)
 *	功能说明: 设置的定时时间闪烁
 *	形    参: 无
 *	返 回 值: 无
@@ -507,55 +471,7 @@ void Set_Timer_Timing_Lcd_Blink(void)
 
 }
 
-/**********************************************************************************************************
-*
-*	函 数 名: void Set_Timer_Timing_Lcd_Blink_Off(void)
-*	功能说明: 设置的定时时间闪烁
-*	形    参: 无
-*	返 回 值: 无
-*
-**********************************************************************************************************/
-void Set_Timer_Timing_Lcd_Blink_Off(void)
-{
 
-    
-      glcd_t.number5_low =  0x0A ;
-      glcd_t.number5_high =  0x0A ;
-
-      glcd_t.number6_low  =  0x0A; //
-      glcd_t.number6_high =  0x0A; //
-      
-       //dispaly minutes 
-      glcd_t.number7_low =   0x0A;
-      glcd_t.number7_high =   0x0A;
-
-      glcd_t.number8_low =   0x0A;
-      glcd_t.number8_high =   0x0A;
-      LCD_Disp_Set_Timer_Timing();
-      
-     // osDelay(200);//HAL_Delay(100);
-}
-
-void Set_Timer_Timing_Lcd_Blink_On(void)
-{
-
-      glcd_t.number5_low =  gpro_t.set_timer_timing_hours  / 10 ;
-      glcd_t.number5_high =  gpro_t.set_timer_timing_hours  / 10 ;
-
-      glcd_t.number6_low  = gpro_t.set_timer_timing_hours% 10; //
-      glcd_t.number6_high = gpro_t.set_timer_timing_hours % 10; //
-      
-       //dispaly minutes 
-      glcd_t.number7_low =  0;
-      glcd_t.number7_high =  0;
-
-      glcd_t.number8_low = 0;
-      glcd_t.number8_high =   0;
-     // LCD_Disp_Timer_Timing();
-
-      osDelay(200);//HAL_Delay(100);
-    
-}
 
 
 
