@@ -379,15 +379,7 @@ static void vTaskMsgPro(void *pvParameters)
             
               power_on_run_handler();
               key_add_dec_set_temp_value_fun();
-             // key_mode_be_pressed_send_data_wifi();
-             
-              if(gkey_t.wifi_led_fast_blink_flag==1 && gctl_t.fan_warning ==0 && gctl_t.ptc_warning == 0){
-
-                  WIFI_Process_Handler();
-                  detection_net_link_state_handler();
-                  Disip_Wifi_Icon_State();
-              
-              }
+              link_wifi_net_state(gkey_t.wifi_led_fast_blink_flag);
               
               mainboard_active_handler();
               disp_set_temperature_value_handler();

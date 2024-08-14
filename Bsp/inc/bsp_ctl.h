@@ -144,6 +144,7 @@ void disp_set_temperature_value_handler(void);
 
 
 
+void link_wifi_net_state(uint8_t data);
 
 
 

@@ -508,6 +508,22 @@ void disp_set_temperature_value_handler(void)
 
 
 
+void link_wifi_net_state(uint8_t data)
+{
+   if(data == 1){
+
+     if(gctl_t.fan_warning ==0 && gctl_t.ptc_warning == 0){
+
+        WIFI_Process_Handler();
+        detection_net_link_state_handler();
+        Disip_Wifi_Icon_State();
+
+
+   }
+
+   }
+
+}
 
 
 
