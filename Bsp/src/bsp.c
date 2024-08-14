@@ -119,11 +119,14 @@ void power_on_run_handler(void)
           
                   Update_DHT11_Value();
                   lcd_disp_ptc_value(gctl_t.dht11_temp_value);
-                  LCD_Disp_Humidity_value_Handler(  gctl_t.dht11_humidity_value);
+                 
                   
 
                 
           }
+
+       
+
 
          gctl_t.step_process=3;
 		  
@@ -234,7 +237,7 @@ void disp_works_or_timer_timing_fun(void)
 
    
     Display_WorksTimingr_Handler(gkey_t.key_mode);
-
+    Record_WorksOr_Timer_Timing_DonotDisp_Handler();
    
 
 }

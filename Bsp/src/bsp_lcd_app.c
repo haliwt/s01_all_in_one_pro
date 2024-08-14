@@ -264,28 +264,22 @@ void Display_WorksTimingr_Handler(uint8_t sel_item)
                switch_counter =0;
               }
 
-             if(set_timer_timing_flag ==1 && gpro_t.gTimer_set_timer_times > 20){
-                set_timer_timing_flag++;
-                gpro_t.gTimer_set_timer_times=0;
-                gctl_t.ai_flag = 1;
-               LCD_Number_FiveSixSeveEight_Hours(gpro_t.disp_works_hours_value,gpro_t.disp_works_minutes_value);
-               disp_ai_iocn();
-
-
-             }
-             else if(default_timing != gkey_t.key_mode_switch_flag || switch_1_2 == 2){  // gpro_t.power_on_every_times
+            if(default_timing != gkey_t.key_mode_switch_flag || switch_1_2 == 2){  // gpro_t.power_on_every_times
                 default_timing  = gkey_t.key_mode_switch_flag;
                 switch_1_2 = 1;      
-
-               LCD_Number_FiveSixSeveEight_Hours(gpro_t.disp_works_hours_value,gpro_t.disp_works_minutes_value);
                disp_ai_iocn();
 
-            }
-            else{
+               LCD_Number_FiveSixSeveEight_Hours(gpro_t.disp_works_hours_value,gpro_t.disp_works_minutes_value);
+               osDelay(100);
+              
+               
 
-               Display_Works_Timing();
-
             }
+          
+
+            Display_Works_Timing();
+
+            
             
 
         }
@@ -311,11 +305,13 @@ void Display_WorksTimingr_Handler(uint8_t sel_item)
                     default_timer  = gpro_t.disp_timer_switch_time_flag;
 
                     switch_1_2  =2;
-                    LCD_Number_FiveSixSeveEight_Hours(gpro_t.set_timer_timing_hours,gpro_t.set_timer_timing_minutes);
-
                      disp_ai_iocn();
+                    LCD_Number_FiveSixSeveEight_Hours(gpro_t.set_timer_timing_hours,gpro_t.set_timer_timing_minutes);
+                    osDelay(100);
+                    
+                     
                }
-
+               
                 Display_Timer_Timing();
              
 

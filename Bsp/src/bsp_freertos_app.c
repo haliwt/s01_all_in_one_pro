@@ -378,7 +378,7 @@ static void vTaskMsgPro(void *pvParameters)
               key_add_dec_set_temp_value_fun();
               key_mode_be_pressed_send_data_wifi();
              
-              Record_WorksOr_Timer_Timing_DonotDisp_Handler();
+              
 
               if(gkey_t.wifi_led_fast_blink_flag==1 && gctl_t.fan_warning ==0 && gctl_t.ptc_warning == 0){
 
@@ -400,6 +400,13 @@ static void vTaskMsgPro(void *pvParameters)
 
               Detected_Fan_Works_State();
               Detected_Ptc_Works_State();
+             
+              if(gpro_t.gTimer_disp_humidity > 30){
+              
+                 gpro_t.gTimer_disp_humidity =0;
+                 LCD_Disp_Humidity_value_Handler(gctl_t.dht11_humidity_value);
+              
+               }
 
               if(gpro_t.gTimer_exit_mode_long_key > 1 && (key_power_long_sound  == 2 || key_mode_long_sound==2)){
 
