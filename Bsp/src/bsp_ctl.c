@@ -460,11 +460,8 @@ void disp_set_temperature_value_handler(void)
             }
             else if(gctl_t.gSet_temperature_value <   gctl_t.dht11_temp_value || gctl_t.gSet_temperature_value ==   gctl_t.dht11_temp_value){
 
-    
-                
-
-                 gctl_t.ptc_flag = 0;
-                 Ptc_Off();
+                gctl_t.ptc_flag = 0;
+                Ptc_Off();
   
                  if(wifi_link_net_state()==1){ //逻辑错误
                  
@@ -508,4 +505,9 @@ void disp_set_temperature_value_handler(void)
 
 
 }
+
+
+
+
+
 

@@ -323,6 +323,7 @@ static void vTaskMsgPro(void *pvParameters)
              }
              else if(key_mode_sound == 1){
                  key_mode_sound++;
+                 mode_key_long_conter=0;
                   buzzer_sound();
                   mode_key_fun();
                 
@@ -338,12 +339,14 @@ static void vTaskMsgPro(void *pvParameters)
              }
              else if(add_flag ==1){
                      add_flag ++;
+                      mode_key_long_conter=0;
                       buzzer_sound();
                      osDelay(20);
 
              }
              else if(dec_flag ==1){
                      dec_flag ++;
+                      mode_key_long_conter=0;
                       buzzer_sound();
                      osDelay(20);
 
@@ -351,7 +354,7 @@ static void vTaskMsgPro(void *pvParameters)
              else if(smart_phone_sound == 1){
 
                    smart_phone_sound++;
-             
+                     mode_key_long_conter=0;
                   buzzer_sound();
                   smartphone_power_on_handler();
 
@@ -376,10 +379,8 @@ static void vTaskMsgPro(void *pvParameters)
             
               power_on_run_handler();
               key_add_dec_set_temp_value_fun();
-              key_mode_be_pressed_send_data_wifi();
+             // key_mode_be_pressed_send_data_wifi();
              
-              
-
               if(gkey_t.wifi_led_fast_blink_flag==1 && gctl_t.fan_warning ==0 && gctl_t.ptc_warning == 0){
 
                   WIFI_Process_Handler();

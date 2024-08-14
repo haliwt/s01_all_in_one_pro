@@ -228,8 +228,6 @@ void LCD_Disp_Set_Timer_Timing(void)
    //LCD_Number_FiveSixSeveEight_Hours();
    LCD_Number_FiveSixSeveEight_Hours(gpro_t.set_timer_timing_hours,gpro_t.set_timer_timing_minutes);
    
-  
-
 }
 /*********************************************************************************
 *
@@ -251,7 +249,7 @@ void Display_WorksTimingr_Handler(uint8_t sel_item)
    
        if(gctl_t.fan_warning ==0 && gctl_t.ptc_warning==0 ){
 
-          if((gpro_t.global_temporary_set_timer_flag == 1) &&   gpro_t.gTimer_set_timer_times <  11 ){
+            if((gpro_t.global_temporary_set_timer_flag == 1) &&   gpro_t.gTimer_set_timer_times <  11 ){
   
                 gpro_t.gTimer_disp_humidity=0;  //don't update humidity value that has "5" be display 
                 gkey_t.key_mode_switch_flag ++;

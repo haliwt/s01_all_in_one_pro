@@ -19,35 +19,23 @@ key_fun_t gkey_t;
 *********************************************************************************/
 void power_long_key_fun(void)
 {
+//WIFI CONNCETOR process
+    gkey_t.wifi_led_fast_blink_flag=1;
 
-  
 
-       
+    //WIFI CONNCETOR process
+    wifi_t.esp8266_login_cloud_success =0;
+    wifi_t.runCommand_order_lable=wifi_link_tencent_cloud;
+    wifi_t.wifi_config_net_lable= wifi_set_restor;
+    wifi_t.link_tencent_step_counter=0;
+
+    wifi_t.power_on_login_tencent_cloud_flag=0;
+
+
+
+    wifi_t.gTimer_linking_tencent_duration=0; //122 -2分7秒
+    gpro_t.gTimer_get_data_from_tencent_data=0;
          
-
-          
-             	//WIFI CONNCETOR process
-			 gkey_t.wifi_led_fast_blink_flag=1;
-          
-           
-			 //WIFI CONNCETOR process
-			wifi_t.esp8266_login_cloud_success =0;
-			wifi_t.runCommand_order_lable=wifi_link_tencent_cloud;
-			wifi_t.wifi_config_net_lable= wifi_set_restor;
-            wifi_t.link_tencent_step_counter=0;
-           
-			wifi_t.power_on_login_tencent_cloud_flag=0;
-			
-
-            
-			wifi_t.gTimer_linking_tencent_duration=0; //122 -2分7秒
-			gpro_t.gTimer_get_data_from_tencent_data=0;
-         
-          
-
-      
-
-    
 }
    
 void power_on_key_handler(void)
@@ -134,7 +122,7 @@ void mode_long_key_fun(void)
 *********************************************************************************/
 void mode_key_fun(void)
 {
-          if(gkey_t.key_mode  == disp_works_timing){
+        if(gkey_t.key_mode  == disp_works_timing && gpro_t.global_temporary_set_timer_flag !=1){
              gkey_t.key_mode  = disp_timer_timing;
            
           //   gctl_t.ai_flag = 0; // DON'T DISP AI ICON
@@ -142,18 +130,42 @@ void mode_key_fun(void)
             gpro_t.gTimer_disp_humidity =0;
             gkey_t.key_mode_switch_flag++;
             gkey_t.key_add_dec_mode = set_temp_value_item;
+
+         
             gkey_t.key_mode_be_pressed = 2;
 
         }
         else if( gkey_t.key_mode  == disp_timer_timing){
-            gkey_t.key_mode_switch_flag++;
+       
             gkey_t.key_mode  = disp_works_timing;
+            gkey_t.key_mode_switch_flag++;
             gkey_t.key_add_dec_mode = set_temp_value_item;
             gpro_t.gTimer_disp_humidity =0;
-      
+
+            gpro_t.global_temporary_set_timer_flag =0;
+             
+            gpro_t.gTimer_set_timer_times = 30;
             gkey_t.key_mode_be_pressed = 1;
              
         }
+        else if(gpro_t.global_temporary_set_timer_flag ==1){
+
+                    gkey_t.key_mode  = disp_works_timing;
+                    gkey_t.key_mode_switch_flag++;
+                    gkey_t.key_add_dec_mode = set_temp_value_item;
+                    gpro_t.gTimer_disp_humidity =0;
+        
+                    gpro_t.global_temporary_set_timer_flag =0;
+                     
+                    gpro_t.gTimer_set_timer_times = 30;
+                    gkey_t.key_mode_be_pressed = 1;
+
+
+
+
+        }
+
+        key_mode_be_pressed_send_data_wifi();
 
 
 }
@@ -161,30 +173,33 @@ void mode_key_fun(void)
 void  key_mode_be_pressed_send_data_wifi(void)
 {
    
-   if(gkey_t.key_mode_be_pressed == 1){
+   if(gkey_t.key_mode_be_pressed == 1){ //display works_timing 
 
-         gkey_t.key_mode_be_pressed= 0xff;
+         gkey_t.key_mode_be_pressed= 0xfe;
          gkey_t.key_mode_switch_flag++;
+   
+         gctl_t.ai_flag = 1;
+         disp_ai_iocn();
 
-          gctl_t.ai_flag = 1;
+       
+        LCD_Number_FiveSixSeveEight_Hours(gpro_t.disp_works_hours_value,gpro_t.disp_works_minutes_value);
 
-           LCD_Number_FiveSixSeveEight_Hours(gpro_t.disp_works_hours_value,gpro_t.disp_works_minutes_value);
+       
           
-            disp_ai_iocn();
+           
         if(wifi_link_net_state()==1){
             MqttData_Publish_SetState(1); //timer model  = 2, works model = 1
             osDelay(20);
         }
      }
-     else if(gkey_t.key_mode_be_pressed == 2  ){
+     else if(gkey_t.key_mode_be_pressed == 2  ){  // display timer timing 
             gkey_t.key_mode_be_pressed= 0xff;
             gkey_t.key_mode_switch_flag++;
 
             gctl_t.ai_flag = 0;
             disp_ai_iocn();
 
-             
-        if(gkey_t.set_timer_timing_success ==0){
+         if(gkey_t.set_timer_timing_success ==0){
             gpro_t.set_timer_timing_hours = 0;
             gpro_t.set_timer_timing_minutes=0;
             gpro_t.global_temporary_set_timer_flag = 1;

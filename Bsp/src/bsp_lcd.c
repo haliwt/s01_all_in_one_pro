@@ -1387,7 +1387,7 @@ void LCD_Timer_Colon_Flicker(void)
                        glcd_t.number6_low = 0 ;
                        glcd_t.number7_high = 0 ;
 
-                       TM1723_Write_Display_Data(0xCB,COLON_SYMBOL+lcdNumber6_Low[glcd_t.number6_low]+lcdNumber7_High[glcd_t.number7_high]);//display "6,7"
+                       TM1723_Write_Display_Data(0xCB,NO_COLON_SYMBOL+lcdNumber6_Low[glcd_t.number6_low]+lcdNumber7_High[glcd_t.number7_high]);//display "6,7"
                  }
                  else{
 
