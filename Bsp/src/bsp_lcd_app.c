@@ -231,10 +231,6 @@ void LCD_Disp_Set_Timer_Timing(void)
   
 
 }
-
-
-
-
 /*********************************************************************************
 *
 *	函 数 名:static void mode_long_short_key_fun(void)
@@ -242,14 +238,12 @@ void LCD_Disp_Set_Timer_Timing(void)
 *	形    参: 
 *	返 回 值: 无
 *   
-
 *********************************************************************************/
 void Display_WorksTimingr_Handler(uint8_t sel_item)
 {
 
- 
-   static uint8_t switch_counter,default_timing = 0xff,default_timer = 0xff,switch_1_2;
-   static uint8_t  set_timer_timing_flag ;
+    static uint8_t default_timing = 0xff,default_timer = 0xff,switch_1_2;
+
  
     switch(sel_item){
 
@@ -257,16 +251,19 @@ void Display_WorksTimingr_Handler(uint8_t sel_item)
    
        if(gctl_t.fan_warning ==0 && gctl_t.ptc_warning==0 ){
 
-           gctl_t.ai_flag = 1; // AI DISPLAY AI ICON
-       
-               
-            if(switch_counter>0){
-               switch_counter =0;
-              }
-
-            if(default_timing != gkey_t.key_mode_switch_flag || switch_1_2 == 2){  // gpro_t.power_on_every_times
+          if((gpro_t.global_temporary_set_timer_flag == 1) &&   gpro_t.gTimer_set_timer_times <  11 ){
+  
+                gpro_t.gTimer_disp_humidity=0;  //don't update humidity value that has "5" be display 
+                gkey_t.key_mode_switch_flag ++;
+                gctl_t.ai_flag = 0;
+                disp_ai_iocn();
+                LCD_Number_FiveSixSeveEight_Hours(0,0);
+            }
+            else if(default_timing != gkey_t.key_mode_switch_flag || switch_1_2 == 2  ){  // gpro_t.power_on_every_times
                 default_timing  = gkey_t.key_mode_switch_flag;
-                switch_1_2 = 1;      
+                switch_1_2 = 1;  
+                gctl_t.ai_flag = 1; // AI DISPLAY AI ICON    
+                gpro_t.global_temporary_set_timer_flag =3;
                disp_ai_iocn();
 
                LCD_Number_FiveSixSeveEight_Hours(gpro_t.disp_works_hours_value,gpro_t.disp_works_minutes_value);
@@ -275,13 +272,12 @@ void Display_WorksTimingr_Handler(uint8_t sel_item)
                
 
             }
-          
-
-            Display_Works_Timing();
-
-            
-            
-
+            else 
+            {
+                 gpro_t.global_temporary_set_timer_flag =3;
+                 gctl_t.ai_flag = 1; // AI DISPLAY AI ICON
+                 Display_Works_Timing();
+            }
         }
         else{
             
@@ -347,7 +343,7 @@ void Display_WorksTimingr_Handler(uint8_t sel_item)
     
         Set_Timer_Timing_Lcd_Blink();//(gpro_t.set_timer_timing_hours,gpro_t.set_timer_timing_minutes);
        
-       
+       gpro_t.gTimer_disp_humidity=0;  //don't update humidity value that has "5" be display 
         if(gkey_t.gTimer_disp_set_timer > 1){
 
             if(gpro_t.set_timer_timing_hours == 0 && gpro_t.set_timer_timing_minutes==0){
@@ -359,8 +355,7 @@ void Display_WorksTimingr_Handler(uint8_t sel_item)
           
                 gkey_t.key_add_dec_mode = set_temp_value_item;
                 gpro_t.disp_timer_switch_time_flag ++ ;
-               
-                set_timer_timing_flag = 1;
+                gpro_t.global_temporary_set_timer_flag= 1;
                 gpro_t.gTimer_set_timer_times=0;
                // LCD_Number_FiveSixSeveEight_Hours(gpro_t.disp_works_hours_value,gpro_t.disp_works_minutes_value);
                /// disp_ai_iocn();
@@ -370,6 +365,7 @@ void Display_WorksTimingr_Handler(uint8_t sel_item)
             else{
                 gkey_t.set_timer_timing_success = 1;
                 gpro_t.gTimer_timer_Counter =0; //start recoder timer timing is "0",from "0" start
+                gpro_t.global_temporary_set_timer_flag= 2; //don't display temporary "works of timing itme" timer timing.
 
                 gctl_t.ai_flag = 0;
                 gpro_t.disp_timer_switch_time_flag ++ ;

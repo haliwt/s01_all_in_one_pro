@@ -124,7 +124,14 @@ void mode_long_key_fun(void)
 
 }
 
-
+/*********************************************************************************
+*
+*	函 数 名:void mode_key_fun(void)
+*	功能说明: 
+*	形    参: 
+*	返 回 值: 无
+*   
+*********************************************************************************/
 void mode_key_fun(void)
 {
           if(gkey_t.key_mode  == disp_works_timing){
@@ -135,13 +142,7 @@ void mode_key_fun(void)
             gpro_t.gTimer_disp_humidity =0;
             gkey_t.key_mode_switch_flag++;
             gkey_t.key_add_dec_mode = set_temp_value_item;
-            
-    
-          
-           
-          gkey_t.key_mode_be_pressed = 2;
-
-           
+            gkey_t.key_mode_be_pressed = 2;
 
         }
         else if( gkey_t.key_mode  == disp_timer_timing){
@@ -186,10 +187,13 @@ void  key_mode_be_pressed_send_data_wifi(void)
         if(gkey_t.set_timer_timing_success ==0){
             gpro_t.set_timer_timing_hours = 0;
             gpro_t.set_timer_timing_minutes=0;
+            gpro_t.global_temporary_set_timer_flag = 1;
+            gpro_t.gTimer_set_timer_times=0;
             LCD_Number_FiveSixSeveEight_Hours(0,0);
 
          }
          else{
+            gpro_t.global_temporary_set_timer_flag = 2;
             LCD_Number_FiveSixSeveEight_Hours(gpro_t.set_timer_timing_hours,gpro_t.set_timer_timing_minutes);
           }
      

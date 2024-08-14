@@ -91,6 +91,7 @@ typedef struct {
    uint8_t set_temperature_value_success;
 
    uint8_t disp_timer_switch_time_flag;
+   uint8_t global_temporary_set_timer_flag ;
  
 
 

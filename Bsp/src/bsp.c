@@ -81,7 +81,7 @@ void power_off_run_handler(void)
 void power_on_run_handler(void)
 {
 
- 
+    static uint8_t disp_hum_times;
      switch(gctl_t.step_process){
 
 
@@ -114,7 +114,7 @@ void power_on_run_handler(void)
 
       case 1:   //run dht11 display 
 
-        if(gpro_t.gTimer_run_dht11 > 12 &&  gkey_t.set_temp_value_be_pressed !=1 && gkey_t.set_temp_value_be_pressed !=2){
+        if(gpro_t.gTimer_run_dht11 > 5 &&  gkey_t.set_temp_value_be_pressed !=1 && gkey_t.set_temp_value_be_pressed !=2){
                 gpro_t.gTimer_run_dht11=0;
           
                   Update_DHT11_Value();
@@ -125,7 +125,17 @@ void power_on_run_handler(void)
                 
           }
 
-       
+          if(gpro_t.gTimer_disp_humidity > 30  || disp_hum_times < 20){
+              
+              gpro_t.gTimer_disp_humidity =0;
+              
+              disp_hum_times ++ ;
+              if( disp_hum_times < 20){
+                 Update_DHT11_Value();
+              }
+              LCD_Disp_Humidity_value_Handler(gctl_t.dht11_humidity_value);
+              
+           }
 
 
          gctl_t.step_process=3;
