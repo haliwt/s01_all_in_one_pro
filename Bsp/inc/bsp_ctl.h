@@ -76,6 +76,7 @@ typedef struct _bsp_ctl{
 
     uint8_t gTimer_compare_ptc_value;
     uint8_t gTimer_set_temp_value;
+    uint8_t gTimer_feed_dog_times ;
 
     
    

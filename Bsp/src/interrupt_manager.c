@@ -124,12 +124,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
         gctl_t.gTimer_wifi_blink++;
      
         gctl_t.gTimer_compare_ptc_value++ ;
-
-
-
-        //lcd timer
+        gctl_t.gTimer_set_temp_value++;
+        gctl_t.gTimer_feed_dog_times ++;
+        //led 
        glcd_t.gTimer_error_times++;
-       gctl_t.gTimer_set_temp_value++;
+       
     
   
 	   

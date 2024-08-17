@@ -246,9 +246,11 @@ void wifi_get_beijint_time_handler(void)
 
                    }
                    else{
+                       if(flag_switch > 1){ //WT.EDIT 2024.08.17
+                           flag_switch=0;
+                           get_beijing_flag =1;
 
-                       flag_switch=0;
-                       get_beijing_flag =1;
+                       }
 
 
                    }

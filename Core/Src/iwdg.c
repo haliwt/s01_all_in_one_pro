@@ -21,7 +21,7 @@
 #include "iwdg.h"
 
 /* USER CODE BEGIN 0 */
-
+#include "bsp_ctl.h"
 
 /* USER CODE END 0 */
 
@@ -39,7 +39,7 @@ void MX_IWDG_Init(void)
 
   /* USER CODE END IWDG_Init 1 */
   hiwdg.Instance = IWDG;
-  hiwdg.Init.Prescaler = IWDG_PRESCALER_256; //  256* 4095 /32KHz = 8190ms = 32.76s
+  hiwdg.Init.Prescaler = IWDG_PRESCALER_128;// 128 * 4095/32KHZ = 16.38s  //  256* 4095 /32KHz = 8190ms = 32.76s
   hiwdg.Init.Window = 4095;
   hiwdg.Init.Reload = 4095;
 //  if (HAL_IWDG_Init(&hiwdg) != HAL_OK)
@@ -55,7 +55,10 @@ void MX_IWDG_Init(void)
 /* USER CODE BEGIN 1 */
 void iwdg_feed(void)
 {
-   HAL_IWDG_Refresh(&hiwdg);  /* ��װ�ؼ����� */
+   if(gctl_t.gTimer_feed_dog_times > 7){
+      gctl_t.gTimer_feed_dog_times =0;
+      HAL_IWDG_Refresh(&hiwdg);  /* ��װ�ؼ����� */
+   }
 }
 
 /* USER CODE END 1 */

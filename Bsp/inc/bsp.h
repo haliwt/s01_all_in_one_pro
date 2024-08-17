@@ -28,6 +28,7 @@
 
 
 
+
 //maiboard
 #include "bsp_adc.h"
 #include "bsp_led.h"
@@ -83,6 +84,10 @@ typedef struct {
    uint8_t run_process_step;
    uint8_t disp_dht11_value;
    uint8_t power_on_every_times;
+   uint8_t long_key_mode_counter;
+   uint8_t key_long_mode_flag ;
+   uint8_t key_mode_be_pressed_flag;
+   uint8_t key_short_mode_flag;
  
   
    uint8_t disp_works_hours_value;
@@ -125,6 +130,8 @@ typedef struct {
    uint8_t gTimer_set_timer_times;
    
    uint8_t gTimer_disp_humidity;
+   
+        
 
    
  
@@ -152,6 +159,7 @@ void Detected_Ptc_Works_State(void);
 
 void disp_works_or_timer_timing_fun(void);
 
+void mode_key_adjust_fun(void);
 
 #endif 
 
