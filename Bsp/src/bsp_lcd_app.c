@@ -322,8 +322,7 @@ void Display_WorksTimingr_Handler(uint8_t sel_item)
                  gpro_t.disp_timer_switch_time_flag ++ ;
                  gkey_t.key_mode = disp_works_timing;
                   
-
-               }
+            }
                
         }
          else{
@@ -331,9 +330,6 @@ void Display_WorksTimingr_Handler(uint8_t sel_item)
             LCD_Fault_Numbers_Code();
 
         }
-
-
-    
     break;
 
 

@@ -84,7 +84,7 @@ static void vTaskMsgPro(void *pvParameters)
 {
    // MSG_T *ptMsg;
     BaseType_t xResult;
-	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(50); /* 设置最大等待时间为40ms */
+	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(60); /* 设置最大等待时间为50ms */
 	uint32_t ulValue;
     static uint8_t add_flag,dec_flag,smart_phone_sound;
     static uint8_t key_power_long_sound ,power_on_sound;
@@ -132,6 +132,7 @@ static void vTaskMsgPro(void *pvParameters)
             
                     power_on_sound = 1;
                     power_key_long_conter=0;
+                    gpro_t.long_key_mode_counter=0; //WT.EIDT 2024.08.20 add new statement
                     gpro_t.gTimer_shut_off_backlight =0;
                 }
                      
@@ -150,6 +151,7 @@ static void vTaskMsgPro(void *pvParameters)
                  else{
                     smart_phone_sound = 1;
                     power_key_long_conter=0;
+                    gpro_t.long_key_mode_counter=0; //WT.EIDT 2024.08.20 add new statement
                     gpro_t.gTimer_shut_off_backlight =0;
                 
 
@@ -170,7 +172,7 @@ static void vTaskMsgPro(void *pvParameters)
               else{
 
                    key_power_long_sound =1;
-      
+                   gpro_t.long_key_mode_counter=0; //WT.EIDT 2024.08.20 add new statement
                    gpro_t.gTimer_exit_mode_long_key =0;
                  }
                }
@@ -187,6 +189,7 @@ static void vTaskMsgPro(void *pvParameters)
                 
                     power_on_sound = 1;
                     power_key_long_conter=0;
+                    gpro_t.long_key_mode_counter=0; //WT.EIDT 2024.08.20 add new statement
                     gpro_t.gTimer_shut_off_backlight =0;
                 }
                
@@ -194,6 +197,7 @@ static void vTaskMsgPro(void *pvParameters)
             else if((ulValue & MODE_KEY_1) != 0){
 
                //switch timer timing and works timing 
+                power_key_long_conter=0;//WT.EIDT 2024.08.20 add new statement
                 if(gkey_t.key_power == power_on  ){
 
                     gpro_t.key_mode_be_pressed_flag = 1 ;
@@ -203,9 +207,9 @@ static void vTaskMsgPro(void *pvParameters)
             }   
             else if((ulValue & DEC_KEY_2) != 0){
 
-                   
+              
                  power_key_long_conter=0;
-           
+                 gpro_t.long_key_mode_counter=0; //WT.EIDT 2024.08.20 add new statement
                  if(gkey_t.key_power==power_on){
 
                    if(gpro_t.shut_Off_backlight_flag == turn_off){
@@ -227,7 +231,7 @@ static void vTaskMsgPro(void *pvParameters)
             else if((ulValue & ADD_KEY_3) != 0){
 
                  power_key_long_conter=0;
-      
+                 gpro_t.long_key_mode_counter=0; //WT.EIDT 2024.08.20 add new statement
                   if(gkey_t.key_power==power_on){
 
                  if(gpro_t.shut_Off_backlight_flag == turn_off){
@@ -328,15 +332,18 @@ static void vTaskMsgPro(void *pvParameters)
              else if(add_flag ==1){
                      add_flag ++;
                
+                     
+                      Add_Key_Fun(gkey_t.key_add_dec_mode);
                       buzzer_sound();
-                     osDelay(20);
+                    
 
              }
              else if(dec_flag ==1){
                      dec_flag ++;
           
-                      buzzer_sound();
-                     osDelay(20);
+                     
+                     Dec_Key_Fun(gkey_t.key_add_dec_mode);
+                     buzzer_sound();
 
              }
              else if(smart_phone_sound == 1){
@@ -351,20 +358,13 @@ static void vTaskMsgPro(void *pvParameters)
 
             if(gkey_t.key_power==power_on){
 
+             
+               if(gpro_t.set_timer_timing_key_flag ==1){
+                    gpro_t.set_timer_timing_key_flag ++;
+                    Set_Timer_Timing_Lcd_Blink();
 
-              
-                if(add_flag ==2){
-                    add_flag ++;
-                    Add_Key_Fun(gkey_t.key_add_dec_mode);
-                 
-
-                 }
-                 else if(dec_flag ==2){
-
-                       dec_flag ++;
-                       Dec_Key_Fun(gkey_t.key_add_dec_mode);
-                 }
-            
+                }
+               
               power_on_run_handler();
               key_add_dec_set_temp_value_fun();
               link_wifi_net_state(gkey_t.wifi_led_fast_blink_flag);
@@ -409,6 +409,7 @@ static void vTaskMsgPro(void *pvParameters)
             
            }
           iwdg_feed();
+          clear_rx_copy_data();
         }
         
     }

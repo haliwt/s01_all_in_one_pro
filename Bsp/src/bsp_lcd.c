@@ -813,6 +813,8 @@ void Set_LCD_Timer_Numbers_FiveSixSeveEight_Hours(void)
    
     //FAN LEAF T14
 
+    
+
     if(gctl_t.ptc_warning ==1 || gctl_t.fan_warning ==1){
 
 
@@ -963,7 +965,7 @@ void Set_LCD_Timer_Numbers_FiveSixSeveEight_Hours(void)
 
 
               }
-              else if(gkey_t.key_mode == mode_set_timer &&     gpro_t.gTimer_timer_led_blink > 0  &&   gpro_t.gTimer_timer_led_blink < 2){
+              else if(gkey_t.key_mode == mode_set_timer &&   gpro_t.gTimer_timer_led_blink > 0  &&   gpro_t.gTimer_timer_led_blink < 2){
                 
                     glcd_t.number5_low =  gpro_t.set_timer_timing_hours  / 10 ;
                     glcd_t.number5_high =  glcd_t.number5_low; //gpro_t.set_timer_timing_hours  / 10 ;
@@ -1340,7 +1342,7 @@ void LCD_Wind_Run_Icon(uint8_t wind_speed)
 *****************************************************************************/
 void LCD_Timer_Colon_Flicker(void)
 {
-  if(gpro_t.power_on_every_times < 20){
+  if(gpro_t.power_on_every_times < 60 &&  gkey_t.key_mode != mode_set_timer){
        gpro_t.power_on_every_times++;
 
 

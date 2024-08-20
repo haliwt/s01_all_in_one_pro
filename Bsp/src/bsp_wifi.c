@@ -10,7 +10,7 @@ uint8_t auto_det_flag;
 
 
 
-static void RunWifi_Command_Handler(void);
+
 
 
 
@@ -96,7 +96,7 @@ void WIFI_Process_Handler(void)
    *Return Ref:NO
    *
 *********************************************************************************/
-static void RunWifi_Command_Handler(void)
+void RunWifi_Command_Handler(void)
 {
   switch(wifi_t.runCommand_order_lable){
 
@@ -209,8 +209,7 @@ void wifi_get_beijint_time_handler(void)
   
      }
 
-  clear_rx_copy_data();
-
+ 
   if(gkey_t.key_power== power_off){
      gkey_t.key_mode = disp_timer_timing;
 
@@ -232,16 +231,16 @@ void wifi_get_beijint_time_handler(void)
                    flag_switch++;
                    if(flag_switch ==1){
                        Subscriber_Data_FromCloud_Handler();
-                       osDelay(200);//HAL_Delay(200)
+                       osDelay(100);//HAL_Delay(200)
                        get_beijing_flag =1;
                     }
-
+                  
                    
                    if(flag_switch > 1 && gpro_t.gPower_On == power_off){
                         flag_switch=0;
                        // property_topic_publish(); 
                         Update_Dht11_Totencent_Value();
-                        osDelay(200);//HAL_Delay(200)
+                        osDelay(100);//HAL_Delay(200)
                         get_beijing_flag =1;
 
                    }
@@ -256,8 +255,10 @@ void wifi_get_beijint_time_handler(void)
                    }
        
     }
-    else 
-       get_beijing_flag =1;
+    else{
+        get_beijing_flag =1;
+
+    }
 
 
   break;

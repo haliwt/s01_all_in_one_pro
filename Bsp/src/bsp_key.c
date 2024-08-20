@@ -9,6 +9,8 @@
 
 key_fun_t gkey_t;
 
+uint8_t add_dec_key_set_timer_flag;
+
 /*********************************************************************************
 *
 *	函 数 名:static void mode_long_short_key_fun(void)
@@ -102,6 +104,7 @@ void smartphone_power_on_handler(void)
 void mode_long_key_fun(void)
 {
     gkey_t.key_mode = mode_set_timer;
+    gpro_t.power_on_every_times =  100;
     gkey_t.key_add_dec_mode = mode_set_timer;
     gctl_t.ai_flag = 0; //timer tiiming model
     gkey_t.gTimer_disp_set_timer = 0;       //counter exit timing this "mode_set_timer"
@@ -236,7 +239,7 @@ void  key_mode_be_pressed_send_data_wifi(void)
 void Dec_Key_Fun(uint8_t cmd)
 {
 
- 
+  
 
     switch(cmd){
 
@@ -274,8 +277,15 @@ void Dec_Key_Fun(uint8_t cmd)
               gkey_t.gTimer_disp_set_timer = 0; 
 
               gpro_t.set_timer_timing_minutes =0;
+              if(add_dec_key_set_timer_flag==0){
+                  add_dec_key_set_timer_flag++;
 
-              gpro_t.set_timer_timing_hours -- ;//run_t.dispTime_minutes = run_t.dispTime_minutes - 1;
+                  gpro_t.set_timer_timing_hours =24;  
+
+              }
+              else
+                  gpro_t.set_timer_timing_hours -- ;//run_t.dispTime_minutes = run_t.dispTime_minutes - 1;
+                  
 				if(gpro_t.set_timer_timing_hours < 0){//if(run_t.dispTime_minutes < 0){
 
 				    gpro_t.set_timer_timing_hours =24;//run_t.dispTime_hours --;
@@ -298,9 +308,13 @@ void Dec_Key_Fun(uint8_t cmd)
                   glcd_t.number8_high =   0;
 
                 
+                gpro_t.gTimer_timer_led_blink =2;
+
+                gpro_t.set_timer_timing_key_flag =1;
+               
 
 
-                Set_Timer_Timing_Lcd_Blink();
+                //Set_Timer_Timing_Lcd_Blink();
         
        
 
@@ -328,13 +342,13 @@ void Add_Key_Fun(uint8_t cmd)
          gpro_t.gTimer_run_main_fun=0;
          gpro_t.gTimer_run_dht11=0;
         gctl_t.gTimer_compare_ptc_value=0;
-        
+       
         gctl_t.gSet_temperature_value   ++;
+        
         if(gctl_t.gSet_temperature_value   < 20){
             gctl_t.gSet_temperature_value  =20;
         }
-
-        if(gctl_t.gSet_temperature_value   > 40)gctl_t.gSet_temperature_value  = 20;
+        else if(gctl_t.gSet_temperature_value   > 40)gctl_t.gSet_temperature_value  = 20;
 
         glcd_t.number1_low = gctl_t.gSet_temperature_value   / 10 ;
         glcd_t.number1_high = gctl_t.gSet_temperature_value   / 10 ;
@@ -359,8 +373,15 @@ void Add_Key_Fun(uint8_t cmd)
 
          gpro_t.set_timer_timing_minutes=0;
 
+         if(add_dec_key_set_timer_flag==0){
+            add_dec_key_set_timer_flag++;
+           gpro_t.set_timer_timing_hours =24;
 
-        	gpro_t.set_timer_timing_hours++ ;//run_t.dispTime_minutes = run_t.dispTime_minutes + 60;
+
+        }
+        else 
+            gpro_t.set_timer_timing_hours++ ;//run_t.dispTime_minutes = run_t.dispTime_minutes + 60;
+            
 		   if(gpro_t.set_timer_timing_hours > 24){ //if(run_t.dispTime_minutes > 59){
 
 		          gpro_t.set_timer_timing_hours=0;//run_t.dispTime_hours =0;
@@ -381,8 +402,10 @@ void Add_Key_Fun(uint8_t cmd)
         glcd_t.number8_low = 0;
         glcd_t.number8_high =  0;
 
+        gpro_t.gTimer_timer_led_blink =2;
 
-        Set_Timer_Timing_Lcd_Blink();
+        gpro_t.set_timer_timing_key_flag =1;
+       // Set_Timer_Timing_Lcd_Blink();
          
         
      break;

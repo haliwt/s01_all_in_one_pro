@@ -514,7 +514,7 @@ void link_wifi_net_state(uint8_t data)
 
      if(gctl_t.fan_warning ==0 && gctl_t.ptc_warning == 0){
 
-        WIFI_Process_Handler();
+        RunWifi_Command_Handler();//WIFI_Process_Handler();
         detection_net_link_state_handler();
         Disip_Wifi_Icon_State();
 

@@ -79,7 +79,8 @@ typedef struct {
    uint8_t power_off_flag;
    uint8_t shut_Off_backlight_flag;
   
-    uint8_t gTimer_power_off_run_times;
+  
+   uint8_t  set_timer_timing_key_flag ;
    //WIFI
    uint8_t run_process_step;
    uint8_t disp_dht11_value;
@@ -130,6 +131,7 @@ typedef struct {
    uint8_t gTimer_set_timer_times;
    
    uint8_t gTimer_disp_humidity;
+   uint8_t gTimer_power_off_run_times;
    
         
 

@@ -38,18 +38,11 @@ void bsp_Idle(void)
 
     if(gkey_t.key_power == power_on){
 
-        
-
-         // Function to display the wind run icon based on the wind speed value set in the WiFi configuration
+        // Function to display the wind run icon based on the wind speed value set in the WiFi configuration
          if(gkey_t.key_mode  != mode_set_timer){
              LCD_Wind_Run_Icon(wifi_t.set_wind_speed_value);
 
-             
-
-            }
-
- 
-
+         }
     }
 	
 }
@@ -119,11 +112,7 @@ void power_on_run_handler(void)
           
                   Update_DHT11_Value();
                   lcd_disp_ptc_value(gctl_t.dht11_temp_value);
-                 
-                  
-
-                
-          }
+        }
 
           if(gpro_t.gTimer_disp_humidity > 30  || disp_hum_times < 20){
               

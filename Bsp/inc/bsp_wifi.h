@@ -16,6 +16,7 @@ void MainBoard_Self_Inspection_PowerOn_Fun(void);
 
 void wifi_get_beijint_time_handler(void);
 
+void RunWifi_Command_Handler(void);
 
 #endif 
 
