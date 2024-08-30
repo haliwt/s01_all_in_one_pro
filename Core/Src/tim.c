@@ -128,9 +128,9 @@ void MX_TIM14_Init(void)
   /* buzze of sound frequency is 2KHZ*/
   /* USER CODE END TIM14_Init 1 */
   htim14.Instance = TIM14;
-  htim14.Init.Prescaler = 23;
+  htim14.Init.Prescaler = 63;
   htim14.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim14.Init.Period =249 ;// 1KHZ //499; //F = 1/(1+499)=0.002MHz = 2KHz
+  htim14.Init.Period =249 ;// 4KHZ //499; //F = 1/(1+499)=0.002MHz = 2KHz
   htim14.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim14.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim14) != HAL_OK)
@@ -172,7 +172,7 @@ void MX_TIM16_Init(uint8_t duty_pwm)
 
   /* USER CODE END TIM16_Init 1 */
   htim16.Instance = TIM16;
-  htim16.Init.Prescaler = 23; //F = 24(MHZ)/(23+1)MHZ = 1MHZ
+  htim16.Init.Prescaler = 63; //F = 64(MHZ)/(63+1)MHZ = 1MHZ
   htim16.Init.CounterMode = TIM_COUNTERMODE_UP;
   #if BALL_FAN
      htim16.Init.Period = 9 ;//65535; 1//100K F = 1/(1+9)=0.1MHZ = 100KHZ.
@@ -235,7 +235,7 @@ void MX_TIM17_Init(void)
 
   /* USER CODE END TIM17_Init 1 */
   htim17.Instance = TIM17;
-  htim17.Init.Prescaler = 23;
+  htim17.Init.Prescaler = 63;
   htim17.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim17.Init.Period = 999; //1ms
   htim17.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;

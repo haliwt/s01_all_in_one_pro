@@ -71,20 +71,18 @@ void freeRTOS_Handler(void)
 }
 
 
-/*
-*********************************************************************************************************
+/**********************************************************************************************************
 *	函 数 名: vTaskMsgPro
 *	功能说明: 使用函数xTaskNotifyWait接收任务vTaskTaskUserIF发送的事件标志位设置
 *	形    参: pvParameters 是在创建该任务时传递的形参
 *	返 回 值: 无
 *   优 先 级: 3  
-*********************************************************************************************************
-*/
+**********************************************************************************************************/
 static void vTaskMsgPro(void *pvParameters)
 {
    // MSG_T *ptMsg;
     BaseType_t xResult;
-	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(60); /* 设置最大等待时间为50ms */
+	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(30); /* 设置最大等待时间为50ms */
 	uint32_t ulValue;
     static uint8_t add_flag,dec_flag,smart_phone_sound;
     static uint8_t key_power_long_sound ,power_on_sound;
@@ -113,7 +111,7 @@ static void vTaskMsgPro(void *pvParameters)
 		xResult = xTaskNotifyWait(0x00000000,      
 						          0xFFFFFFFF,      
 						          &ulValue,        /* 保存ulNotifiedValue到变量ulValue中 */
-						          xMaxBlockTime);  /* 最大允许延迟时间 */
+						          xMaxBlockTime);  /* 最大允许延迟时间,等待时间 */
 		
 		if( xResult == pdPASS )
 		{
@@ -253,7 +251,7 @@ static void vTaskMsgPro(void *pvParameters)
                     
             }
         }
-        else{
+        else{ //超时，时间是50ms
 
 
          if(gpro_t.key_mode_be_pressed_flag == 1 &&  gpro_t.key_long_mode_flag !=1){
@@ -390,8 +388,7 @@ static void vTaskMsgPro(void *pvParameters)
                      power_key_long_conter =0; //clear power key loong flag .
                      key_power_long_sound = 0;
                        
-
-                  }
+                   }
                  
                  
                 }
@@ -408,7 +405,7 @@ static void vTaskMsgPro(void *pvParameters)
             }
             
            }
-          iwdg_feed();
+        //  iwdg_feed();
           clear_rx_copy_data();
         }
         
@@ -509,7 +506,7 @@ static void AppTaskCreate (void)
                  "vTaskMsgPro",   		/* 任务名    */
                  256,             		/* 任务栈大小，单位word，也就是4字节 */
                  NULL,           		/* 任务参数  */
-                 2,               		/* 任务优先级*/
+                 1,               		/* 任务优先级*/
                  &xHandleTaskMsgPro );  /* 任务句柄  */
 	
 	
@@ -517,7 +514,7 @@ static void AppTaskCreate (void)
                  "vTaskStart",   		/* 任务名    */
                  128,            		/* 任务栈大小，单位word，也就是4字节 */
                  NULL,           		/* 任务参数  */
-                 1,              		/* 任务优先级*/
+                 2,              		/* 任务优先级*/
                  &xHandleTaskStart );   /* 任务句柄  */
 }
 

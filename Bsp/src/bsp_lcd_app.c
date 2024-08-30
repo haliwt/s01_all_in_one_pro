@@ -249,7 +249,7 @@ void Display_WorksTimingr_Handler(uint8_t sel_item)
    
        if(gctl_t.fan_warning ==0 && gctl_t.ptc_warning==0 ){
 
-            if((gpro_t.global_temporary_set_timer_flag == 1) &&   gpro_t.gTimer_set_timer_times <  11 ){
+            if((gpro_t.global_temporary_set_timer_flag == 1) &&   gpro_t.gTimer_set_timer_times <  11 && wifi_link_net_state()==0){
   
                 gpro_t.gTimer_disp_humidity=0;  //don't update humidity value that has "5" be display 
                 gkey_t.key_mode_switch_flag ++;

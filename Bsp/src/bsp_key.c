@@ -138,8 +138,21 @@ void mode_key_fun(void)
             gkey_t.key_mode_be_pressed = 2;
 
         }
-        else if( gkey_t.key_mode  == disp_timer_timing){
+        else if( gkey_t.key_mode  == disp_timer_timing){ //定时 时间
        
+            gkey_t.key_mode  = disp_works_timing;
+            gkey_t.key_mode_switch_flag++;
+            gkey_t.key_add_dec_mode = set_temp_value_item;
+            gpro_t.gTimer_disp_humidity =0;
+
+            gpro_t.global_temporary_set_timer_flag =0;  //timer timing 定时时间
+             
+            gpro_t.gTimer_set_timer_times = 30;
+            gkey_t.key_mode_be_pressed = 1;
+             
+        }
+        else if(gpro_t.global_temporary_set_timer_flag ==1){
+
             gkey_t.key_mode  = disp_works_timing;
             gkey_t.key_mode_switch_flag++;
             gkey_t.key_add_dec_mode = set_temp_value_item;
@@ -149,23 +162,6 @@ void mode_key_fun(void)
              
             gpro_t.gTimer_set_timer_times = 30;
             gkey_t.key_mode_be_pressed = 1;
-             
-        }
-        else if(gpro_t.global_temporary_set_timer_flag ==1){
-
-                    gkey_t.key_mode  = disp_works_timing;
-                    gkey_t.key_mode_switch_flag++;
-                    gkey_t.key_add_dec_mode = set_temp_value_item;
-                    gpro_t.gTimer_disp_humidity =0;
-        
-                    gpro_t.global_temporary_set_timer_flag =0;
-                     
-                    gpro_t.gTimer_set_timer_times = 30;
-                    gkey_t.key_mode_be_pressed = 1;
-
-
-
-
         }
 
         key_mode_be_pressed_send_data_wifi();
