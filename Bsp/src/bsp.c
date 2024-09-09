@@ -699,9 +699,9 @@ void Detected_Fan_Works_State(void)
 void Detected_Ptc_Works_State(void)
 {
 
-   if(gpro_t.gTimer_ptc_detected > 6 ){ //3 minutes 120s
+   if(gpro_t.gTimer_ptc_detected > 4 ){ //3 minutes 120s
 			gpro_t.gTimer_ptc_detected =0;	
-			  Get_PTC_Temperature_Voltage(ADC_CHANNEL_1,20);
+			  Get_PTC_Temperature_Voltage(ADC_CHANNEL_1,1);
 
               
 					

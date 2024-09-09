@@ -8,13 +8,6 @@ uint8_t get_rx_beijing_time_enable;
 uint8_t beijing_step;
 uint8_t auto_det_flag;
 
-
-
-
-
-
-
-
 uint8_t get_beijing_flag;
 
 ///********************************************************************************

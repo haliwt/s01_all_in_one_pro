@@ -656,7 +656,7 @@ void LCD_Number_FiveSixSeveEight_Hours(uint8_t hours_n,uint8_t minutes_n)
 void LCD_disp_default_FiveSixSeveEight_Codes(void)
 {
 
-   static uint8_t alternate_flag;
+   static uint8_t alternate_flag,alternate_flag_2;
    //FAN LEAF T14
 
     if(gctl_t.ptc_warning ==1 || gctl_t.fan_warning ==1){
@@ -680,12 +680,24 @@ void LCD_disp_default_FiveSixSeveEight_Codes(void)
                         TM1723_Write_Display_Data(0xCE,lcdNumber8_Low[1]+WIND_SPEED_ONE);//display "t,c"
 
                       }
+                      else{
+                         alternate_flag=0;
+
+                         TM1723_Write_Display_Data(0xCE,lcdNumber8_Low[2]+WIND_SPEED_ONE);//display "t,c"
+
+                      }
                   }
                   else if(glcd_t.gTimer_fan_blink >50 && glcd_t.gTimer_fan_blink < 100){
 
-                     if(alternate_flag > 0){
-                         alternate_flag=0;
+                     if(alternate_flag_2 == 0){
+                         alternate_flag_2++;
                          TM1723_Write_Display_Data(0xCE,lcdNumber8_Low[2]+WIND_SPEED_ONE);//display "t,c"
+                     }
+                     else{
+
+                       alternate_flag_2=0;
+                       TM1723_Write_Display_Data(0xCE,lcdNumber8_Low[1]+WIND_SPEED_ONE);//display "t,c"
+
                      }
 
 

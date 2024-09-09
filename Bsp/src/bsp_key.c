@@ -58,6 +58,8 @@ void power_on_key_handler(void)
            else{
               gkey_t.key_power=power_off;
               gctl_t.step_process=0;
+               gctl_t.ptc_warning =0;
+               gctl_t.fan_warning =0;
 
            }
           
