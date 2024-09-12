@@ -177,8 +177,8 @@ void Get_Fan_Adc_Fun(uint32_t channel,uint8_t times)
 	static uint8_t detect_error_times;
 
     
-	fan_max_run();
-    osDelay(200);
+	//fan_max_run();
+   // osDelay(200);
 	adc_fan_hex = Get_Adc_Average(channel,times);
 
     fan_detect_voltage  =(uint16_t)((adc_fan_hex * 3300)/4096); //amplification 1000 ,3.111V -> 3111
@@ -202,7 +202,7 @@ void Get_Fan_Adc_Fun(uint32_t channel,uint8_t times)
 
     
 
-	if(fan_detect_voltage >300 &&  fan_detect_voltage < 1400){
+	if(fan_detect_voltage >300 ){
            detect_error_times=0;
 		   #ifdef DEBUG
              printf("adc= %d",run_t.fan_detect_voltage);

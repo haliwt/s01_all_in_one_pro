@@ -101,6 +101,17 @@ void power_on_run_handler(void)
            gpro_t.power_on_every_times = 1;
            
            Disp_HumidityTemp_Value();
+           
+          if(wifi_link_net_state()==1){
+             MqttData_Publish_SetOpen(1);  
+             osDelay(100);//300
+          
+             Publish_Data_Warning(fan_warning,no_warning);
+          
+             Publish_Data_Warning(ptc_temp_warning,no_warning);
+          
+             }
+          fan_max_run();
 
 		  break;
 

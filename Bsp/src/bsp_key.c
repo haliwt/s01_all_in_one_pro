@@ -53,6 +53,7 @@ void power_on_key_handler(void)
                gctl_t.fan_warning =0;
               
               gctl_t.step_process=0;
+          
               gpro_t.power_off_flag =1;
             }
            else{
